@@ -65,7 +65,7 @@ void player_update()
     case 2:
         player.pos.x += player.speed.x;
         player.pos.y += player.speed.y;
-
+        //testing for pushing and pull
         player_moveX();
         player_moveY();
         debug::setString("player speed x is %f", player.speed.x);
