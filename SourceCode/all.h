@@ -41,9 +41,12 @@
 
 #include "scene_game.h"
 #include "scene_title.h"
-
+#include "obj2d.h"  
+#include "player.h"
 // namespace
 using namespace GameLib;
 using namespace input;
+
+
 
 #endif//ALL_H

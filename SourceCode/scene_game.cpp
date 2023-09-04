@@ -19,7 +19,7 @@
 //------< 変数 >----------------------------------------------------------------
 int game_state;
 int game_timer;
-
+int mapPosX;
 Sprite* sprBack;
 
 //--------------------------------------
@@ -89,6 +89,7 @@ void game_update()
 
         GameLib::setBlendMode(Blender::BS_ALPHA);
 
+       mapPosX = 0;
         game_state++;
         /*fallthrough*/
 
@@ -106,17 +107,7 @@ void game_update()
             break;
         }
 
-#if 12
-//******************************************************************************
-// TODO:12 プレイヤーの更新関数を呼び出す
-//------------------------------------------------------------------------------
-/*
-課題）
-    下記でplayer_update関数を呼びましょう。
-*/
-//******************************************************************************
-#endif
-        //TODO_12
+        mapPosX-=5;
 
         player_update();
         break;
@@ -132,7 +123,7 @@ void game_render()
 {
     GameLib::clear(0.2f, 0.2f, 0.4f);
 
-    sprite_render(sprBack, 0, 0);
+    sprite_render(sprBack, mapPosX, 0);
 
     player_render();
 
