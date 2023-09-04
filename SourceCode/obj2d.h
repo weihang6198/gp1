@@ -31,6 +31,7 @@ struct OBJ2D
     VECTOR2 pivot;
     VECTOR4 color;
     VECTOR2 speed;
+    VECTOR2 maxSpeed;
 
 };
 

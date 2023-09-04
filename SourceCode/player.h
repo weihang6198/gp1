@@ -13,5 +13,5 @@ void player_render();
 //
 void player_moveX();
 void player_moveY();
-
+void triggerAccelerateMode();
 #endif//PLAYER_H
