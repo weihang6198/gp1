@@ -99,7 +99,7 @@
     <ClInclude Include="GameLib\depth_stencil.h">
       <Filter>GameLib\ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="meteor.h">
+    <ClInclude Include="SourceCode\meteor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -167,7 +167,7 @@
     <ClCompile Include="GameLib\wnd_proc.cpp">
       <Filter>GameLib\ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="meteor.cpp">
+    <ClCompile Include="SourceCode\meteor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
