@@ -63,7 +63,7 @@ void meteor_render() {
 }
 
 void meteor_move() {
-    meteor.pos.x -= 1.0f; 
+   // meteor.pos.x -= 1.0f; 
 }
 
 float meteor_random_spawning(int lower_bound, int upper_bound) {

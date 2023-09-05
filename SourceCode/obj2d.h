@@ -74,15 +74,20 @@ struct OBJ2D
     //this function can be used for all dir (top down left right)
     void collisionDetector(COLLISION_COORD playerCollisionCoord,COLLISION_COORD enemyCoord)
     {
-        if (playerCollisionCoord.right > enemyCoord.left)
-        {
-            debug::setString("playerCollisionCoord.right > enemyCoord.left is true");
-        }
+       //right side of the plane hitting left side of the rock
         if (playerCollisionCoord.right > enemyCoord.left && playerCollisionCoord.right < enemyCoord.right
             && playerCollisionCoord.top <enemyCoord.bottom && playerCollisionCoord.bottom >enemyCoord.top
             )
         {
-            debug::setString("collided");
+            debug::setString("collided the left side ");
+        }
+      
+        //right side of the rock hitting the left side of the plane
+        else if (enemyCoord.right > playerCollisionCoord.left && enemyCoord.right < playerCollisionCoord.right
+            && enemyCoord.top <playerCollisionCoord.bottom && enemyCoord.bottom >playerCollisionCoord.top
+            )
+        {
+            debug::setString("collided the right side ");
         }
         else
         {
