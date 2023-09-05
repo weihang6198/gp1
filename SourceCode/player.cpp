@@ -15,7 +15,7 @@ int     player_state;
 #endif
 //TODO_03
 
-
+//test
 Sprite* sprPlayer;
 OBJ2D player;
 bool turboMode;
