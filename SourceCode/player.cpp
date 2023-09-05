@@ -65,8 +65,11 @@ void player_update()
         spaceShip.pivot = { 0,0 };
         spaceShip.color = { 1,1,1,1 };
         spaceShip.speed = { 0 ,0 };
-        spaceShip.maxSpeed = { 7,7 };
+        spaceShip.maxSpeed = { 9,9 };
+        spaceShip.inGameSize = { (spaceShip.texSize.x * spaceShip.scale.x) ,(spaceShip.texSize.y * spaceShip.scale.y) };
         spaceShip.fuel = 100;
+        spaceShip.collisionCoord = { spaceShip.pos.x,spaceShip.pos.x + spaceShip.inGameSize.x,
+            spaceShip.pos.y,spaceShip.pos.y + spaceShip.inGameSize.y};
         turboMode = false;
         ++player_state;
         /*fallthrough*/
@@ -112,7 +115,7 @@ void player_render()
         spaceShip.texPos.x, spaceShip.texPos.y, //texture pos
         spaceShip.texSize.x, spaceShip.texSize.y,//texture width and height
         spaceShip.pivot.x, spaceShip.pivot.y, 0);
-    spaceShip.drawCollision(spaceShip.pos.x, spaceShip.pos.y, spaceShip.texSize.x*spaceShip.scale.x, spaceShip.texSize.y* spaceShip.scale.y);
+    spaceShip.drawCollision(spaceShip.pos.x, spaceShip.pos.y,spaceShip.inGameSize.x, spaceShip.inGameSize.y);
             
 }
 
@@ -168,7 +171,7 @@ void player_moveX()
         {
             spaceShip.speed.x = spaceShip.maxSpeed.x;
         }
-        OutputDebugStringA("button pressed");
+      
     }
     else if (STATE(0) & PAD_LEFT)
     {
@@ -177,11 +180,11 @@ void player_moveX()
         {
             spaceShip.speed.x = -spaceShip.maxSpeed.x;
         }
-        OutputDebugStringA("button pressed");
+     
     }
     else
     {
-        debug::setString("pad right rleeased");
+       
        /* player.speed.x -= 0.1;
         if (player.speed.x < 0)
         {

@@ -26,8 +26,10 @@ struct OBJ2D
 
     struct COLLISION_COORD
     {
-        VECTOR2 startCoord;
-        VECTOR2 endCoord;
+        float left; //x coord
+        float right; //x coord +width
+        float top;  //y coord 
+        float bottom; //y coord+ height
     };
     int timer;
     VECTOR2 pos;
@@ -38,7 +40,8 @@ struct OBJ2D
     VECTOR4 color;
     VECTOR2 speed;
     VECTOR2 maxSpeed;   
-
+    COLLISION_COORD collisionCoord;
+    VECTOR2 inGameSize;
     //TODO collision
     void drawCollision(int posX,int posY,int width,int height )
     {
@@ -71,10 +74,12 @@ struct OBJ2D
     //this function can be used for all dir (top down left right)
     void collisionDetector(COLLISION_COORD playerCollisionCoord,COLLISION_COORD enemyCoord)
     {
-       /* if (playerCollisionCoord.startCoord.x > enemyCoord.startCoord.x && playerCollisionCoord.startCoord.y<)
+        if (playerCollisionCoord.right > enemyCoord.left && playerCollisionCoord.right < enemyCoord.right
+            && playerCollisionCoord.top <enemyCoord.bottom && playerCollisionCoord.bottom >enemyCoord.top
+            )
         {
-
-        }*/
+            OutputDebugStringA("collided");
+       }
     }
 
     
