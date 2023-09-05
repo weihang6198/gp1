@@ -28,7 +28,7 @@ bool turboMode;
 //  ƒvƒŒƒCƒ„[‚Ì‰Šúİ’è
 //--------------------------------------
 void player_init()
-{
+{ 
 
     player_state = 0;
 

@@ -35,4 +35,23 @@ struct OBJ2D
 
 };
 
+struct METEOR : public OBJ2D
+{
+
+};
+
+struct ITEM :public OBJ2D
+{
+
+};
+
+struct ALIEN :public OBJ2D
+{
+
+};
+
+struct SPACE_SHIP :public OBJ2D
+{
+
+};
 #endif
