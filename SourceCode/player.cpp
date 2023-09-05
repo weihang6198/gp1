@@ -51,7 +51,7 @@ void player_update()
     switch (player_state)
     {
     case 0:
-        spaceShipSpr = sprite_load(L"./Data/Images/spaceship.png");
+        spaceShipSpr = sprite_load(L"./Data/Images/spaceship3.png");
 
 
         ++player_state;
@@ -59,14 +59,14 @@ void player_update()
 
     case 1:
         spaceShip.pos = { 300,100 };
-        spaceShip.scale = { 0.3,0.3 };
+        spaceShip.scale = { 1,1 };
         spaceShip.texPos = { 0,0 };
-        spaceShip.texSize = { 500,500 };
+        spaceShip.texSize = {173,231}; //spaceship size is 173x231
         spaceShip.pivot = { 0,0 };
         spaceShip.color = { 1,1,1,1 };
         spaceShip.speed = { 0 ,0 };
         spaceShip.maxSpeed = { 7,7 };
-
+        spaceShip.fuel = 100;
         turboMode = false;
         ++player_state;
         /*fallthrough*/
@@ -77,9 +77,11 @@ void player_update()
         //testing for pushing and pull
         player_moveX();
         player_moveY();
-       triggerAccelerateMode();
+        triggerAccelerateMode();
         debug::setString("turbo mode is %d", turboMode);
         debug::setString("player speed x is %f", spaceShip.speed.x);
+
+    
         break;
     }
 }
@@ -103,13 +105,15 @@ void player_render()
     //******************************************************************************
 #endif
     //TODO_09
+
     sprite_render(spaceShipSpr,
         spaceShip.pos.x, spaceShip.pos.y, //pos
         spaceShip.scale.x, spaceShip.scale.y, //scale
         spaceShip.texPos.x, spaceShip.texPos.y, //texture pos
         spaceShip.texSize.x, spaceShip.texSize.y,//texture width and height
-        spaceShip.pivot.x, spaceShip.pivot.y, ToRadian(90));
-
+        spaceShip.pivot.x, spaceShip.pivot.y, 0);
+    spaceShip.drawCollision(spaceShip.pos.x, spaceShip.pos.y, spaceShip.texSize.x, spaceShip.texSize.y);
+            
 }
 
 void player_moveY()
