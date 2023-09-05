@@ -108,10 +108,12 @@ void game_update()
             break;
         }
 
-        mapPosX-=5;
+      //  mapPosX-=5;
 
         player_update();
         meteor_update(); 
+        spaceShip.collisionDetector(spaceShip.collisionCoord, meteor.collisionCoord);
+       // debug::setString(spaceShip.collisionCoord)
         break;
     }
 

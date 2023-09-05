@@ -25,7 +25,7 @@ void meteor_update() {
         /*fallthrough*/
     case 1:
         meteor.timer = 0; 
-        meteor.pos = { meteor_random_spawning(500, 2000), meteor_random_spawning(0, 400)};
+        meteor.pos = { 800, meteor_random_spawning(0, 400)};
         meteor.scale = { 0.3f, 0.3f };
         meteor.texPos = { 0,0 };
         meteor.texSize = { 500, 500 };
@@ -34,11 +34,19 @@ void meteor_update() {
 
         meteor_state++; 
         
+        //wei hang's work
+        //fixed the posX issue,no longer need to pos x-150
+        //added collision coord 
+        //added collision update
+        meteor.collisionCoord = { meteor.pos.x ,(meteor.pos.x) + meteor.texSize.x * 3 / 10,
+                                    meteor.pos.y,meteor.pos.y+ meteor.texSize.y * 3/10 };
         /*fallthrough*/
 
     case 2:
         debug::setString("meteor position x: %f, y: %f", meteor.pos.x, meteor.pos.y);
         meteor_move(); 
+        meteor.updateCollisionCoord(&meteor.collisionCoord, meteor.pos.x, (meteor.pos.x) + meteor.texSize.x * 3 / 10,
+            meteor.pos.y, meteor.pos.y + meteor.texSize.y * 3 / 10);
 
     }
 }
@@ -50,12 +58,12 @@ void meteor_render() {
         meteor.scale.x, meteor.scale.y, //scale
         meteor.texPos.x, meteor.texPos.y, //texture pos
         meteor.texSize.x, meteor.texSize.y,//texture width and height
-        meteor.pivot.x, meteor.pivot.y, ToRadian(90));
-    meteor.drawCollision(meteor.pos.x - 150, meteor.pos.y, meteor.texSize.x*0.3, meteor.texSize.y*0.3);
+        meteor.pivot.x, meteor.pivot.y, 0);
+    meteor.drawCollision(meteor.pos.x , meteor.pos.y, meteor.texSize.x*0.3, meteor.texSize.y*0.3);
 }
 
 void meteor_move() {
-    meteor.pos.x -= 2.0f; 
+    meteor.pos.x -= 1.0f; 
 }
 
 float meteor_random_spawning(int lower_bound, int upper_bound) {

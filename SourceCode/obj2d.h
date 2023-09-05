@@ -74,15 +74,30 @@ struct OBJ2D
     //this function can be used for all dir (top down left right)
     void collisionDetector(COLLISION_COORD playerCollisionCoord,COLLISION_COORD enemyCoord)
     {
+        if (playerCollisionCoord.right > enemyCoord.left)
+        {
+            debug::setString("playerCollisionCoord.right > enemyCoord.left is true");
+        }
         if (playerCollisionCoord.right > enemyCoord.left && playerCollisionCoord.right < enemyCoord.right
             && playerCollisionCoord.top <enemyCoord.bottom && playerCollisionCoord.bottom >enemyCoord.top
             )
         {
-            OutputDebugStringA("collided");
-       }
+            debug::setString("collided");
+        }
+        else
+        {
+            debug::setString("did not collided");
+        }
     }
 
-    
+    void updateCollisionCoord(COLLISION_COORD *playerCollisionCoord,float left,float right,float top,float bottom)
+    {
+        playerCollisionCoord->left = left;
+        playerCollisionCoord->right = right;
+        playerCollisionCoord->top = top ;
+        playerCollisionCoord->bottom = bottom;
+
+    }
 };
 
 struct METEOR : public OBJ2D //heinŒN ’S“–

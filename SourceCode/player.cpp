@@ -58,7 +58,7 @@ void player_update()
         /*fallthrough*/
 
     case 1:
-        spaceShip.pos = { 300,100 };
+        spaceShip.pos = { 100,100 };
         spaceShip.scale = { 0.5,0.5 };
         spaceShip.texPos = { 0,0 };
         spaceShip.texSize = {173,231}; //spaceship size is 173x231
@@ -78,9 +78,13 @@ void player_update()
         spaceShip.pos.x += spaceShip.speed.x;
         spaceShip.pos.y += spaceShip.speed.y;
         //testing for pushing and pull
+        spaceShip.updateCollisionCoord(&spaceShip.collisionCoord, spaceShip.pos.x, spaceShip.pos.x + spaceShip.inGameSize.x,
+            spaceShip.pos.y, spaceShip.pos.y + spaceShip.inGameSize.y);
         player_moveX();
         player_moveY();
         triggerAccelerateMode();
+
+
         debug::setString("turbo mode is %d", turboMode);
         debug::setString("player speed x is %f", spaceShip.speed.x);
 

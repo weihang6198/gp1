@@ -16,4 +16,5 @@ extern SPACE_SHIP spaceShip;
 void player_moveX();
 void player_moveY();
 void triggerAccelerateMode();
+
 #endif//PLAYER_H
