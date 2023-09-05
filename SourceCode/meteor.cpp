@@ -32,11 +32,13 @@ void meteor_update() {
         meteor.color = { 1,1,1,1 };
 
         meteor_state++; 
-        debug::setString("meteor position x: %f, y: %f", meteor.pos.x, meteor.pos.y);
+        
         /*fallthrough*/
 
     case 2:
+        debug::setString("meteor position x: %f, y: %f", meteor.pos.x, meteor.pos.y);
         meteor_move(); 
+
     }
 }
 
@@ -48,7 +50,7 @@ void meteor_render() {
         meteor.texPos.x, meteor.texPos.y, //texture pos
         meteor.texSize.x, meteor.texSize.y,//texture width and height
         meteor.pivot.x, meteor.pivot.y, ToRadian(90));
-    meteor.drawCollision(meteor.pos.x, meteor.pos.y, meteor.texSize.x, meteor.texSize.y);
+    meteor.drawCollision(meteor.pos.x - 150, meteor.pos.y, meteor.texSize.x * meteor.scale.x, meteor.texSize.y * meteor.scale.y);
 }
 
 void meteor_move() {
