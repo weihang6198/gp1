@@ -9,6 +9,7 @@
 //----< インクルード >-----------------------------------------------------------
 #include "all.h"
 #include "player.h"
+#include "meteor.h"
 
 //------< 定数 >----------------------------------------------------------------
 
@@ -110,6 +111,7 @@ void game_update()
         mapPosX-=5;
 
         player_update();
+        meteor_update(); 
         break;
     }
 
@@ -126,6 +128,7 @@ void game_render()
     sprite_render(sprBack, mapPosX, 0);
 
     player_render();
+    meteor_render(); 
 
 #if 13
 //******************************************************************************
