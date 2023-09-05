@@ -48,7 +48,7 @@ void meteor_render() {
         meteor.texPos.x, meteor.texPos.y, //texture pos
         meteor.texSize.x, meteor.texSize.y,//texture width and height
         meteor.pivot.x, meteor.pivot.y, ToRadian(90));
-    meteor.drawCollision(meteor.pos.x, meteor.pos.y, meteor.texSize.x, meteor.texSize.y);
+    meteor.drawCollision(meteor.pos.x, meteor.pos.y, meteor.texSize.x*0.3, meteor.texSize.y*0.3);
 }
 
 void meteor_move() {

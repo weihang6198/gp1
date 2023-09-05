@@ -23,6 +23,12 @@ struct OBJ2D
     {
         int r, g, b, a;
     };
+
+    struct COLLISION_COORD
+    {
+        VECTOR2 startCoord;
+        VECTOR2 endCoord;
+    };
     int timer;
     VECTOR2 pos;
     VECTOR2 scale;
@@ -60,6 +66,18 @@ struct OBJ2D
             1); //thicness
     }
 
+    //to detect collision
+    //this is to compare the collision between enemy and player
+    //this function can be used for all dir (top down left right)
+    void collisionDetector(COLLISION_COORD playerCollisionCoord,COLLISION_COORD enemyCoord)
+    {
+        if (playerCollisionCoord.startCoord.x > enemyCoord.startCoord.x && playerCollisionCoord.startCoord.y<)
+        {
+
+        }
+    }
+
+    
 };
 
 struct METEOR : public OBJ2D //heinŒN ’S“–

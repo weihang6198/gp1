@@ -59,7 +59,7 @@ void player_update()
 
     case 1:
         spaceShip.pos = { 300,100 };
-        spaceShip.scale = { 1,1 };
+        spaceShip.scale = { 0.5,0.5 };
         spaceShip.texPos = { 0,0 };
         spaceShip.texSize = {173,231}; //spaceship size is 173x231
         spaceShip.pivot = { 0,0 };
@@ -112,7 +112,7 @@ void player_render()
         spaceShip.texPos.x, spaceShip.texPos.y, //texture pos
         spaceShip.texSize.x, spaceShip.texSize.y,//texture width and height
         spaceShip.pivot.x, spaceShip.pivot.y, 0);
-    spaceShip.drawCollision(spaceShip.pos.x, spaceShip.pos.y, spaceShip.texSize.x, spaceShip.texSize.y);
+    spaceShip.drawCollision(spaceShip.pos.x, spaceShip.pos.y, spaceShip.texSize.x*spaceShip.scale.x, spaceShip.texSize.y* spaceShip.scale.y);
             
 }
 
