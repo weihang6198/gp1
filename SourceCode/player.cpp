@@ -15,6 +15,7 @@ int     player_state;
 #endif
 //TODO_03
 
+//test retarget
 //test 
 //test
 //msg to pain
@@ -27,7 +28,7 @@ bool turboMode;
 //  ƒvƒŒƒCƒ„[‚Ì‰Šúİ’è
 //--------------------------------------
 void player_init()
-{
+{ 
 
     player_state = 0;
 
