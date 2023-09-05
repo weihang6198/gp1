@@ -72,7 +72,7 @@ void player_update()
         //testing for pushing and pull
         player_moveX();
         player_moveY();
-      //  triggerAccelerateMode();
+       triggerAccelerateMode();
         debug::setString("turbo mode is %d", turboMode);
         debug::setString("player speed x is %f", player.speed.x);
         break;
