@@ -15,8 +15,11 @@ int     player_state;
 #endif
 //TODO_03
 
+//test 
 //test
 //msg to pain
+//
+//msg from 
 Sprite* sprPlayer;
 OBJ2D player;
 bool turboMode;
