@@ -7,7 +7,7 @@ void meteor_update();
 void meteor_render();
 
 void meteor_move();
-void meteor_random_spawning();
+float meteor_random_spawning(int lower_bound, int upper_bound);
 void meteor_rotation();
 
 #endif //METEOR_H
