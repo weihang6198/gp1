@@ -128,7 +128,7 @@ void game_render()
     sprite_render(sprBack, mapPosX, 0);
 
     player_render();
-   // meteor_render(); 
+    meteor_render(); 
 
 #if 13
 //******************************************************************************
