@@ -18,7 +18,8 @@ int     player_state;
 //test 
 //test
 //msg to pain
-//msg from miya
+//
+//msg from 
 Sprite* sprPlayer;
 OBJ2D player;
 bool turboMode;
