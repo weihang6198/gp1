@@ -11,6 +11,8 @@ void player_update();
 void player_render();
 
 //
+extern SPACE_SHIP spaceShip;
+
 void player_moveX();
 void player_moveY();
 void triggerAccelerateMode();
