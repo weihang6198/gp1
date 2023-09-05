@@ -71,10 +71,10 @@ struct OBJ2D
     //this function can be used for all dir (top down left right)
     void collisionDetector(COLLISION_COORD playerCollisionCoord,COLLISION_COORD enemyCoord)
     {
-        if (playerCollisionCoord.startCoord.x > enemyCoord.startCoord.x && playerCollisionCoord.startCoord.y<)
+     /*   if (playerCollisionCoord.startCoord.x > enemyCoord.startCoord.x && playerCollisionCoord.startCoord.y<)
         {
 
-        }
+        }*/
     }
 
     
