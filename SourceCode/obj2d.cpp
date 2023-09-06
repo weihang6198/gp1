@@ -16,6 +16,7 @@ void SPACE_SHIP::spaceShipInit()
    collisionCoord = {pos.x,pos.x +inGameSize.x,
        pos.y,pos.y +inGameSize.y };
    turboMode = false;
+   //testing
 }
 
 void BEAM::beamInit()
