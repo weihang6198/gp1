@@ -18,7 +18,7 @@ int     player_state;
 
 Sprite* spaceShipSpr;
 SPACE_SHIP spaceShip;
-
+Sprite* beamSpr;
 BEAM beam;
 //--------------------------------------
 //  ÉvÉåÉCÉÑÅ[ÇÃèâä˙ê›íË
@@ -48,13 +48,14 @@ void player_update()
     {
     case 0:
         spaceShipSpr = sprite_load(L"./Data/Images/spaceship3.png");
-
+        beamSpr = sprite_load(L"./Data/Images/beam.png");
 
         ++player_state;
         /*fallthrough*/
 
     case 1:
         spaceShip.spaceShipInit();
+        beam.beamInit();
         ++player_state;
         /*fallthrough*/
         
@@ -97,6 +98,7 @@ void player_render()
 #endif
     //TODO_09
 
+    //rendering for spaceship
     sprite_render(spaceShipSpr,
         spaceShip.pos.x, spaceShip.pos.y, //pos
         spaceShip.scale.x, spaceShip.scale.y, //scale
@@ -105,6 +107,14 @@ void player_render()
         spaceShip.pivot.x, spaceShip.pivot.y, 0);
     spaceShip.drawCollision(spaceShip.pos.x, spaceShip.pos.y,spaceShip.inGameSize.x, spaceShip.inGameSize.y);
             
+    //rendering for beam
+    sprite_render(beamSpr,
+       beam.pos.x,beam.pos.y, //pos
+       beam.scale.x,beam.scale.y, //scale
+       beam.texPos.x,beam.texPos.y, //texture pos
+       beam.texSize.x,beam.texSize.y,//texture width and height
+       beam.pivot.x,beam.pivot.y, 0);
+   beam.drawCollision(spaceShip.pos.x,beam.pos.y,beam.inGameSize.x, beam.inGameSize.y);
 }
 
 void player_moveY()

@@ -3,7 +3,7 @@
 void SPACE_SHIP::spaceShipInit()
 {
     
-   pos = { 100,100 };
+   pos = { 100,300 };
    scale = { 0.5,0.5 };
    texPos = { 0,0 };
    texSize = { 173,231 }; //spaceship size is 173x231
@@ -20,8 +20,8 @@ void SPACE_SHIP::spaceShipInit()
 
 void BEAM::beamInit()
 {
-    pos = { 100,100}; 
-    scale = { 0.5,0.5 };
+    pos = { 100,300}; 
+    scale = { 0.35,0.2 };
     texPos = { 0,0 };
     texSize = { 300,100 }; //spaceship size is 173x231
     pivot = { 0,0 };
