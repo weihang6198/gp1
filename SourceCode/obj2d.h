@@ -107,7 +107,7 @@ struct OBJ2D
 
 struct METEOR : public OBJ2D //heinŒN ’S“–
 {
-
+   
 };
 
 struct ITEM :public OBJ2D //dang ŒN’S“–
