@@ -15,15 +15,11 @@ int     player_state;
 #endif
 //TODO_03
 
-//test retarget
-//test 
-//test
-//msg to pain
-//
-//msg from 
+
 Sprite* spaceShipSpr;
 SPACE_SHIP spaceShip;
-bool turboMode;
+
+BEAM beam;
 //--------------------------------------
 //  ÉvÉåÉCÉÑÅ[ÇÃèâä˙ê›íË
 //--------------------------------------
@@ -58,19 +54,7 @@ void player_update()
         /*fallthrough*/
 
     case 1:
-        spaceShip.pos = { 100,100 };
-        spaceShip.scale = { 0.5,0.5 };
-        spaceShip.texPos = { 0,0 };
-        spaceShip.texSize = {173,231}; //spaceship size is 173x231
-        spaceShip.pivot = { 0,0 };
-        spaceShip.color = { 1,1,1,1 };
-        spaceShip.speed = { 0 ,0 };
-        spaceShip.maxSpeed = { 9,9 };
-        spaceShip.inGameSize = { (spaceShip.texSize.x * spaceShip.scale.x) ,(spaceShip.texSize.y * spaceShip.scale.y) };
-        spaceShip.fuel = 100;
-        spaceShip.collisionCoord = { spaceShip.pos.x,spaceShip.pos.x + spaceShip.inGameSize.x,
-            spaceShip.pos.y,spaceShip.pos.y + spaceShip.inGameSize.y};
-        turboMode = false;
+        spaceShip.spaceShipInit();
         ++player_state;
         /*fallthrough*/
         
@@ -85,7 +69,7 @@ void player_update()
         triggerAccelerateMode();
 
 
-        debug::setString("turbo mode is %d", turboMode);
+        debug::setString("turbo mode is %d", spaceShip.turboMode);
         debug::setString("player speed x is %f", spaceShip.speed.x);
 
     
@@ -154,12 +138,12 @@ void triggerAccelerateMode()
         if (spaceShip.maxSpeed.x == 15)
         {
             spaceShip.maxSpeed = { 7,7 };
-            turboMode = false;
+            spaceShip.turboMode = false;
         }
         else
         {
             spaceShip.maxSpeed = { 15,15 };
-            turboMode = true;
+           spaceShip.turboMode = true;
         }
      
     }
