@@ -102,6 +102,9 @@
     <ClInclude Include="SourceCode\meteor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\item.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameLib\debug.cpp">
@@ -171,6 +174,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\obj2d.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\item.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
