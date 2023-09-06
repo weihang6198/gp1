@@ -32,6 +32,7 @@ struct OBJ2D
         float bottom; //y coord+ height
     };
     int timer;
+    
     VECTOR2 pos;
     VECTOR2 scale;
     VECTOR2 texPos;
@@ -123,5 +124,13 @@ struct ALIEN :public OBJ2D //‹{–{ŒN’S“–
 struct SPACE_SHIP :public OBJ2D //ƒ‚ƒE’S“–
 {
     float fuel;
+    bool turboMode;
+
+    void spaceShipInit();
+};
+
+struct BEAM : public OBJ2D //ƒ‚ƒE’S“–
+{
+    void beamInit();
 };
 #endif
