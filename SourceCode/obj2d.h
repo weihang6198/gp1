@@ -1,6 +1,6 @@
 #ifndef OBJ2D_H
 #define OBJ2D_H
-
+#include <random>
 //******************************************************************************
 //
 //
@@ -41,7 +41,7 @@ struct OBJ2D
     };
    
     int timer;
-    
+    GameLib::Sprite* spr;
     VECTOR2 pos;
     VECTOR2 scale;
     VECTOR2 texPos;
@@ -112,4 +112,6 @@ struct BEAM : public OBJ2D //ƒ‚ƒE’S“–
     void beamTravel();
     void selfDestruct();
 };
+
+OBJ2D* searchSet0(OBJ2D arr[], int dataNum, int moveAlg, VECTOR2 pos);
 #endif
