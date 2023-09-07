@@ -1,6 +1,6 @@
 #ifndef OBJ2D_H
 #define OBJ2D_H
-
+#include <random>
 //******************************************************************************
 //
 //
@@ -32,7 +32,7 @@ struct OBJ2D
         float bottom; //y coord+ height
     };
     int timer;
-    
+    GameLib::Sprite* spr;
     VECTOR2 pos;
     VECTOR2 scale;
     VECTOR2 texPos;
@@ -104,11 +104,22 @@ struct OBJ2D
         playerCollisionCoord->bottom = bottom;
 
     }
+
+    //float random_spawning(int lower_bound, int upper_bound) {
+    //    std::random_device rd;
+    //    std::mt19937 gen(rd());
+    //    // Create a distribution that maps the random numbers within the specified range
+    //    std::uniform_int_distribution<> distribution(lower_bound, upper_bound);
+    //    // Generate random numbers and print them
+
+    //    int randomNumber = distribution(gen);
+    //    return randomNumber;
+    //}
 };
 
 struct METEOR : public OBJ2D //heinŒN ’S“–
 {
-   
+
 };
 
 struct ITEM :public OBJ2D //dang ŒN’S“–
@@ -133,4 +144,6 @@ struct BEAM : public OBJ2D //ƒ‚ƒE’S“–
 {
     void beamInit();
 };
+
+OBJ2D* searchSet0(OBJ2D arr[], int dataNum, int moveAlg, VECTOR2 pos);
 #endif

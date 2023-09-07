@@ -10,5 +10,5 @@ void meteor_move();
 float meteor_random_spawning(int lower_bound, int upper_bound);
 void meteor_rotation();
 
-extern METEOR meteor;
+extern METEOR meteor_obj;
 #endif //METEOR_H
