@@ -1,7 +1,7 @@
 ﻿#include "all.h"
 
 int item_state = 0;
-Sprite* itemspr;
+Sprite* itemspr[3];
 ITEM item[15]; // Sử dụng mảng ITEM item[15] thay vì con trỏ ITEM* item
 float scaleSpeed = 0.001f; // Tốc độ tăng/giảm scale
 bool increasing[15]; // Sử dụng mảng increasing để theo dõi tốc độ tăng/giảm cho từng item
@@ -16,7 +16,9 @@ void item_init() {
 }
 
 void item_deinit() {
-    safe_delete(itemspr);
+    for (int i = 0; i < 15; i++) {
+        safe_delete(itemspr[i]);
+    }
 }
 
 void item_update() {
@@ -24,15 +26,19 @@ void item_update() {
     {
     case 0:
         // Khởi tạo sprite và các thông số của item
-        itemspr = sprite_load(L"./Data/Images/battery.png");
-
+       
+       
+            itemspr[0] = sprite_load(L"./Data/Images/battery.png");
+            itemspr[1] = sprite_load(L"./Data/Images/repair_kit.png");
+            itemspr[2] = sprite_load(L"./Data/Images/fuel.png");
         ++item_state;
         break;
 
     case 1:
-        for (int i = 0; i < 15; ++i) {
+     
             // Khởi tạo các thông số của từng item
-           float j = i;
+        for(int i=0;i<15;i++){
+            float j = i;
             item[i].pos = { 300 + j * 50, 200 };
             item[i].scale = { 0.05, 0.05 };
             item[i].texPos = { 0, 0 };
@@ -40,7 +46,7 @@ void item_update() {
             item[i].pivot = { 0.5, 0.5 };
             item[i].color = { 1, 1, 1, 1 };
         }
-
+      
         ++item_state;
         break;
 
@@ -67,9 +73,9 @@ void item_update() {
 }
 
 void item_render() {
-    for (int i = 0; i < 15; ++i) {
+    for (int i = 0; i < 3; ++i) {
         // Render từng item trong mảng
-        sprite_render(itemspr,
+        sprite_render(itemspr[i],
             item[i].pos.x, item[i].pos.y,
             item[i].scale.x, item[i].scale.y,
             item[i].texPos.x, item[i].texPos.y,
