@@ -31,7 +31,7 @@ void meteor_update() {
         meteor.texSize = { 500, 500 };
         meteor.pivot = { 0,0 };
         meteor.color = { 1,1,1,1 };
-
+        meteor.objType = ITEM::ENEMY;
         meteor_state++; 
         
         //wei hang's work

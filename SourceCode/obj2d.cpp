@@ -18,6 +18,7 @@ void SPACE_SHIP::spaceShipInit()
    turboMode = false;
    beamCount = 0;
    objType = PLAYER;
+   collided = false;
    //testing
 }
 
@@ -139,7 +140,13 @@ void OBJ2D::processCollision(OBJ2D *obj1,OBJ2D *obj2 )
     {
       //player collide with enemy
       //player will lose a life
-        OutputDebugStringA("this is player with enemy collision\n");
+        if (!obj1->collided)
+        {
+            OutputDebugStringA("this is player with enemy collision\n");
+            obj1->collided = true;
+           // obj2->collided = true;
+        }
+      
     }
 
    
@@ -147,12 +154,23 @@ void OBJ2D::processCollision(OBJ2D *obj1,OBJ2D *obj2 )
     {
         //beam collide with enemy
         //enemy will be destroyed
-        OutputDebugStringA("this is projectile with enemy collision\n");
+        if (!obj1->collided )
+        {
+            OutputDebugStringA("this is projectile with enemy collision\n");
+            obj1->collided = true;
+           // obj2->collided = true;
+        }
+      
     }
    
   
     if (obj1->objType == PLAYER && obj2->objType == CONSUMABLE)
     {
-        OutputDebugStringA("this is player with consumable collision\n");
+        if (!obj1->collided && !obj2->collided)
+        {
+            OutputDebugStringA("this is consumable with player \n");
+            obj1->collided = true;
+            obj2->collided = true;
+        }
     }
 }
