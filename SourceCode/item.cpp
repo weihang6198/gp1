@@ -29,6 +29,7 @@ void item_update() {
         item.texSize = { 1024, 1024 };
         item.pivot = { 0.5, 0.5 };
         item.color = { 1, 1, 1, 1 };
+        
         ++item_state;
         break;
 

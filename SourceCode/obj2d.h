@@ -31,6 +31,15 @@ struct OBJ2D
         float top;  //y coord 
         float bottom; //y coord+ height
     };
+
+    enum OBJ_TYPE
+    {
+        PLAYER,
+        ENEMY,
+        PROJECTILE,
+        CONSUMABLE
+    };
+   
     int timer;
     
     VECTOR2 pos;
@@ -43,6 +52,7 @@ struct OBJ2D
     VECTOR2 maxSpeed;   
     COLLISION_COORD collisionCoord;
     VECTOR2 inGameSize;
+    OBJ_TYPE objType;
     //TODO collision
     void drawCollision(int posX,int posY,int width,int height )
     {
@@ -104,36 +114,49 @@ struct OBJ2D
         playerCollisionCoord->bottom = bottom;
 
     }
+
+    void processCollision(OBJ2D obj1, OBJ2D obj2);
+            
 };
 
 struct METEOR : public OBJ2D //heinŒN ’S“–
 {
-    
+    int life;
 };
 
 struct ITEM :public OBJ2D //dang ŒN’S“–
 {
-    enum itemType
+    enum ITEM_TYPE
     {
-
+        battery,
+        fuelPack
     };
+    ITEM_TYPE itemType;
 };
 
 struct ALIEN :public OBJ2D //‹{–{ŒN’S“–
 {
-
+    int life;
 };
 
 struct SPACE_SHIP :public OBJ2D //ƒ‚ƒE’S“–
 {
     float fuel;
     bool turboMode;
-
+    bool beamFired;
+    int beamCount;
+    int life;
+    VECTOR2 beamFireLoc;
     void spaceShipInit();
 };
 
 struct BEAM : public OBJ2D //ƒ‚ƒE’S“–
 {
+    int visibility;
+    bool canFire;
+    bool setInitLoc;
     void beamInit();
+    void beamTravel();
+    void selfDestruct();
 };
 #endif
