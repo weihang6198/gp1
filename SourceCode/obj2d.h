@@ -31,6 +31,15 @@ struct OBJ2D
         float top;  //y coord 
         float bottom; //y coord+ height
     };
+
+    enum OBJ_TYPE
+    {
+        PLAYER,
+        ENEMY,
+        PROJECTILE,
+        CONSUMABLE
+    };
+   
     int timer;
     GameLib::Sprite* spr;
     VECTOR2 pos;
@@ -43,106 +52,68 @@ struct OBJ2D
     VECTOR2 maxSpeed;   
     COLLISION_COORD collisionCoord;
     VECTOR2 inGameSize;
+    OBJ_TYPE objType;
+    bool collided = false;
     //TODO collision
-    void drawCollision(int posX,int posY,int width,int height )
-    {
-        //to draw top line
-        primitive::line(
-            posX, posY, posX + width, posY, //pos
-            1, 1, 1, 1, //rgba
-            1); //thicness
-
-        //to draw bottom line
-        primitive::line(
-            posX, posY+height, posX + width, posY+height, //pos
-            1, 1, 1, 1, //rgba
-            1); //thicness
-
-        //to draw right line
-        primitive::line(
-            posX+width, posY , posX + width, posY + height, //pos
-            1, 1, 1, 1, //rgba
-            1); //thicness
-        //to draw left line
-        primitive::line(
-            posX , posY, posX , posY + height, //pos
-            1, 1, 1, 1, //rgba
-            1); //thicness
-    }
-
+    void drawCollision(int posX, int posY, int width, int height);
+   
     //to detect collision
     //this is to compare the collision between enemy and player
     //this function can be used for all dir (top down left right)
-    void collisionDetector(COLLISION_COORD playerCollisionCoord,COLLISION_COORD enemyCoord)
-    {
-       //right side of the plane hitting left side of the rock
-        if (playerCollisionCoord.right > enemyCoord.left && playerCollisionCoord.right < enemyCoord.right
-            && playerCollisionCoord.top <enemyCoord.bottom && playerCollisionCoord.bottom >enemyCoord.top
-            )
-        {
-            debug::setString("collided the left side ");
-        }
-      
-        //right side of the rock hitting the left side of the plane
-        else if (enemyCoord.right > playerCollisionCoord.left && enemyCoord.right < playerCollisionCoord.right
-            && enemyCoord.top <playerCollisionCoord.bottom && enemyCoord.bottom >playerCollisionCoord.top
-            )
-        {
-            debug::setString("collided the right side ");
-        }
-        else
-        {
-            debug::setString("did not collided");
-        }
-    }
-
-    void updateCollisionCoord(COLLISION_COORD *playerCollisionCoord,float left,float right,float top,float bottom)
-    {
-        playerCollisionCoord->left = left;
-        playerCollisionCoord->right = right;
-        playerCollisionCoord->top = top ;
-        playerCollisionCoord->bottom = bottom;
-
-    }
-
-    //float random_spawning(int lower_bound, int upper_bound) {
-    //    std::random_device rd;
-    //    std::mt19937 gen(rd());
-    //    // Create a distribution that maps the random numbers within the specified range
-    //    std::uniform_int_distribution<> distribution(lower_bound, upper_bound);
-    //    // Generate random numbers and print them
-
-    //    int randomNumber = distribution(gen);
-    //    return randomNumber;
-    //}
+    void collisionDetector(OBJ2D* playerCollisionCoord, OBJ2D* enemyCoord);
+    void updateCollisionCoord(COLLISION_COORD* playerCollisionCoord, float left, float right, float top, float bottom);
+    void processCollision(OBJ2D *obj1, OBJ2D *obj2);
+    
 };
 
 struct METEOR : public OBJ2D //heinŒN ’S“–
 {
-
+    int life;
 };
 
 struct ITEM :public OBJ2D //dang ŒN’S“–
 {
+    enum ITEM_TYPE
+    {
+        battery,
+        repair_kit,
+        fuel
+    };
 
+      
+    struct test
+    {
+        int x;
+    };
+    
+ ITEM_TYPE itemType;
+ void itemInit();
 };
 
 struct ALIEN :public OBJ2D //‹{–{ŒN’S“–
 {
-
+    int life;
 };
 
 struct SPACE_SHIP :public OBJ2D //ƒ‚ƒE’S“–
 {
     float fuel;
     bool turboMode;
-
+    bool beamFired;
+    int beamCount;
+    int life;
+    VECTOR2 beamFireLoc;
     void spaceShipInit();
 };
 
 struct BEAM : public OBJ2D //ƒ‚ƒE’S“–
 {
+    int visibility;
+    bool canFire;
+    bool setInitLoc;
     void beamInit();
+    void beamTravel();
+    void selfDestruct();
 };
 
 OBJ2D* searchSet0(OBJ2D arr[], int dataNum, int moveAlg, VECTOR2 pos);

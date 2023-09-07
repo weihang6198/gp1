@@ -207,6 +207,7 @@ attrib +h SourceCode\gp1.log
     <ClCompile Include="SourceCode\meteor.cpp" />
     <ClCompile Include="SourceCode\obj2d.cpp" />
     <ClCompile Include="SourceCode\player.cpp" />
+    <ClCompile Include="SourceCode\repair_kit.cpp" />
     <ClCompile Include="SourceCode\scene_game.cpp" />
     <ClCompile Include="SourceCode\scene_title.cpp" />
   </ItemGroup>

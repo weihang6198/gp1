@@ -112,7 +112,9 @@ void game_update()
         item_update();
         player_update();
         meteor_update(); 
-        spaceShip.collisionDetector(spaceShip.collisionCoord, meteor_obj.collisionCoord);
+        spaceShip->collisionDetector(spaceShip, &meteor);
+        
+
        // debug::setString(spaceShip.collisionCoord)
         break;
     }

@@ -1,60 +1,91 @@
 ﻿#include "all.h"
-
+#include "item.h"
 int item_state = 0;
-Sprite* itemspr;
-ITEM item;
-float scaleSpeed = 0.001f; // Tốc độ tăng/giảm scale
-bool increasing = true;
+Sprite* itemspr[3];
+ITEM item[15]; // Sử dụng mảng ITEM item[15] thay vì con trỏ ITEM* item
+float scaleSpeed = 0.005f; // Tốc độ tăng/giảm scale
+bool increasing[15]; // Sử dụng mảng increasing để theo dõi tốc độ tăng/giảm cho từng item
 
 void item_init() {
     item_state = 0;
+
+    // Khởi tạo giá trị mặc định cho mảng increasing
+    for (int i = 0; i < MAX_ITEM; ++i) {
+        increasing[i] = true;
+    }
 }
 
 void item_deinit() {
-    safe_delete(itemspr);
+    for (int i = 0; i < MAX_ITEM; i++) {
+        safe_delete(itemspr[i]);
+    }
 }
 
 void item_update() {
     switch (item_state)
     {
     case 0:
-        itemspr = sprite_load(L"./Data/Images/battery.png");
+        // Khởi tạo sprite và các thông số của item
+       
+       
+            itemspr[0] = sprite_load(L"./Data/Images/battery.png");
+            itemspr[1] = sprite_load(L"./Data/Images/repair_kit.png");
+            itemspr[2] = sprite_load(L"./Data/Images/fuel.png");
         ++item_state;
         break;
 
     case 1:
-        item.pos = { 300, 200 };
-        item.scale = { 0.05, 0.05 };
-        item.texPos = { 0, 0 };
-        item.texSize = { 1024, 1024 };
-        item.pivot = { 0.5, 0.5 };
-        item.color = { 1, 1, 1, 1 };
+     
+            // Khởi tạo các thông số của từng item
+        for(int i=0;i<15;i++){
+            float j = i;
+            item[i].pos = { 300 + j * 50, 200 };
+            item[i].scale = { 1, 1 };
+            item[i].texPos = { 0, 0 };
+            item[i].texSize = { 100, 100 };
+            item[i].pivot = { 0.5, 0.5 };
+            item[i].color = { 1, 1, 1, 1 };
+            
+        }
+      
         ++item_state;
         break;
 
     case 2:
-        if (increasing) {
-            item.scale.x += scaleSpeed;
-            item.scale.y += scaleSpeed;
-            if (item.scale.x >= 0.1f || item.scale.y >= 0.1f) {
-                increasing = false;
-            }
-        }
-        else {
-            item.scale.x -= scaleSpeed;
-            item.scale.y -= scaleSpeed;
-            if (item.scale.x <= 0.05f || item.scale.y <= 0.05f) {
-                increasing = true;
-            }
-        }
+        item->updateCollisionCoord(&item->collisionCoord, item->pos.x, item->pos.x + item->inGameSize.x,
+            item->pos.y, item->pos.y + item->inGameSize.y);
+       
+        //for (int i = 0; i < MAX_ITEM; ++i) {
+        //    // Cập nhật scale của từng item tương tự như trước
+        //    if (increasing[i]) {
+        //        item[i].scale.x += scaleSpeed;
+        //        item[i].scale.y += scaleSpeed;
+        //        if (item[i].scale.x >= 1.2f || item[i].scale.y >= 1.2f) {
+        //            increasing[i] = false;
+        //        }
+        //    }
+        //    else {
+        //        item[i].scale.x -= scaleSpeed;
+        //        item[i].scale.y -= scaleSpeed;
+        //        if (item[i].scale.x <= 0.8f || item[i].scale.y <= 0.8f) {
+        //            increasing[i] = true;
+        //        }
+        //    }
+        //}
         break;
     }
 }
 
 void item_render() {
-    sprite_render(itemspr,
-        item.pos.x, item.pos.y,
-        item.scale.x, item.scale.y,
-        item.texPos.x, item.texPos.y,
-        item.texSize.x, item.texSize.y, item.pivot.x, item.pivot.y, ToRadian(0));
+    for (int i = 0; i < MAX_ITEM; ++i) {
+        // Render từng item trong mảng
+        sprite_render(itemspr[i % 3],
+            item[i].pos.x, item[i].pos.y,
+            item[i].scale.x, item[i].scale.y,
+            item[i].texPos.x, item[i].texPos.y,
+            item[i].texSize.x, item[i].texSize.y, item[i].pivot.x, item[i].pivot.y, ToRadian(0));
+        item[i].drawCollision(item[i].pos.x, item[i].pos.y, item[i].texSize.x, item[i].texSize.y);
+    }
+
+   
 }

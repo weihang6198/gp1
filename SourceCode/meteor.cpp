@@ -78,29 +78,17 @@ void meteor_update() {
         meteor.texPos = { 0,0 };
         meteor.texSize = { 500, 500 };
         meteor.pivot = { 0,0 };
-        meteor.color = { 1,1,1,1 };*/
+        meteor.color = { 1,1,1,1 };
+        meteor.objType = ITEM::ENEMY;
+        meteor_state++; 
         
-       
-        for (int i = 0; i < METEOR_MAX; i++) {
-            meteor[i] = {};
-            
-
-            //wei hang's work
-            //fixed the posX issue,no longer need to pos x-150
-            //added collision coord 
-            //added collision update
-            meteor[i].collisionCoord = {meteor[i].pos.x ,(meteor[i].pos.x) + meteor[i].texSize.x * 3 / 10,
-                                        meteor[i].pos.y,meteor[i].pos.y + meteor[i].texSize.y * 3 / 10};
-        }
-        for (int i = 0; meteor_set[i].meteor_type != -1; i++) {
-            OBJ2D* p = searchSet0(meteor, METEOR_MAX, meteor_set[i].meteor_type, meteor_set[i].pos);
-
-            if (p == NULL) {
-                break;
-            }
-
-        }
-        meteor_state++;
+        //wei hang's work
+        //fixed the posX issue,no longer need to pos x-150
+        //added collision coord 
+        //added collision update
+        meteor.collisionCoord = { meteor.pos.x ,(meteor.pos.x) + meteor.texSize.x * 3 / 10,
+                                    meteor.pos.y,meteor.pos.y+ meteor.texSize.y * 3/10 };
+        /*fallthrough*/
 
     case 2:
         for (int i = 0; i < METEOR_MAX; i++) {
