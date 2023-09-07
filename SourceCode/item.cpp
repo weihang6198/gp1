@@ -32,8 +32,8 @@ void item_update() {
     case 1:
         for (int i = 0; i < 15; ++i) {
             // Khởi tạo các thông số của từng item
-          float j = i;
-            item[i].pos = {  j*50, 200};
+           float j = i;
+            item[i].pos = { 300 + j * 50, 200 };
             item[i].scale = { 0.05, 0.05 };
             item[i].texPos = { 0, 0 };
             item[i].texSize = { 1024, 1024 };
