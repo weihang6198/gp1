@@ -53,10 +53,11 @@ struct OBJ2D
     COLLISION_COORD collisionCoord;
     VECTOR2 inGameSize;
     OBJ_TYPE objType;
+    Sprite* sprImg;
     bool collided = false;
+
     //TODO collision
     void drawCollision(int posX, int posY, int width, int height);
-   
     //to detect collision
     //this is to compare the collision between enemy and player
     //this function can be used for all dir (top down left right)
@@ -78,16 +79,10 @@ struct ITEM :public OBJ2D //dang ŒN’S“–
         battery,
         repair_kit,
         fuel
-    };
+    }; 
 
-      
-    struct test
-    {
-        int x;
-    };
-    
- ITEM_TYPE itemType;
- void itemInit();
+ void itemInit(float posX,float posY,ITEM_TYPE itemType, Sprite* sprImg);
+ void processItem();
 };
 
 struct ALIEN :public OBJ2D //‹{–{ŒN’S“–
@@ -97,12 +92,14 @@ struct ALIEN :public OBJ2D //‹{–{ŒN’S“–
 
 struct SPACE_SHIP :public OBJ2D //ƒ‚ƒE’S“–
 {
-    float fuel;
+    int fuel;
+    int battery;
     bool turboMode;
     bool beamFired;
     int beamCount;
     int life;
     VECTOR2 beamFireLoc;
+
     void spaceShipInit();
 };
 

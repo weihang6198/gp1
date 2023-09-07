@@ -9,7 +9,7 @@
 //----< インクルード >-----------------------------------------------------------
 #include "all.h"
 #include "player.h"
-#include "meteor.h"
+#include "enemy.h"
 #include "item.h"
 //------< 定数 >----------------------------------------------------------------
 
@@ -113,7 +113,11 @@ void game_update()
         player_update();
         meteor_update(); 
         spaceShip->collisionDetector(spaceShip, &meteor);
-        
+        for (int i = 0; i < MAX_ITEM; i++)
+        {
+            spaceShip->collisionDetector(spaceShip, &item[i]);
+        }
+      
 
        // debug::setString(spaceShip.collisionCoord)
         break;

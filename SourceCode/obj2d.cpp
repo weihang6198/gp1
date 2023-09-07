@@ -4,7 +4,7 @@ void SPACE_SHIP::spaceShipInit()
 {
     
    pos = { 100,300 };
-   scale = { 0.3,0.3 };
+   scale = { 0.5,0.5 };
    texPos = { 0,0 };
    texSize = { 173,231 }; //spaceship size is 173x231
    pivot = { 0,0 };
@@ -40,7 +40,22 @@ void BEAM::beamInit()
     objType = PROJECTILE;
 }
 
+void ITEM::itemInit(float posX,float posY, ITEM_TYPE itemType, Sprite* sprImg)
+{
+    pos = { posX , posY };
+    scale = { 0.4, 0.6 };
+    texPos = { 0, 0 };
+    texSize = { 100, 100 };
+    pivot = { 0.5, 0.5 };
+    color = { 1, 1, 1, 1 };
+    inGameSize = { (texSize.x * scale.x) ,(texSize.y * scale.y) };
+    collisionCoord = { pos.x,pos.x + inGameSize.x,
+    pos.y,pos.y + inGameSize.y };
+    objType = CONSUMABLE;
+    itemType = itemType;
+    this->sprImg = sprImg;
 
+}
 
 void OBJ2D::drawCollision(int posX, int posY, int width, int height)
 {
@@ -164,18 +179,22 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
       
     }
 
-
+    //PLAYER can collide with unlimited amount of CONSUMABLE
+    //CONSUMABLE can only be collide once and destroy after that
     if (obj1->objType == PLAYER && obj2->objType == CONSUMABLE)
     {
-        if (!obj1->collided && !obj2->collided)
+        if ( !obj2->collided)
         {
             OutputDebugStringA("this is consumable with player \n");
-            obj1->collided = true;
+            
             obj2->collided = true;
+            //destroy the item
         }
     }
 }
 
-void ITEM::itemInit()
+
+void ITEM::processItem()
 {
 }
+

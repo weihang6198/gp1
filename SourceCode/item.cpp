@@ -2,7 +2,7 @@
 #include "item.h"
 int item_state = 0;
 Sprite* itemspr[3];
-ITEM item[15]; // Sử dụng mảng ITEM item[15] thay vì con trỏ ITEM* item
+ITEM item[MAX_ITEM]; // Sử dụng mảng ITEM item[15] thay vì con trỏ ITEM* item
 float scaleSpeed = 0.005f; // Tốc độ tăng/giảm scale
 bool increasing[15]; // Sử dụng mảng increasing để theo dõi tốc độ tăng/giảm cho từng item
 
@@ -37,15 +37,11 @@ void item_update() {
     case 1:
      
             // Khởi tạo các thông số của từng item
-        for(int i=0;i<15;i++){
+        for(int i=0;i< MAX_ITEM;i++){
             float j = i;
-            item[i].pos = { 300 + j * 50, 200 };
-            item[i].scale = { 1, 1 };
-            item[i].texPos = { 0, 0 };
-            item[i].texSize = { 100, 100 };
-            item[i].pivot = { 0.5, 0.5 };
-            item[i].color = { 1, 1, 1, 1 };
-            
+         
+            item[i].itemInit(300,100 + i * 100,ITEM::battery,itemspr[i%3]);
+           
         }
       
         ++item_state;
@@ -55,23 +51,7 @@ void item_update() {
         item->updateCollisionCoord(&item->collisionCoord, item->pos.x, item->pos.x + item->inGameSize.x,
             item->pos.y, item->pos.y + item->inGameSize.y);
        
-        //for (int i = 0; i < MAX_ITEM; ++i) {
-        //    // Cập nhật scale của từng item tương tự như trước
-        //    if (increasing[i]) {
-        //        item[i].scale.x += scaleSpeed;
-        //        item[i].scale.y += scaleSpeed;
-        //        if (item[i].scale.x >= 1.2f || item[i].scale.y >= 1.2f) {
-        //            increasing[i] = false;
-        //        }
-        //    }
-        //    else {
-        //        item[i].scale.x -= scaleSpeed;
-        //        item[i].scale.y -= scaleSpeed;
-        //        if (item[i].scale.x <= 0.8f || item[i].scale.y <= 0.8f) {
-        //            increasing[i] = true;
-        //        }
-        //    }
-        //}
+    
         break;
     }
 }
@@ -79,12 +59,12 @@ void item_update() {
 void item_render() {
     for (int i = 0; i < MAX_ITEM; ++i) {
         // Render từng item trong mảng
-        sprite_render(itemspr[i % 3],
+        sprite_render(item[i].sprImg,
             item[i].pos.x, item[i].pos.y,
             item[i].scale.x, item[i].scale.y,
             item[i].texPos.x, item[i].texPos.y,
             item[i].texSize.x, item[i].texSize.y, item[i].pivot.x, item[i].pivot.y, ToRadian(0));
-        item[i].drawCollision(item[i].pos.x, item[i].pos.y, item[i].texSize.x, item[i].texSize.y);
+        item[i].drawCollision(item[i].collisionCoord.left, item[i].collisionCoord.top, item[i].inGameSize.x, item[i].inGameSize.y);
     }
 
    

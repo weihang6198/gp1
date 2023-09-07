@@ -43,7 +43,7 @@
 #include "scene_title.h"
 #include "obj2d.h"  
 #include "player.h"
-#include "meteor.h"
+#include "enemy.h"
 // namespace
 using namespace GameLib;
 using namespace input;
