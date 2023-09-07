@@ -54,67 +54,13 @@ struct OBJ2D
     VECTOR2 inGameSize;
     OBJ_TYPE objType;
     //TODO collision
-    void drawCollision(int posX,int posY,int width,int height )
-    {
-        //to draw top line
-        primitive::line(
-            posX, posY, posX + width, posY, //pos
-            1, 1, 1, 1, //rgba
-            1); //thicness
-
-        //to draw bottom line
-        primitive::line(
-            posX, posY+height, posX + width, posY+height, //pos
-            1, 1, 1, 1, //rgba
-            1); //thicness
-
-        //to draw right line
-        primitive::line(
-            posX+width, posY , posX + width, posY + height, //pos
-            1, 1, 1, 1, //rgba
-            1); //thicness
-        //to draw left line
-        primitive::line(
-            posX , posY, posX , posY + height, //pos
-            1, 1, 1, 1, //rgba
-            1); //thicness
-    }
-
+    void drawCollision(int posX, int posY, int width, int height);
+   
     //to detect collision
     //this is to compare the collision between enemy and player
     //this function can be used for all dir (top down left right)
-    void collisionDetector(COLLISION_COORD playerCollisionCoord,COLLISION_COORD enemyCoord)
-    {
-       //right side of the plane hitting left side of the rock
-        if (playerCollisionCoord.right > enemyCoord.left && playerCollisionCoord.right < enemyCoord.right
-            && playerCollisionCoord.top <enemyCoord.bottom && playerCollisionCoord.bottom >enemyCoord.top
-            )
-        {
-            debug::setString("collided the left side ");
-        }
-      
-        //right side of the rock hitting the left side of the plane
-        else if (enemyCoord.right > playerCollisionCoord.left && enemyCoord.right < playerCollisionCoord.right
-            && enemyCoord.top <playerCollisionCoord.bottom && enemyCoord.bottom >playerCollisionCoord.top
-            )
-        {
-            debug::setString("collided the right side ");
-        }
-        else
-        {
-            debug::setString("did not collided");
-        }
-    }
-
-    void updateCollisionCoord(COLLISION_COORD *playerCollisionCoord,float left,float right,float top,float bottom)
-    {
-        playerCollisionCoord->left = left;
-        playerCollisionCoord->right = right;
-        playerCollisionCoord->top = top ;
-        playerCollisionCoord->bottom = bottom;
-
-    }
-
+    void collisionDetector(COLLISION_COORD* playerCollisionCoord, COLLISION_COORD* enemyCoord);
+    void updateCollisionCoord(COLLISION_COORD* playerCollisionCoord, float left, float right, float top, float bottom);
     void processCollision(OBJ2D obj1, OBJ2D obj2);
             
 };
