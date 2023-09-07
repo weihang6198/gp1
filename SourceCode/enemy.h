@@ -1,6 +1,7 @@
 #ifndef METEOR_H
 #define METEOR_H
 
+#define METEOR_MAX 1
 void meteor_init();
 void meteor_deinit();
 void meteor_update();

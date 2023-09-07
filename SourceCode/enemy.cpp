@@ -4,7 +4,7 @@
 int meteor_state;
 
 Sprite* meteorSpr; 
-METEOR meteor[METEOR_MAX};
+METEOR meteor;
 
 struct METEOR_DATA  //heinŒN ’S“–
 {
@@ -101,7 +101,7 @@ void meteor_update() {
 
 void meteor_render() {
     sprite_render(meteorSpr,
-        meteor[i].pos.x, meteor.pos.y, //pos
+        meteor.pos.x, meteor.pos.y, //pos
         meteor.scale.x, meteor.scale.y, //scale
         meteor.texPos.x, meteor.texPos.y, //texture pos
         meteor.texSize.x, meteor.texSize.y,//texture width and height
