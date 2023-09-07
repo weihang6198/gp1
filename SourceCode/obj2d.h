@@ -53,16 +53,17 @@ struct OBJ2D
     COLLISION_COORD collisionCoord;
     VECTOR2 inGameSize;
     OBJ_TYPE objType;
+    bool collided = false;
     //TODO collision
     void drawCollision(int posX, int posY, int width, int height);
    
     //to detect collision
     //this is to compare the collision between enemy and player
     //this function can be used for all dir (top down left right)
-    void collisionDetector(OBJ2D* obj1, OBJ2D* obj2);
+    void collisionDetector(OBJ2D* playerCollisionCoord, OBJ2D* enemyCoord);
     void updateCollisionCoord(COLLISION_COORD* playerCollisionCoord, float left, float right, float top, float bottom);
-    void processCollision(OBJ2D *obj1, OBJ2D* obj2);
-            
+    void processCollision(OBJ2D *obj1, OBJ2D *obj2);
+    
 };
 
 struct METEOR : public OBJ2D //heinŒN ’S“–

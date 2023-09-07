@@ -2,23 +2,24 @@
 
 void SPACE_SHIP::spaceShipInit()
 {
-
-    pos = { 100,300 };
-    scale = { 0.3,0.3 };
-    texPos = { 0,0 };
-    texSize = { 173,231 }; //spaceship size is 173x231
-    pivot = { 0,0 };
-    color = { 1,1,1,1 };
-    speed = { 0 ,0 };
-    maxSpeed = { 15,15 };
-    inGameSize = { (texSize.x * scale.x) ,(texSize.y * scale.y) };
-    fuel = 100;
-    collisionCoord = { pos.x,pos.x + inGameSize.x,
-        pos.y,pos.y + inGameSize.y };
-    turboMode = false;
-    beamCount = 0;
-    objType = PLAYER;
-    //testing
+    
+   pos = { 100,300 };
+   scale = { 0.3,0.3 };
+   texPos = { 0,0 };
+   texSize = { 173,231 }; //spaceship size is 173x231
+   pivot = { 0,0 };
+   color = { 1,1,1,1 };
+   speed = { 0 ,0 };
+   maxSpeed = { 15,15 };
+   inGameSize = { (texSize.x *scale.x) ,(texSize.y *scale.y) };
+   fuel = 100;
+   collisionCoord = {pos.x,pos.x +inGameSize.x,
+       pos.y,pos.y +inGameSize.y };
+   turboMode = false;
+   beamCount = 0;
+   objType = PLAYER;
+   collided = false;
+   //testing
 }
 
 void BEAM::beamInit()
@@ -138,23 +139,40 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
 
     if (obj1->objType == PLAYER && obj2->objType == ENEMY)
     {
-        //player collide with enemy
-        //player will lose a life
-        OutputDebugStringA("this is player with enemy collision\n");
+      //player collide with enemy
+      //player will lose a life
+        if (!obj1->collided)
+        {
+            OutputDebugStringA("this is player with enemy collision\n");
+            obj1->collided = true;
+           // obj2->collided = true;
+        }
+      
     }
 
-
+   
     if (obj1->objType == PROJECTILE && obj2->objType == ENEMY)
     {
         //beam collide with enemy
         //enemy will be destroyed
-        OutputDebugStringA("this is projectile with enemy collision\n");
+        if (!obj1->collided )
+        {
+            OutputDebugStringA("this is projectile with enemy collision\n");
+            obj1->collided = true;
+           // obj2->collided = true;
+        }
+      
     }
 
 
     if (obj1->objType == PLAYER && obj2->objType == CONSUMABLE)
     {
-        OutputDebugStringA("this is player with consumable collision\n");
+        if (!obj1->collided && !obj2->collided)
+        {
+            OutputDebugStringA("this is consumable with player \n");
+            obj1->collided = true;
+            obj2->collided = true;
+        }
     }
 }
 

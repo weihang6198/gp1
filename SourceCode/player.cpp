@@ -80,7 +80,7 @@ void player_update()
 
         debug::setString("turbo mode is %d", spaceShip->turboMode);
         debug::setString("player speed x is %f", spaceShip->speed.x);
-
+       
     
         break;
     }
@@ -185,7 +185,7 @@ void fireBeam()
 {
     if (TRG(0) & PAD_TRG4)
     {
-        OutputDebugStringA("firing beam");
+      //  OutputDebugStringA("firing beam");
         //create beam obj as soon as fire trigger is pressed
         beam[spaceShip->beamCount] = new BEAM();
         beam[spaceShip->beamCount]->beamInit();
@@ -200,6 +200,8 @@ void fireBeam()
        {
            if (beam[i]->canFire)
            {
+               debug::setString("obj1->collided is %d", beam[i]->collided);
+               debug::setString(" i is %d", i);
                //set init spawn loc of the beam
                if (!beam[i]->setInitLoc)
                {
@@ -214,7 +216,7 @@ void fireBeam()
                beam[i]->pos.x += beam[i]->maxSpeed.x;
                beam[i]->updateCollisionCoord(&beam[i]->collisionCoord, beam[i]->pos.x, beam[i]->pos.x + beam[i]->inGameSize.x,
                    beam[i]->pos.y, beam[i]->pos.y + beam[i]->inGameSize.y);
-               beam[i]->collisionDetector(beam[i],&meteor);
+               beam[i]->collisionDetector(beam[i], &meteor);
                if (beam[i]->pos.x > SCREEN_W)
                {
                    safe_delete(beam[i]);
