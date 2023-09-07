@@ -80,6 +80,7 @@ void OBJ2D::processCollision(OBJ2D obj1,OBJ2D obj2 )
 
     }
    
+    //
     if (obj1.objType == PLAYER && obj2.objType == CONSUMABLE)
     {
 

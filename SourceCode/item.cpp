@@ -30,6 +30,15 @@ void item_update() {
         break;
 
     case 1:
+
+        item.pos = { 300, 200 };
+        item.scale = { 0.05, 0.05 };
+        item.texPos = { 0, 0 };
+        item.texSize = { 1024, 1024 };
+        item.pivot = { 0.5, 0.5 };
+        item.color = { 1, 1, 1, 1 };
+        
+=======
         for (int i = 0; i < 15; ++i) {
             // Khởi tạo các thông số của từng item
            float j = i;
@@ -41,6 +50,7 @@ void item_update() {
             item[i].color = { 1, 1, 1, 1 };
         }
 
+>>>>>>> 6401252084b208cabac2dbb48c711bae9a2055b1
         ++item_state;
         break;
 

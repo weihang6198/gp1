@@ -131,14 +131,15 @@ struct ITEM :public OBJ2D //dang ŒN’S“–
         battery,
         repair_kit,
         fuel
-
     };
+
+      
     struct test
     {
         int x;
     };
     
-    ITEM_TYPE itemType;
+ ITEM_TYPE itemType;
 };
 
 struct ALIEN :public OBJ2D //‹{–{ŒN’S“–
