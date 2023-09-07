@@ -1,6 +1,6 @@
 #ifndef OBJ2D_H
 #define OBJ2D_H
-#include <random>
+
 //******************************************************************************
 //
 //
@@ -41,7 +41,7 @@ struct OBJ2D
     };
    
     int timer;
-    GameLib::Sprite* spr;
+    
     VECTOR2 pos;
     VECTOR2 scale;
     VECTOR2 texPos;
@@ -61,15 +61,42 @@ struct OBJ2D
     //to detect collision
     //this is to compare the collision between enemy and player
     //this function can be used for all dir (top down left right)
-    void collisionDetector(OBJ2D* playerCollisionCoord, OBJ2D* enemyCoord);
-    void updateCollisionCoord(COLLISION_COORD* playerCollisionCoord, float left, float right, float top, float bottom);
-    void processCollision(OBJ2D *obj1, OBJ2D *obj2);
-    
+    void collisionDetector(COLLISION_COORD playerCollisionCoord,COLLISION_COORD enemyCoord)
+    {
+       //right side of the plane hitting left side of the rock
+        if (playerCollisionCoord.right > enemyCoord.left && playerCollisionCoord.right < enemyCoord.right
+            && playerCollisionCoord.top <enemyCoord.bottom && playerCollisionCoord.bottom >enemyCoord.top
+            )
+        {
+            debug::setString("collided the left side ");
+        }
+      
+        //right side of the rock hitting the left side of the plane
+        else if (enemyCoord.right > playerCollisionCoord.left && enemyCoord.right < playerCollisionCoord.right
+            && enemyCoord.top <playerCollisionCoord.bottom && enemyCoord.bottom >playerCollisionCoord.top
+            )
+        {
+            debug::setString("collided the right side ");
+        }
+        else
+        {
+            debug::setString("did not collided");
+        }
+    }
+
+    void updateCollisionCoord(COLLISION_COORD *playerCollisionCoord,float left,float right,float top,float bottom)
+    {
+        playerCollisionCoord->left = left;
+        playerCollisionCoord->right = right;
+        playerCollisionCoord->top = top ;
+        playerCollisionCoord->bottom = bottom;
+
+    }
 };
 
 struct METEOR : public OBJ2D //heinŒN ’S“–
 {
-    int life;
+   
 };
 
 struct ITEM :public OBJ2D //dang ŒN’S“–
@@ -112,6 +139,4 @@ struct BEAM : public OBJ2D //ƒ‚ƒE’S“–
     void beamTravel();
     void selfDestruct();
 };
-
-OBJ2D* searchSet0(OBJ2D arr[], int dataNum, int moveAlg, VECTOR2 pos);
 #endif

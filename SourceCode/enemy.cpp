@@ -1,11 +1,10 @@
 #include "all.h"
 #include <random>
-#define METEOR_MAX (1)
+
 int meteor_state;
 
 Sprite* meteorSpr; 
-METEOR meteor[METEOR_MAX];
-struct METEOR meteor_obj;
+METEOR meteor[METEOR_MAX};
 
 struct METEOR_DATA  //heinŒN ’S“–
 {
@@ -78,8 +77,8 @@ void meteor_update() {
         meteor.texPos = { 0,0 };
         meteor.texSize = { 500, 500 };
         meteor.pivot = { 0,0 };
-        meteor.color = { 1,1,1,1 };
-        meteor.objType = ITEM::ENEMY;
+        meteor.color = { 1,1,1,1 };*/
+
         meteor_state++; 
         
         //wei hang's work
@@ -91,29 +90,23 @@ void meteor_update() {
         /*fallthrough*/
 
     case 2:
-        for (int i = 0; i < METEOR_MAX; i++) {
-            debug::setString("meteor position x: %f, y: %f", meteor[i].pos.x, meteor[i].pos.y);
-            meteor_move();
-            meteor[i].updateCollisionCoord(&meteor[i].collisionCoord, meteor[i].pos.x, (meteor[i].pos.x) + meteor[i].texSize.x * 3 / 10,
-                meteor[i].pos.y, meteor[i].pos.y + meteor[i].texSize.y * 3 / 10);
-        }
-       
+        debug::setString("meteor position x: %f, y: %f", meteor.pos.x, meteor.pos.y);
+        meteor_move(); 
+        meteor.updateCollisionCoord(&meteor.collisionCoord, meteor.pos.x, (meteor.pos.x) + meteor.texSize.x * 3 / 10,
+            meteor.pos.y, meteor.pos.y + meteor.texSize.y * 3 / 10);
 
     }
 }
 
 
 void meteor_render() {
-    for (int i = 0; i < METEOR_MAX; i++) {
-        sprite_render(meteor[i].spr,
-            meteor[i].pos.x, meteor[i].pos.y, //pos
-            meteor[i].scale.x, meteor[i].scale.y, //scale
-            meteor[i].texPos.x, meteor[i].texPos.y, //texture pos
-            meteor[i].texSize.x, meteor[i].texSize.y,//texture width and height
-            meteor[i].pivot.x, meteor[i].pivot.y, 0);
-        meteor[i].drawCollision(meteor[i].pos.x, meteor[i].pos.y, meteor[i].texSize.x * 0.3, meteor[i].texSize.y * 0.3);
-    }
-    
+    sprite_render(meteorSpr,
+        meteor[i].pos.x, meteor.pos.y, //pos
+        meteor.scale.x, meteor.scale.y, //scale
+        meteor.texPos.x, meteor.texPos.y, //texture pos
+        meteor.texSize.x, meteor.texSize.y,//texture width and height
+        meteor.pivot.x, meteor.pivot.y, 0);
+    meteor.drawCollision(meteor.pos.x , meteor.pos.y, meteor.texSize.x*0.3, meteor.texSize.y*0.3);
 }
 
 void meteor_move() {
