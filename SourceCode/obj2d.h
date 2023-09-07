@@ -113,10 +113,19 @@ struct METEOR : public OBJ2D //heinŒN ’S“–
 
 struct ITEM :public OBJ2D //dang ŒN’S“–
 {
-    enum itemType
+    enum ITEM_TYPE
     {
+        battery,
+        repair_kit,
+        fuel
 
     };
+    struct test
+    {
+        int x;
+    };
+    
+    ITEM_TYPE itemType;
 };
 
 struct ALIEN :public OBJ2D //‹{–{ŒN’S“–
