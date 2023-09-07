@@ -129,8 +129,15 @@ struct ITEM :public OBJ2D //dang ŒN’S“–
     enum ITEM_TYPE
     {
         battery,
-        fuelPack
+        repair_kit,
+        fuel
+
     };
+    struct test
+    {
+        int x;
+    };
+    
     ITEM_TYPE itemType;
 };
 
