@@ -130,7 +130,7 @@ void game_render()
     GameLib::clear(0.2f, 0.2f, 0.4f);
 
     sprite_render(sprBack, mapPosX, 0);
-   // item_render();
+    item_render();
     player_render();
     meteor_render(); 
 

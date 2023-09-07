@@ -59,9 +59,9 @@ struct OBJ2D
     //to detect collision
     //this is to compare the collision between enemy and player
     //this function can be used for all dir (top down left right)
-    void collisionDetector(COLLISION_COORD* playerCollisionCoord, COLLISION_COORD* enemyCoord);
+    void collisionDetector(OBJ2D* obj1, OBJ2D* obj2);
     void updateCollisionCoord(COLLISION_COORD* playerCollisionCoord, float left, float right, float top, float bottom);
-    void processCollision(OBJ2D obj1, OBJ2D obj2);
+    void processCollision(OBJ2D *obj1, OBJ2D* obj2);
             
 };
 
@@ -86,6 +86,7 @@ struct ITEM :public OBJ2D //dang ŒN’S“–
     };
     
  ITEM_TYPE itemType;
+ void itemInit();
 };
 
 struct ALIEN :public OBJ2D //‹{–{ŒN’S“–

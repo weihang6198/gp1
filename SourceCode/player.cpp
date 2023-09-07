@@ -214,7 +214,7 @@ void fireBeam()
                beam[i]->pos.x += beam[i]->maxSpeed.x;
                beam[i]->updateCollisionCoord(&beam[i]->collisionCoord, beam[i]->pos.x, beam[i]->pos.x + beam[i]->inGameSize.x,
                    beam[i]->pos.y, beam[i]->pos.y + beam[i]->inGameSize.y);
-               beam[i]->collisionDetector(beam[i]->collisionCoord, meteor.collisionCoord);
+               beam[i]->collisionDetector(beam[i],&meteor);
                if (beam[i]->pos.x > SCREEN_W)
                {
                    safe_delete(beam[i]);
