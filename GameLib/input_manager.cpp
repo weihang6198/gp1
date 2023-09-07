@@ -38,7 +38,7 @@ namespace GameLib
         { PAD_TRG2      , Keyboard::N },            // 'N'
         { PAD_TRG3      , Keyboard::M },            // 'M'
         { PAD_TRG4      , Keyboard::K },            // 'K'
-
+      
         { PAD_L1        , Keyboard::F1 },           // VK_F1
         { PAD_L3        , Keyboard::F2 },           // VK_F2
         { PAD_R1        , Keyboard::F3 },           // VK_F3
