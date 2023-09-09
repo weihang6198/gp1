@@ -44,6 +44,8 @@
 #include "obj2d.h"  
 #include "player.h"
 #include "enemy.h"
+#include "../consumable.h"
+#include "item.h"
 // namespace
 using namespace GameLib;
 using namespace input;

@@ -40,6 +40,12 @@ struct OBJ2D
         CONSUMABLE
     };
    
+    enum ITEM_TYPE
+    {
+        battery,
+        repair_kit,
+        fuel
+    };
     int timer;
     
     VECTOR2 pos;
@@ -55,6 +61,7 @@ struct OBJ2D
     OBJ_TYPE objType;
     Sprite* sprImg;
     bool collided = false;
+    int life;
 
     //TODO collision
     void drawCollision(int posX, int posY, int width, int height);
@@ -66,30 +73,29 @@ struct OBJ2D
 
     void processCollision(OBJ2D* obj1, OBJ2D* obj2);
     
-  
+    void animation(OBJ2D* obj);
+
+    void destroyObj(OBJ2D* obj);
+
+    void processItem(OBJ2D* obj);
 };
 
 struct METEOR : public OBJ2D //heinŒN ’S“–
 {
-   
+    void meteorInit();
 };
 
 struct ITEM :public OBJ2D //dang ŒN’S“–
 {
-    enum ITEM_TYPE
-    {
-        battery,
-        repair_kit,
-        fuel
-    }; 
+    
 
  void itemInit(float posX,float posY,ITEM_TYPE itemType, Sprite* sprImg);
- void processItem();
+
 };
 
 struct ALIEN :public OBJ2D //‹{–{ŒN’S“–
 {
-    int life;
+    
 };
 
 struct SPACE_SHIP :public OBJ2D //ƒ‚ƒE’S“–
@@ -99,7 +105,7 @@ struct SPACE_SHIP :public OBJ2D //ƒ‚ƒE’S“–
     bool turboMode;
     bool beamFired;
     int beamCount;
-    int life;
+    
     VECTOR2 beamFireLoc;
 
     void spaceShipInit();

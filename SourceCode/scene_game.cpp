@@ -11,6 +11,7 @@
 #include "player.h"
 #include "enemy.h"
 #include "item.h"
+
 //------< ’è” >----------------------------------------------------------------
 
 
@@ -30,6 +31,7 @@ void game_init()
 {
     game_state      = 0;
     game_timer      = 0;
+    //consumable_init();
 }
 
 //--------------------------------------
@@ -110,12 +112,13 @@ void game_update()
 
       //  mapPosX-=5;
         item_update();
+      /*  consumable_update();*/
         player_update();
         meteor_update(); 
         spaceShip->collisionDetector(spaceShip, &meteor);
         for (int i = 0; i < MAX_ITEM; i++)
         {
-            spaceShip->collisionDetector(spaceShip, &item[i]);
+            spaceShip->collisionDetector(spaceShip, item[i]);
         }
       
 
@@ -135,6 +138,7 @@ void game_render()
 
     sprite_render(sprBack, mapPosX, 0);
     item_render();
+   // consumable_render();
     player_render();
     meteor_render(); 
 

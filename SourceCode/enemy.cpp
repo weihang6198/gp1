@@ -68,19 +68,13 @@ void meteor_update() {
         for (int i = 0; i < dataNum; i++) {
             meteor_data[i].spr = sprite_load(meteor_data[i].filePath);
         }
+        meteorSpr = sprite_load(L"./Data/Images/meteor1.png");
         meteor_state++; 
         /*fallthrough*/
     case 1:
-        /*meteor.timer = 0; 
-        meteor.pos = { 800, meteor_random_spawning(0, 400)};
-        meteor.scale = { 0.3f, 0.3f };
-        meteor.texPos = { 0,0 };
-        meteor.texSize = { 500, 500 };
-        meteor.pivot = { 0,0 };
-        meteor.color = { 1,1,1,1 };*/
-
-        meteor_state++; 
         
+        meteor_state++; 
+        meteor.meteorInit();
         //wei hang's work
         //fixed the posX issue,no longer need to pos x-150
         //added collision coord 
