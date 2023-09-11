@@ -1,11 +1,11 @@
 #include "all.h"
 #include <random>
 
-int meteor_state;
+
 
 Sprite* meteorSpr; 
 METEOR meteor;
-
+int meteor_state = 0;
 struct METEOR_DATA  //heinŒN ’S“–
 {
     Sprite* spr;

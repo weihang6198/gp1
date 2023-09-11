@@ -19,5 +19,5 @@ void player_moveY();
 void triggerAccelerateMode();
 void fireBeam();
 
-
+extern int player_state;
 #endif//PLAYER_H

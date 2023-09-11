@@ -12,6 +12,7 @@
 #include "enemy.h"
 #include "item.h"
 
+
 //------< ’è” >----------------------------------------------------------------
 
 
@@ -51,7 +52,9 @@ void game_deinit()
 #endif
     //TODO_11
 
-
+    item_deinit();
+    meteor_deinit();
+    player_deinit();
     safe_delete(sprBack);
 }
 
@@ -112,17 +115,20 @@ void game_update()
 
       //  mapPosX-=5;
         item_update();
-      /*  consumable_update();*/
         player_update();
         meteor_update(); 
         spaceShip->collisionDetector(spaceShip, &meteor);
         for (int i = 0; i < MAX_ITEM; i++)
         {
-            spaceShip->collisionDetector(spaceShip, item[i]);
+            if (item[i]) 
+            {
+                spaceShip->collisionDetector(spaceShip, item[i]);
+            }
+          
         }
       
 
-       // debug::setString(spaceShip.collisionCoord)
+       
         break;
     }
 
@@ -157,4 +163,14 @@ void game_render()
 #endif
     //TODO_13
 
+}
+
+void game_reset()
+{
+    game_state = 0;
+    meteor_state = 0;
+    player_state = 0;
+    item_state = 0;
+
+  
 }

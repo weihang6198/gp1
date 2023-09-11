@@ -6,7 +6,7 @@ void SPACE_SHIP::spaceShipInit()
    pos = { 100,300 };
    scale = { 0.5,0.5 };
    texPos = { 0,0 };
-   texSize = { 173,231 }; //spaceship size is 173x231
+   texSize = { 356,136 }; //spaceship size is 356x136
    pivot = { 0,0 };
    color = { 1,1,1,1 };
    speed = { 0 ,0 };
@@ -114,7 +114,7 @@ void OBJ2D::collisionDetector(OBJ2D* obj1, OBJ2D* obj2)
     }
     else
     {
-        debug::setString("did not collided");
+       // debug::setString("did not collided");
     }
 }
 
@@ -162,7 +162,8 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
         {
             OutputDebugStringA("this is player with enemy collision\n");
             obj1->collided = true;
-            obj1->life = -1;
+            obj1->life -=1;
+            game_reset();
             if (obj1->life < 0) //player lose the game when life reaches 0
             {
                 //lose game
@@ -185,11 +186,7 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
         {
             OutputDebugStringA("this is projectile with enemy collision\n");
             obj1->collided = true;
-            //enemy destroyed animation
-            animation(obj1);
-            //animation(obj2); //meteor is not a pointer yet, hold this operation
-            //no animation will be played for projectile when hitting enemy
-           // safe_delete(obj1);
+            obj1->destroySelf = true;
           
         }
       
@@ -204,10 +201,10 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
             OutputDebugStringA("this is consumable with player \n");
             
             obj2->collided = true;
-            //process the item
-            
-            //destroy the item after process
-           // safe_delete(obj2);
+            //process the item and destroy after processing it
+            processItem(obj2);
+           
+           
         }
     }
 }
@@ -225,6 +222,20 @@ void OBJ2D::destroyObj(OBJ2D* obj)
 
 void OBJ2D::processItem(OBJ2D* obj)
 {
+    switch (obj->objType)
+    {
+    case   battery:
+
+        break;
+    case repair_kit:
+        
+        break;
+
+    case fuel:
+        break;
+            
+    }
+    obj->destroySelf = true;
 }
 
 void METEOR::meteorInit()

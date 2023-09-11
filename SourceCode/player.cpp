@@ -1,7 +1,7 @@
 #include "all.h"
 #include<string>
 using namespace std;
-int     player_state;
+
 
 #if 3
 //******************************************************************************
@@ -20,6 +20,7 @@ Sprite* spaceShipSpr;
 SPACE_SHIP* spaceShip;
 Sprite* beamSpr;
 BEAM *beam[99];
+int player_state = 0;
 //--------------------------------------
 //  ƒvƒŒƒCƒ„[‚Ì‰ŠúÝ’è
 //--------------------------------------
@@ -48,7 +49,7 @@ void player_update()
     switch (player_state)
     {
     case 0:
-        spaceShipSpr = sprite_load(L"./Data/Images/spaceship3.png");
+        spaceShipSpr = sprite_load(L"./Data/Images/spaceship_renya.png");
         beamSpr = sprite_load(L"./Data/Images/beam.png");
 
         ++player_state;
@@ -78,9 +79,10 @@ void player_update()
         player_moveY();
         triggerAccelerateMode();
         fireBeam();
-
+        debug::setString("player life is %d", spaceShip->life);
         debug::setString("turbo mode is %d", spaceShip->turboMode);
         debug::setString("player speed x is %f", spaceShip->speed.x);
+        
        
     
         break;
@@ -207,8 +209,8 @@ void fireBeam()
                if (!beam[i]->setInitLoc)
                {
                    beam[i]->setInitLoc = true;
-                   beam[i]->pos.x = spaceShip->pos.x;
-                   beam[i]->pos.y = spaceShip->pos.y;
+                   beam[i]->pos.x = spaceShip->pos.x+45;
+                   beam[i]->pos.y = spaceShip->pos.y+43;
                    beam[i]->collisionCoord =
                    { beam[i]->pos.x,beam[i]->pos.x + beam[i]->inGameSize.x ,
                      beam[i]->pos.y,beam[i]->pos.y + beam[i]->inGameSize.y };
@@ -218,10 +220,16 @@ void fireBeam()
                beam[i]->updateCollisionCoord(&beam[i]->collisionCoord, beam[i]->pos.x, beam[i]->pos.x + beam[i]->inGameSize.x,
                    beam[i]->pos.y, beam[i]->pos.y + beam[i]->inGameSize.y);
                beam[i]->collisionDetector(beam[i], &meteor);
+               if (beam[i]->destroySelf)
+               {
+                   safe_delete(beam[i]);
+                   break;
+               }
                if (beam[i]->pos.x > SCREEN_W)
                {
                    safe_delete(beam[i]);
                }
+              
            }
        }
      
