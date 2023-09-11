@@ -23,6 +23,9 @@
 int game_state;
 int game_timer;
 int mapPosX;
+int map2PosX = 1280;
+bool moveFirstMap = true;
+bool moveSecondMap = false;
 Sprite* sprBack;
 
 //--------------------------------------
@@ -93,9 +96,8 @@ void game_update()
     case 1:
         //////// ÉpÉâÉÅÅ[É^ÇÃê›íË ////////
 
-        GameLib::setBlendMode(Blender::BS_ALPHA);
-        music::play(1);
-        music::setVolume(1, 0.15f);
+        //GameLib::setBlendMode(Blender::BS_ALPHA);
+
        mapPosX = 0;
         game_state++;
         /*fallthrough*/
@@ -107,14 +109,52 @@ void game_update()
         debug::setString("A D   : LEFT, RIGHT");
         debug::setString("SPACE : JUMP");
         debug::setString("");
-
+        debug::setString("map pos x is %d", mapPosX);
+        debug::setString("map 2 pos x is %d", map2PosX);
         if (TRG(0) & PAD_SELECT)
         {
             nextScene = SCENE_TITLE;
             break;
         }
+        //screen size is 1280
+        //image is 1920x1080
+        //1920-1280=640
+        //640 is where the blank will appear and it has to be replace with the new image
+    /*    if (mapPosX <= -645)
+        {
 
-      //  mapPosX-=5;
+        }
+        else
+        {
+            mapPosX -= 10;
+        }*/
+        if (mapPosX < -1900  ) // #3
+        {
+            mapPosX = 1280;
+            moveFirstMap = false;
+        }
+        else if(moveFirstMap)  // #1
+        {
+            mapPosX -= 5;
+        }
+      
+        if (mapPosX < -640 ||moveSecondMap ) //#2
+        {
+            moveSecondMap = true;
+            map2PosX -= 5;
+        }
+        if (map2PosX < -1900) //#5
+        {
+            map2PosX = 1280;
+            moveSecondMap = false;
+        }
+         if (map2PosX < -640)  //#4
+        {
+            moveFirstMap = true;   
+        }
+
+     
+       
         item_update();
         player_update();
         meteor_update(); 
@@ -142,10 +182,21 @@ void game_update()
 void game_render()
 {
     GameLib::clear(0.2f, 0.2f, 0.4f);
-
-    sprite_render(sprBack, mapPosX, 0);
+    //firrst screen
+    if (moveFirstMap)
+        {
+        sprite_render(sprBack, mapPosX, 0,
+            1.1, 1.1); //scale
+        }
+      
+        if (moveSecondMap)
+        {
+            debug::setString("second screen");
+            sprite_render(sprBack, map2PosX , 0,
+                1.1, 1.1); //scale
+        }
+  
     item_render();
-   // consumable_render();
     player_render();
     meteor_render(); 
 
