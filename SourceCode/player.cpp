@@ -69,45 +69,21 @@ void player_update()
         /*fallthrough*/
         
     case 2:
-        spaceShip->pos.x += spaceShip->speed.x;
-        spaceShip->pos.y += spaceShip->speed.y;
-        //testing for pushing and pull
-        spaceShip->updateCollisionCoord(&spaceShip->collisionCoord, spaceShip->pos.x, spaceShip->pos.x + spaceShip->inGameSize.x,
-            spaceShip->pos.y, spaceShip->pos.y + spaceShip->inGameSize.y);
+      
         //player movement
-        player_moveX();
-        player_moveY();
-        triggerAccelerateMode();
-        fireBeam();
+        spaceShipLogic();
+
         debug::setString("player life is %d", spaceShip->life);
         debug::setString("turbo mode is %d", spaceShip->turboMode);
         debug::setString("player speed x is %f", spaceShip->speed.x);
         
-       
-    
+      
         break;
     }
 }
 
 void player_render()
 {
-#if 9
-    //******************************************************************************
-    // TODO:09 プレイヤーの描画
-    //------------------------------------------------------------------------------
-    /*
-    課題）
-        下記でspaceShipSprを描画しましょう。
-
-    解説）
-        他に必要なパラメータは基本的にOBJ2D構造体のメンバ変数になっています。OBJ2D型の
-        playerのメンバ変数を記述していきましょう。角度のみ、ToRadian(0)でOKです。
-        色はVECTOR4型です。VECTOR4型の中身はx, y, z, wです。色はr, g, b, aなので、
-        その順番で対応しています。（例えばrはxで、aはwで表すなど）
-    */
-    //******************************************************************************
-#endif
-    //TODO_09
 
     //rendering for spaceship
     sprite_render(spaceShipSpr,
@@ -135,13 +111,23 @@ void player_render()
                 beam[i]->drawCollision(beam[i]->collisionCoord.left, beam[i]->collisionCoord.top, beam[i]->inGameSize.x, beam[i]->inGameSize.y);
             }
         }
-      
-      
     }
   
-   //beam.drawCollision(beam.pos.x,beam.pos.y,beam.inGameSize.x, beam.inGameSize.y);
 }
 
+void spaceShipLogic()
+{
+    spaceShip->pos.x += spaceShip->speed.x;
+    spaceShip->pos.y += spaceShip->speed.y;
+    //testing for pushing and pull
+    spaceShip->updateCollisionCoord(&spaceShip->collisionCoord, spaceShip->pos.x, spaceShip->pos.x + spaceShip->inGameSize.x,
+        spaceShip->pos.y, spaceShip->pos.y + spaceShip->inGameSize.y);
+    player_moveX();
+    player_moveY();
+    triggerAccelerateMode();
+    fireBeam();
+    LimitSpaceShipToScreen();
+}
 void player_moveY()
 {
     if (STATE(0) & PAD_DOWN)
@@ -236,6 +222,34 @@ void fireBeam()
     }
 }
 
+void  LimitSpaceShipToScreen()
+{
+    if (spaceShip->pos.x < 0)
+    {
+        spaceShip->pos.x = 0;
+    }
+
+    if (spaceShip->pos.y < 0)
+
+    {
+        spaceShip->pos.y = 0;
+
+    }
+
+    if (spaceShip->pos.y + spaceShip->inGameSize.y > SCREEN_H)
+    {
+        debug::setString("over the line");
+        spaceShip->pos.y = SCREEN_H - spaceShip->inGameSize.y;
+    }
+
+    if (spaceShip->pos.x + spaceShip->inGameSize.x > SCREEN_W)
+    {
+        spaceShip->pos.x = SCREEN_W - spaceShip->inGameSize.x;
+    }
+}
+
+
+
 
 void player_moveX()
 {
@@ -264,7 +278,6 @@ void player_moveX()
   
         spaceShip->speed.x = 0;
     }       
-    
-
+   
 }
 

@@ -18,6 +18,7 @@ void player_moveX();
 void player_moveY();
 void triggerAccelerateMode();
 void fireBeam();
-
+void LimitSpaceShipToScreen();
+void spaceShipLogic();
 extern int player_state;
 #endif//PLAYER_H
