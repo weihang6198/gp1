@@ -12,6 +12,7 @@
 #include "enemy.h"
 #include "item.h"
 
+
 //------< ’è” >----------------------------------------------------------------
 
 
@@ -167,6 +168,9 @@ void game_render()
 void game_reset()
 {
     game_state = 0;
-  /*  item_state = 0;
-    player_state = 0;*/
+    meteor_state = 0;
+    player_state = 0;
+    item_state = 0;
+
+  
 }

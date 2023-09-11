@@ -9,6 +9,6 @@ void item_update();
 void item_render();
 
 extern ITEM *item[MAX_ITEM];
-
+extern int item_state;
 
 #endif 

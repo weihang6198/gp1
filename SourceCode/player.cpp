@@ -1,7 +1,7 @@
 #include "all.h"
 #include<string>
 using namespace std;
-int     player_state = 0;
+
 
 #if 3
 //******************************************************************************
@@ -20,6 +20,7 @@ Sprite* spaceShipSpr;
 SPACE_SHIP* spaceShip;
 Sprite* beamSpr;
 BEAM *beam[99];
+int player_state = 0;
 //--------------------------------------
 //  ƒvƒŒƒCƒ„[‚Ì‰Šúİ’è
 //--------------------------------------

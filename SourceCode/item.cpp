@@ -5,7 +5,7 @@ Sprite* itemspr[3];
 int item_state = 0;
 float scaleSpeed = 0.005f; // Tốc độ tăng/giảm scale
 bool increasing[15]; // Sử dụng mảng increasing để theo dõi tốc độ tăng/giảm cho từng item
-int x;
+
 ITEM* item[MAX_ITEM];
 void item_init() {
     item_state = 0;

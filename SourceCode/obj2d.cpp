@@ -163,6 +163,7 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
             OutputDebugStringA("this is player with enemy collision\n");
             obj1->collided = true;
             obj1->life -=1;
+            game_reset();
             if (obj1->life < 0) //player lose the game when life reaches 0
             {
                 //lose game
