@@ -109,14 +109,13 @@ void title_render()
     GameLib::clear(0.3f, 0.5f, 1.0f);
 
     // タイトルの文字
-    font::textOut(4, "ECC COMP", VECTOR2(100, 80), VECTOR2(2.4f, 2.4f), VECTOR4(1, 0.8f, 0, 1));
-    font::textOut(4, "Game Programming I", VECTOR2(80, 180), VECTOR2(2.0f, 2.0f), VECTOR4(0, 1, 0.6f, 1));
+   
 
     // "Push Enter Key" 点滅
-    if (title_timer >> 5 & 0x01)
-    {
-        font::textOut(4, "Push Enter Key", VECTOR2(120, 560), VECTOR2(1.4f, 1.4f));
-    }
+    
 
     sprite_render(sprbg, 0, 0);
+
+    font::textOut(4, "A<-   |   D->", VECTOR2(460, 630), VECTOR2(1.4f, 1.4f));
+    font::textOut(4, "Press ENTER to select", VECTOR2(320, 670), VECTOR2(1.4f, 1.4f));
 }
