@@ -48,7 +48,7 @@ void title_update()
         GameLib::setBlendMode(Blender::BS_ALPHA);
 
         music::play(0);
-        music::setVolume(0, 0.1f);
+        music::setVolume(0, 0.15f);
 
         title_state++;
         /*fallthrough*/
@@ -58,7 +58,7 @@ void title_update()
 
         if ((gamestart==1) && (TRG(0) & PAD_START))
         {
-            sound::play(XWB_SYSTEM, XWB_SYSTEM_START);
+            sound::play(4, 2);
 
             nextScene = SCENE_GAME;
             break;
@@ -66,23 +66,26 @@ void title_update()
 
         if (TRG(0) & PAD_RIGHT)
         {
-
+            sound::play(4, 2);
             sprbg = sprite_load(L"./Data/Images/back2.png");
             gamestart = 0;
             break;
         }
         else if (TRG(0) & PAD_LEFT) {
+            sound::play(4, 2);
             sprbg = sprite_load(L"./Data/Images/back1.png");
             gamestart = 1;
 
             break;
         }
         if ((gamestart == 0) && (TRG(0) & PAD_START)) {
+            sound::play(4, 2);
             sprbg = sprite_load(L"./Data/Images/help1.png");
             gamestart = 2;
             break;
         }
         if ((gamestart == 2) && (TRG(0) & PAD_START)) {
+            sound::play(4, 2);
             sprbg = sprite_load(L"./Data/Images/help2.png");
             gamestart = 1;
         }

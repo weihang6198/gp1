@@ -156,6 +156,7 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
 
     if (obj1->objType == PLAYER && obj2->objType == ENEMY)
     {
+        sound::play(4, 4);
       //player collide with enemy
       //player will lose a life
         if (!obj1->collided)
@@ -166,6 +167,7 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
             game_reset();
             if (obj1->life < 0) //player lose the game when life reaches 0
             {
+
                 //lose game
                 //destroy animation will be played for both player and enemy
                /* animation(obj1);
@@ -180,6 +182,8 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
    
     if (obj1->objType == PROJECTILE && obj2->objType == ENEMY)
     {
+        sound::play(4, 0);
+    
         //beam collide with enemy
         //enemy will be destroyed
         if (!obj1->collided )
@@ -196,6 +200,7 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
     //CONSUMABLE can only be collide once and destroy after that
     if (obj1->objType == PLAYER && obj2->objType == CONSUMABLE)
     {
+        sound::play(4, 5);
         if ( !obj2->collided)
         {
             OutputDebugStringA("this is consumable with player \n");

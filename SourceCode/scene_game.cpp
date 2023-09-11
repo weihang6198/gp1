@@ -94,7 +94,8 @@ void game_update()
         //////// ƒpƒ‰ƒ[ƒ^‚Ìİ’è ////////
 
         GameLib::setBlendMode(Blender::BS_ALPHA);
-
+        music::play(1);
+        music::setVolume(1, 0.15f);
        mapPosX = 0;
         game_state++;
         /*fallthrough*/
