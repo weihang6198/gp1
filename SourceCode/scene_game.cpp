@@ -182,9 +182,7 @@ void game_update()
 void game_render()
 {
     GameLib::clear(0.2f, 0.2f, 0.4f);
-
-   
-        //firrst screen
+    //firrst screen
     if (moveFirstMap)
         {
         sprite_render(sprBack, mapPosX, 0,
@@ -197,20 +195,8 @@ void game_render()
             sprite_render(sprBack, map2PosX , 0,
                 1.1, 1.1); //scale
         }
-       
-        //else
-        //{
-        //    sprite_render(sprBack, mapPosX, 0,
-        //        1, 1); //scale
-        //}
-        
-   
   
-    //second screen
-  
-    
     item_render();
-   // consumable_render();
     player_render();
     meteor_render(); 
 
