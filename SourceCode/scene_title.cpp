@@ -2,8 +2,9 @@
 
 int title_state;
 int title_timer;
-
-Sprite* sprCar;
+int gamestart = 1;
+Sprite* sprbg;
+Sprite* sprhelp;
 
 //--------------------------------------
 //  èâä˙ê›íË
@@ -21,7 +22,8 @@ void title_deinit()
 {
     music::stop(0);
 
-    safe_delete(sprCar);
+    safe_delete(sprbg);
+    safe_delete(sprhelp);
 }
 
 //--------------------------------------
@@ -34,8 +36,9 @@ void title_update()
     case 0:
         //////// èâä˙ê›íË ////////
 
-        sprCar = sprite_load(L"./Data/Images/right.png");
+        sprbg = sprite_load(L"./Data/Images/back1.png");
 
+        sprhelp = sprite_load(L"./Data/Images/help1.png");
         title_state++;
         /*fallthrough*/
 
@@ -53,7 +56,7 @@ void title_update()
     case 2:
         //////// í èÌéû ////////
 
-        if (TRG(0) & PAD_START)
+        if ((gamestart==1) && (TRG(0) & PAD_START))
         {
             sound::play(XWB_SYSTEM, XWB_SYSTEM_START);
 
@@ -61,12 +64,35 @@ void title_update()
             break;
         }
 
-        break;
-    }
+        if (TRG(0) & PAD_RIGHT)
+        {
 
-    debug::setString("");
-    debug::setString("title_state:%d", title_state);
-    debug::setString("title_timer:%d", title_timer);
+            sprbg = sprite_load(L"./Data/Images/back2.png");
+            gamestart = 0;
+            break;
+        }
+        else if (TRG(0) & PAD_LEFT) {
+            sprbg = sprite_load(L"./Data/Images/back1.png");
+            gamestart = 1;
+
+            break;
+        }
+        if ((gamestart == 0) && (TRG(0) & PAD_START)) {
+            sprbg = sprite_load(L"./Data/Images/help1.png");
+            gamestart = 2;
+            break;
+        }
+        if ((gamestart == 2) && (TRG(0) & PAD_START)) {
+            sprbg = sprite_load(L"./Data/Images/help2.png");
+            gamestart = 1;
+        }
+        
+
+        break;
+    
+
+    }
+    
 
     title_timer++;
 }
@@ -89,5 +115,5 @@ void title_render()
         font::textOut(4, "Push Enter Key", VECTOR2(120, 560), VECTOR2(1.4f, 1.4f));
     }
 
-    sprite_render(sprCar, 200, 200);
+    sprite_render(sprbg, 0, 0);
 }
