@@ -6,7 +6,7 @@ void SPACE_SHIP::spaceShipInit()
    pos = { 100,300 };
    scale = { 0.5,0.5 };
    texPos = { 0,0 };
-   texSize = { 173,231 }; //spaceship size is 173x231
+   texSize = { 356,136 }; //spaceship size is 356x136
    pivot = { 0,0 };
    color = { 1,1,1,1 };
    speed = { 0 ,0 };
