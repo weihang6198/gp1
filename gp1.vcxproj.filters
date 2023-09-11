@@ -99,10 +99,13 @@
     <ClInclude Include="GameLib\depth_stencil.h">
       <Filter>GameLib\ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="SourceCode\meteor.h">
+    <ClInclude Include="SourceCode\enemy.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\item.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="consumable.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -170,7 +173,7 @@
     <ClCompile Include="GameLib\wnd_proc.cpp">
       <Filter>GameLib\ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="SourceCode\meteor.cpp">
+    <ClCompile Include="SourceCode\enemy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\obj2d.cpp">
@@ -180,6 +183,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\repair_kit.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="consumable.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

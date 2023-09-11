@@ -8,6 +8,7 @@ void item_deinit();
 void item_update();
 void item_render();
 
+extern ITEM *item[MAX_ITEM];
 
 
 #endif 

@@ -40,6 +40,12 @@ struct OBJ2D
         CONSUMABLE
     };
    
+    enum ITEM_TYPE
+    {
+        battery,
+        repair_kit,
+        fuel
+    };
     int timer;
     
     VECTOR2 pos;
@@ -53,56 +59,55 @@ struct OBJ2D
     COLLISION_COORD collisionCoord;
     VECTOR2 inGameSize;
     OBJ_TYPE objType;
+    Sprite* sprImg;
     bool collided = false;
+    int life;
+
     //TODO collision
     void drawCollision(int posX, int posY, int width, int height);
-   
     //to detect collision
     //this is to compare the collision between enemy and player
     //this function can be used for all dir (top down left right)
-    void collisionDetector(OBJ2D* playerCollisionCoord, OBJ2D* enemyCoord);
-    void updateCollisionCoord(COLLISION_COORD* playerCollisionCoord, float left, float right, float top, float bottom);
-    void processCollision(OBJ2D *obj1, OBJ2D *obj2);
+    void collisionDetector(OBJ2D* obj1, OBJ2D* obj2);
+    void updateCollisionCoord(COLLISION_COORD* obj1, float left, float right, float top, float bottom);
+
+    void processCollision(OBJ2D* obj1, OBJ2D* obj2);
     
+    void animation(OBJ2D* obj);
+
+    void destroyObj(OBJ2D* obj);
+
+    void processItem(OBJ2D* obj);
 };
 
 struct METEOR : public OBJ2D //heinŒN ’S“–
 {
-    int life;
+    void meteorInit();
 };
 
 struct ITEM :public OBJ2D //dang ŒN’S“–
 {
-    enum ITEM_TYPE
-    {
-        battery,
-        repair_kit,
-        fuel
-    };
-
-      
-    struct test
-    {
-        int x;
-    };
     
- ITEM_TYPE itemType;
- void itemInit();
+
+ void itemInit(float posX,float posY,ITEM_TYPE itemType, Sprite* sprImg);
+
 };
 
 struct ALIEN :public OBJ2D //‹{–{ŒN’S“–
 {
-    int life;
+    
 };
 
 struct SPACE_SHIP :public OBJ2D //ƒ‚ƒE’S“–
 {
-    float fuel;
+    int fuel;
+    int battery;
     bool turboMode;
     bool beamFired;
     int beamCount;
-    int life;
+    
     VECTOR2 beamFireLoc;
+
     void spaceShipInit();
 };
 

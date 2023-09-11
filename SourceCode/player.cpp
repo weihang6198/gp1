@@ -37,6 +37,7 @@ void player_deinit()
 {
 
     safe_delete(spaceShipSpr);
+    safe_delete(spaceShip);
 }
 
 //--------------------------------------
@@ -200,8 +201,8 @@ void fireBeam()
        {
            if (beam[i]->canFire)
            {
-               debug::setString("obj1->collided is %d", beam[i]->collided);
-               debug::setString(" i is %d", i);
+              /* debug::setString("obj1->collided is %d", beam[i]->collided);
+               debug::setString(" i is %d", i);*/
                //set init spawn loc of the beam
                if (!beam[i]->setInitLoc)
                {

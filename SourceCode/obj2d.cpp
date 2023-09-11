@@ -4,7 +4,7 @@ void SPACE_SHIP::spaceShipInit()
 {
     
    pos = { 100,300 };
-   scale = { 0.3,0.3 };
+   scale = { 0.5,0.5 };
    texPos = { 0,0 };
    texSize = { 173,231 }; //spaceship size is 173x231
    pivot = { 0,0 };
@@ -19,6 +19,7 @@ void SPACE_SHIP::spaceShipInit()
    beamCount = 0;
    objType = PLAYER;
    collided = false;
+   life = 3;
    //testing
 }
 
@@ -40,7 +41,22 @@ void BEAM::beamInit()
     objType = PROJECTILE;
 }
 
+void ITEM::itemInit(float posX,float posY, ITEM_TYPE itemType, Sprite* sprImg)
+{
+    pos = { posX , posY };
+    scale = { 0.4, 0.6 };
+    texPos = { 0, 0 };
+    texSize = { 100, 100 };
+    pivot = { 0.5, 0.5 };
+    color = { 1, 1, 1, 1 };
+    inGameSize = { (texSize.x * scale.x) ,(texSize.y * scale.y) };
+    collisionCoord = { pos.x,pos.x + inGameSize.x,
+    pos.y,pos.y + inGameSize.y };
+    objType = CONSUMABLE;
+    itemType = itemType;
+    this->sprImg = sprImg;
 
+}
 
 void OBJ2D::drawCollision(int posX, int posY, int width, int height)
 {
@@ -94,6 +110,7 @@ void OBJ2D::collisionDetector(OBJ2D* obj1, OBJ2D* obj2)
 
     {
         debug::setString("collided the right side ");
+        processCollision(obj1, obj2);
     }
     else
     {
@@ -145,6 +162,15 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
         {
             OutputDebugStringA("this is player with enemy collision\n");
             obj1->collided = true;
+            obj1->life = -1;
+            if (obj1->life < 0) //player lose the game when life reaches 0
+            {
+                //lose game
+                //destroy animation will be played for both player and enemy
+               /* animation(obj1);
+                animation(obj2);*/
+
+            }
            // obj2->collided = true;
         }
       
@@ -159,23 +185,56 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
         {
             OutputDebugStringA("this is projectile with enemy collision\n");
             obj1->collided = true;
-           // obj2->collided = true;
+            //enemy destroyed animation
+            animation(obj1);
+            //animation(obj2); //meteor is not a pointer yet, hold this operation
+            //no animation will be played for projectile when hitting enemy
+           // safe_delete(obj1);
+          
         }
       
     }
 
-
+    //PLAYER can collide with unlimited amount of CONSUMABLE
+    //CONSUMABLE can only be collide once and destroy after that
     if (obj1->objType == PLAYER && obj2->objType == CONSUMABLE)
     {
-        if (!obj1->collided && !obj2->collided)
+        if ( !obj2->collided)
         {
             OutputDebugStringA("this is consumable with player \n");
-            obj1->collided = true;
+            
             obj2->collided = true;
+            //process the item
+            
+            //destroy the item after process
+           // safe_delete(obj2);
         }
     }
 }
 
-void ITEM::itemInit()
+void OBJ2D::animation(OBJ2D* obj)
 {
+    //destroy obj when the animation is finished
+    safe_delete(obj);
+}
+
+void OBJ2D::destroyObj(OBJ2D* obj)
+{
+}
+
+
+void OBJ2D::processItem(OBJ2D* obj)
+{
+}
+
+void METEOR::meteorInit()
+{
+    meteor.timer = 0;
+    meteor.pos = { 800, meteor_random_spawning(0, 400) };
+    meteor.scale = { 0.3f, 0.3f };
+    meteor.texPos = { 0,0 };
+    meteor.texSize = { 500, 500 };
+    meteor.pivot = { 0,0 };
+    meteor.color = { 1,1,1,1 };
+    meteor.objType = OBJ_TYPE::ENEMY;
 }

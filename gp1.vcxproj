@@ -156,6 +156,7 @@ attrib +h SourceCode\gp1.log
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="consumable.h" />
     <ClInclude Include="GameLib\blender.h" />
     <ClInclude Include="GameLib\debug.h" />
     <ClInclude Include="GameLib\depth_stencil.h" />
@@ -178,7 +179,7 @@ attrib +h SourceCode\gp1.log
     <ClInclude Include="SourceCode\audio.h" />
     <ClInclude Include="SourceCode\common.h" />
     <ClInclude Include="SourceCode\item.h" />
-    <ClInclude Include="SourceCode\meteor.h" />
+    <ClInclude Include="SourceCode\enemy.h" />
     <ClInclude Include="SourceCode\obj2d.h" />
     <ClInclude Include="SourceCode\player.h" />
     <ClInclude Include="SourceCode\scene_game.h" />
@@ -204,12 +205,13 @@ attrib +h SourceCode\gp1.log
     <ClCompile Include="SourceCode\common.cpp" />
     <ClCompile Include="SourceCode\item.cpp" />
     <ClCompile Include="SourceCode\main.cpp" />
-    <ClCompile Include="SourceCode\meteor.cpp" />
+    <ClCompile Include="SourceCode\enemy.cpp" />
     <ClCompile Include="SourceCode\obj2d.cpp" />
     <ClCompile Include="SourceCode\player.cpp" />
     <ClCompile Include="SourceCode\repair_kit.cpp" />
     <ClCompile Include="SourceCode\scene_game.cpp" />
     <ClCompile Include="SourceCode\scene_title.cpp" />
+    <ClCompile Include="consumable.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
