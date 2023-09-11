@@ -89,7 +89,11 @@ void title_update()
             sprbg = sprite_load(L"./Data/Images/help2.png");
             gamestart = 1;
         }
-        
+        if ((gamestart == 2) && (TRG(0) & PAD_TRG1)) {
+            sound::play(4,3);
+            sound::setVolume(4, 3, 2.0f);
+            sprbg = sprite_load(L"./Data/Images/jumpscare.jpg");
+        }
 
         break;
     
@@ -117,5 +121,5 @@ void title_render()
     sprite_render(sprbg, 0, 0);
 
     font::textOut(4, "A<-   |   D->", VECTOR2(460, 630), VECTOR2(1.4f, 1.4f));
-    font::textOut(4, "Press ENTER to select", VECTOR2(320, 670), VECTOR2(1.4f, 1.4f));
+    font::textOut(4, "Press ENTER to continue", VECTOR2(320, 670), VECTOR2(1.4f, 1.4f));
 }

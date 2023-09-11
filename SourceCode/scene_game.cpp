@@ -68,7 +68,7 @@ void game_update()
     case 0:
         //////// ‰Šúİ’è ////////
 
-        sprBack = sprite_load(L"./Data/Images/ruins.jpg");
+        sprBack = sprite_load(L"./Data/Images/space.png");
 
 #if 10
 //******************************************************************************
