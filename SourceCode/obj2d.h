@@ -12,6 +12,7 @@
 //------< \‘¢‘Ì >--------------------------------------------------------------
 struct OBJ2D
 {
+#define MAX_LIFE 3
 
     struct VECTOR2
     {
@@ -62,7 +63,7 @@ struct OBJ2D
     Sprite* sprImg;
     bool collided = false;
     int life;
-
+    bool destroySelf = false;
     //TODO collision
     void drawCollision(int posX, int posY, int width, int height);
     //to detect collision

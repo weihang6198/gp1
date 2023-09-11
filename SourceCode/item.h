@@ -2,7 +2,7 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#define MAX_ITEM 1
+#define MAX_ITEM 3
 void item_init();
 void item_deinit();
 void item_update();

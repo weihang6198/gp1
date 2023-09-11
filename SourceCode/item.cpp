@@ -1,8 +1,8 @@
 ﻿#include "all.h"
 
-int item_state = 0;
-Sprite* itemspr[3];
 
+Sprite* itemspr[3];
+int item_state = 0;
 float scaleSpeed = 0.005f; // Tốc độ tăng/giảm scale
 bool increasing[15]; // Sử dụng mảng increasing để theo dõi tốc độ tăng/giảm cho từng item
 int x;
@@ -14,11 +14,13 @@ void item_init() {
     for (int i = 0; i < MAX_ITEM; ++i) {
         increasing[i] = true;
     }
+
 }
 
 void item_deinit() {
     for (int i = 0; i < MAX_ITEM; i++) {
         safe_delete(itemspr[i]);
+        safe_delete(item[i]);
     }
 }
 
@@ -33,10 +35,21 @@ void item_update() {
             itemspr[1] = sprite_load(L"./Data/Images/repair_kit.png");
             itemspr[2] = sprite_load(L"./Data/Images/fuel.png");
 
-            for (int i = 0; i < MAX_ITEM; i++) {
+            for (int i = 0; i < 3; i++) {
                 float j = i;
                 item[i] = new ITEM();
-                item[i]->itemInit(300, 100 + i * 100, ITEM::battery, itemspr[0]);
+                if (i < 1)
+                {
+                    item[i]->itemInit(300, 100 + i * 100, ITEM::battery, itemspr[0]);
+                }
+                else if (i < 2)
+                {
+                    item[i]->itemInit(300, 100 + i * 100, ITEM::repair_kit, itemspr[1]);
+                }
+                else if (i < 3)
+                {
+                    item[i]->itemInit(300, 100 + i * 100, ITEM::fuel, itemspr[2]);
+                }
 
             }
         ++item_state;
@@ -50,26 +63,42 @@ void item_update() {
 
     case 2:
         for (int i = 0; i < MAX_ITEM; i++) {
-            item[i]->updateCollisionCoord(&item[i]->collisionCoord, item[i]->pos.x, item[i]->pos.x + item[i]->inGameSize.x,
-                item[i]->pos.y, item[i]->pos.y + item[i]->inGameSize.y);
+            if (item[i])
+            {
+                if (item[i]->destroySelf)
+                {
+                    safe_delete(item[i]);
+
+                }
+                else
+                {
+                    item[i]->updateCollisionCoord(&item[i]->collisionCoord, item[i]->pos.x, item[i]->pos.x + item[i]->inGameSize.x,
+                        item[i]->pos.y, item[i]->pos.y + item[i]->inGameSize.y);
+                }
+               
+            }
+           
         }
-        if (item[0]->sprImg)
-        {
-            debug::setString("the img exist");
-        }
-       
-    
+
         break;
     }
 }
 
 void item_render()
 {
-    sprite_render(item[0]->sprImg,
-        item[0]->pos.x, item[0]->pos.y,
-        item[0]->scale.x, item[0]->scale.y,
-        item[0]->texPos.x, item[0]->texPos.y,
-        item[0]->texSize.x, item[0]->texSize.y, item[0]->pivot.x, item[0]->pivot.y, ToRadian(0)); 
+    for (int i = 0; i < MAX_ITEM; i++)
+    {
+        if (item[i])
+        {
+            sprite_render(item[i]->sprImg,
+                item[i]->pos.x, item[i]->pos.y,
+                item[i]->scale.x, item[i]->scale.y,
+                item[i]->texPos.x, item[i]->texPos.y,
+                item[i]->texSize.x, item[i]->texSize.y, item[i]->pivot.x, item[i]->pivot.y, ToRadian(0));
 
-    item[0]->drawCollision(item[0]->collisionCoord.left, item[0]->collisionCoord.top, item[0]->inGameSize.x, item[0]->inGameSize.y);
+            item[0]->drawCollision(item[i]->collisionCoord.left, item[i]->collisionCoord.top, item[i]->inGameSize.x, item[i]->inGameSize.y);
+
+        }
+    }
+   
 }
