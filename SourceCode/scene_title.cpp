@@ -2,8 +2,9 @@
 
 int title_state;
 int title_timer;
-
-Sprite* sprCar;
+int gamestart = 1;
+Sprite* sprbg;
+Sprite* sprhelp;
 
 //--------------------------------------
 //  初期設定
@@ -21,7 +22,8 @@ void title_deinit()
 {
     music::stop(0);
 
-    safe_delete(sprCar);
+    safe_delete(sprbg);
+    safe_delete(sprhelp);
 }
 
 //--------------------------------------
@@ -34,8 +36,9 @@ void title_update()
     case 0:
         //////// 初期設定 ////////
 
-        sprCar = sprite_load(L"./Data/Images/right.png");
+        sprbg = sprite_load(L"./Data/Images/back1.png");
 
+        sprhelp = sprite_load(L"./Data/Images/help1.png");
         title_state++;
         /*fallthrough*/
 
@@ -45,7 +48,7 @@ void title_update()
         GameLib::setBlendMode(Blender::BS_ALPHA);
 
         music::play(0);
-        music::setVolume(0, 0.1f);
+        music::setVolume(0, 0.15f);
 
         title_state++;
         /*fallthrough*/
@@ -53,20 +56,46 @@ void title_update()
     case 2:
         //////// 通常時 ////////
 
-        if (TRG(0) & PAD_START)
+        if ((gamestart==1) && (TRG(0) & PAD_START))
         {
-            sound::play(XWB_SYSTEM, XWB_SYSTEM_START);
+            sound::play(4, 2);
 
             nextScene = SCENE_GAME;
             break;
         }
 
-        break;
-    }
+        if (TRG(0) & PAD_RIGHT)
+        {
+            sound::play(4, 2);
+            sprbg = sprite_load(L"./Data/Images/back2.png");
+            gamestart = 0;
+            break;
+        }
+        else if (TRG(0) & PAD_LEFT) {
+            sound::play(4, 2);
+            sprbg = sprite_load(L"./Data/Images/back1.png");
+            gamestart = 1;
 
-    debug::setString("");
-    debug::setString("title_state:%d", title_state);
-    debug::setString("title_timer:%d", title_timer);
+            break;
+        }
+        if ((gamestart == 0) && (TRG(0) & PAD_START)) {
+            sound::play(4, 2);
+            sprbg = sprite_load(L"./Data/Images/help1.png");
+            gamestart = 2;
+            break;
+        }
+        if ((gamestart == 2) && (TRG(0) & PAD_START)) {
+            sound::play(4, 2);
+            sprbg = sprite_load(L"./Data/Images/help2.png");
+            gamestart = 1;
+        }
+        
+
+        break;
+    
+
+    }
+    
 
     title_timer++;
 }
@@ -80,14 +109,13 @@ void title_render()
     GameLib::clear(0.3f, 0.5f, 1.0f);
 
     // タイトルの文字
-    font::textOut(4, "ECC COMP", VECTOR2(100, 80), VECTOR2(2.4f, 2.4f), VECTOR4(1, 0.8f, 0, 1));
-    font::textOut(4, "Game Programming I", VECTOR2(80, 180), VECTOR2(2.0f, 2.0f), VECTOR4(0, 1, 0.6f, 1));
+   
 
     // "Push Enter Key" 点滅
-    if (title_timer >> 5 & 0x01)
-    {
-        font::textOut(4, "Push Enter Key", VECTOR2(120, 560), VECTOR2(1.4f, 1.4f));
-    }
+    
 
-    sprite_render(sprCar, 200, 200);
+    sprite_render(sprbg, 0, 0);
+
+    font::textOut(4, "A<-   |   D->", VECTOR2(460, 630), VECTOR2(1.4f, 1.4f));
+    font::textOut(4, "Press ENTER to select", VECTOR2(320, 670), VECTOR2(1.4f, 1.4f));
 }

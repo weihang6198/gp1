@@ -174,6 +174,7 @@ void fireBeam()
 {
     if (TRG(0) & PAD_TRG4)
     {
+        sound::play(4, 1);
       //  OutputDebugStringA("firing beam");
         //create beam obj as soon as fire trigger is pressed
         beam[spaceShip->beamCount] = new BEAM();

@@ -6,12 +6,13 @@
 void audio_init()
 {
     // 音楽の読み込み
-    music::load(0, L"./Data/Musics/bgm_maoudamashii_8bit29.wav");
-
+    music::load(0, L"./Data/Musics/theme.wav");
+    music::load(1, L"./Data/Musics/MUSIC.wav");
     sound::load(XWB_SYSTEM, L"./Data/Sounds/system.xwb");    // メニューなどのSE
     sound::load(XWB_STAGE1, L"./Data/Sounds/stage1.xwb");    // ステージ用のSE
-
+    sound::load(4, L"./Data/Sounds/wadaheck.xwb");
     sound::setVolume(XWB_STAGE1, XWB_STAGE1_JUMP, 0.1f);
+    sound::setVolume(4,0, 0.25f);
 }
 
 //--------------------------------------
