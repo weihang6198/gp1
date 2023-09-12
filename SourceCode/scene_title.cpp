@@ -4,7 +4,7 @@ int title_state;
 int title_timer;
 int gamestart = 1;
 Sprite* sprbg;
-Sprite* sprhelp;
+
 
 //--------------------------------------
 //  ‰Šúİ’è
@@ -23,7 +23,7 @@ void title_deinit()
     music::stop(0);
 
     safe_delete(sprbg);
-    safe_delete(sprhelp);
+  
 }
 
 //--------------------------------------
@@ -38,7 +38,7 @@ void title_update()
 
         sprbg = sprite_load(L"./Data/Images/back1.png");
 
-        sprhelp = sprite_load(L"./Data/Images/help1.png");
+      
         title_state++;
         /*fallthrough*/
 
@@ -96,7 +96,7 @@ void title_update()
         }
 
         break;
-    
+
 
     }
     

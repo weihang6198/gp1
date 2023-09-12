@@ -167,7 +167,7 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
             game_reset();
             if (obj1->life < 0) //player lose the game when life reaches 0
             {
-
+                nextScene = SCENE_GAMEOVER;
                 //lose game
                 //destroy animation will be played for both player and enemy
                /* animation(obj1);
