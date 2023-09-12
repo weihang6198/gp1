@@ -72,6 +72,7 @@ void item_update() {
                 }
                 else
                 {
+                    debug::setString("item enum %d",item[i]->itemType);
                     item[i]->updateCollisionCoord(&item[i]->collisionCoord, item[i]->pos.x, item[i]->pos.x + item[i]->inGameSize.x,
                         item[i]->pos.y, item[i]->pos.y + item[i]->inGameSize.y);
                 }

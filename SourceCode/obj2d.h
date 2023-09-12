@@ -61,9 +61,12 @@ struct OBJ2D
     VECTOR2 inGameSize;
     OBJ_TYPE objType;
     Sprite* sprImg;
+    Sprite* HPSpr[3];
+    ITEM_TYPE itemType;
     bool collided = false;
-    int life;
+    int currentLife;
     bool destroySelf = false;
+
     //TODO collision
     void drawCollision(int posX, int posY, int width, int height);
     //to detect collision
@@ -78,7 +81,7 @@ struct OBJ2D
 
     void destroyObj(OBJ2D* obj);
 
-    void processItem(OBJ2D* obj);
+    void processItem(OBJ2D* item, OBJ2D* player);
 };
 
 struct METEOR : public OBJ2D //heinŒN ’S“–
@@ -89,7 +92,7 @@ struct METEOR : public OBJ2D //heinŒN ’S“–
 struct ITEM :public OBJ2D //dang ŒN’S“–
 {
     
-
+   
  void itemInit(float posX,float posY,ITEM_TYPE itemType, Sprite* sprImg);
 
 };
@@ -101,9 +104,11 @@ struct ALIEN :public OBJ2D //‹{–{ŒN’S“–
 
 struct SPACE_SHIP :public OBJ2D //ƒ‚ƒE’S“–
 {
+   
     int fuel;
     int battery;
     bool turboMode;
+    int turboTimer;
     bool beamFired;
     int beamCount;
     
@@ -117,6 +122,7 @@ struct BEAM : public OBJ2D //ƒ‚ƒE’S“–
     int visibility;
     bool canFire;
     bool setInitLoc;
+
     void beamInit();
     void beamTravel();
     void selfDestruct();
