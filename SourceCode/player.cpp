@@ -20,6 +20,8 @@ Sprite* spaceShipSpr;
 SPACE_SHIP* spaceShip;
 Sprite* beamSpr;
 BEAM *beam[99];
+Sprite* HPSpr[3];
+
 int player_state = 0;
 //--------------------------------------
 //  ÉvÉåÉCÉÑÅ[ÇÃèâä˙ê›íË
@@ -36,9 +38,18 @@ void player_init()
 //--------------------------------------
 void player_deinit()
 {
-
+    for (int i = 0; i < spaceShip->beamCount; i++)
+    {
+        if (beam[i])
+        {
+            safe_delete(beam[i]);
+        }
+    }
     safe_delete(spaceShipSpr);
     safe_delete(spaceShip);
+    
+
+    
 }
 
 //--------------------------------------
@@ -51,19 +62,21 @@ void player_update()
     case 0:
         spaceShipSpr = sprite_load(L"./Data/Images/spaceship_renya.png");
         beamSpr = sprite_load(L"./Data/Images/beam.png");
-
+        for (int i = 0; i < MAX_LIFE; i++)
+        {
+           HPSpr[i] = sprite_load(L"./Data/Images/filled_HP.png");
+        }
+       
         ++player_state;
         /*fallthrough*/
 
     case 1:
         spaceShip = new SPACE_SHIP(); 
         spaceShip->spaceShipInit();
-        //for (int i = 0; i <MAX_BULLET; i++)
-        //{
-        //    beam[i] = new BEAM();
-        //    beam[i]->beamInit();
-        //   // beam[i]->canFire = false;
-        //}
+        for (int i = 0; i < MAX_LIFE; i++)
+        {
+            spaceShip->HPSpr[i] = HPSpr[i];
+      }
       
         ++player_state;
         /*fallthrough*/
@@ -73,10 +86,10 @@ void player_update()
         //player movement
         spaceShipLogic();
 
-        debug::setString("player life is %d", spaceShip->life);
+        debug::setString("player life is %d", spaceShip->currentLife);
         debug::setString("turbo mode is %d", spaceShip->turboMode);
         debug::setString("player speed x is %f", spaceShip->speed.x);
-        
+        //debug::setString("player hp is %d",spaceShip->)
       
         break;
     }
@@ -84,7 +97,17 @@ void player_update()
 
 void player_render()
 {
+    // spaceShip->sprImg = sprite_load(L"./Data/Images/empty_HP.png");
+   
+        for (int i = 0; i < MAX_LIFE ; i++)
+        {
 
+            sprite_render(spaceShip->HPSpr[i], 25 + i * 70, 10,
+                0.6, 0.6); //scale
+        }
+    
+    
+ 
     //rendering for spaceship
     sprite_render(spaceShipSpr,
         spaceShip->pos.x, spaceShip->pos.y, //pos
@@ -108,7 +131,7 @@ void player_render()
                     beam[i]->texSize.x, beam[i]->texSize.y,//texture width and height
                     beam[i]->pivot.x, beam[i]->pivot.y, 0);
              
-                beam[i]->drawCollision(beam[i]->collisionCoord.left, beam[i]->collisionCoord.top, beam[i]->inGameSize.x, beam[i]->inGameSize.y);
+               // beam[i]->drawCollision(beam[i]->collisionCoord.left, beam[i]->collisionCoord.top, beam[i]->inGameSize.x, beam[i]->inGameSize.y);
             }
         }
     }
@@ -156,14 +179,14 @@ void triggerAccelerateMode()
 {
     if (TRG(0) &PAD_TRG1 )
     {
-        if (spaceShip->maxSpeed.x == 15)
+        if (spaceShip->maxSpeed.x == MAX_SPEED)
         {
-            spaceShip->maxSpeed = { 7,7 };
+            spaceShip->maxSpeed = { MIN_SPEED,MIN_SPEED };
             spaceShip->turboMode = false;
         }
         else
         {
-            spaceShip->maxSpeed = { 15,15 };
+            spaceShip->maxSpeed = { MAX_SPEED,MAX_SPEED };
            spaceShip->turboMode = true;
         }
      
@@ -197,7 +220,7 @@ void fireBeam()
                {
                    beam[i]->setInitLoc = true;
                    beam[i]->pos.x = spaceShip->pos.x+45;
-                   beam[i]->pos.y = spaceShip->pos.y+43;
+                   beam[i]->pos.y = spaceShip->pos.y+25;
                    beam[i]->collisionCoord =
                    { beam[i]->pos.x,beam[i]->pos.x + beam[i]->inGameSize.x ,
                      beam[i]->pos.y,beam[i]->pos.y + beam[i]->inGameSize.y };

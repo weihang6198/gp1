@@ -2,24 +2,25 @@
 
 void SPACE_SHIP::spaceShipInit()
 {
-    
+   
    pos = { 100,300 };
-   scale = { 0.5,0.5 };
+   scale = { 0.3,0.3};
    texPos = { 0,0 };
    texSize = { 356,136 }; //spaceship size is 356x136
    pivot = { 0,0 };
    color = { 1,1,1,1 };
    speed = { 0 ,0 };
-   maxSpeed = { 15,15 };
+   maxSpeed = { MIN_SPEED, MIN_SPEED };
    inGameSize = { (texSize.x *scale.x) ,(texSize.y *scale.y) };
    fuel = 100;
    collisionCoord = {pos.x,pos.x +inGameSize.x,
        pos.y,pos.y +inGameSize.y };
    turboMode = false;
+   
    beamCount = 0;
    objType = PLAYER;
    collided = false;
-   life = 3;
+   currentLife = 3;
    //testing
 }
 
@@ -32,7 +33,7 @@ void BEAM::beamInit()
     pivot = { 0,0 };
     color = { 1,1,1,1 };
     speed = { 0 ,0 };
-    maxSpeed = { 30,30 };
+    maxSpeed = { 22,30 };
     inGameSize = { (texSize.x * scale.x) ,(texSize.y * scale.y) };
     collisionCoord = { pos.x,pos.x + inGameSize.x,
     pos.y,pos.y + inGameSize.y };
@@ -53,7 +54,7 @@ void ITEM::itemInit(float posX,float posY, ITEM_TYPE itemType, Sprite* sprImg)
     collisionCoord = { pos.x,pos.x + inGameSize.x,
     pos.y,pos.y + inGameSize.y };
     objType = CONSUMABLE;
-    itemType = itemType;
+    this->itemType = itemType;
     this->sprImg = sprImg;
 
 }
@@ -163,11 +164,13 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
         {
             OutputDebugStringA("this is player with enemy collision\n");
             obj1->collided = true;
-            obj1->life -=1;
-            game_reset();
-            if (obj1->life < 0) //player lose the game when life reaches 0
+            obj1->currentLife -=1;
+            obj1->HPSpr[currentLife] = sprite_load(L"./Data/Images/empty_HP.png");
+           // healthIconSpr[1] = sprite_load();
+            
+            if (obj1->currentLife < 0) //player lose the game when life reaches 0
             {
-                nextScene = SCENE_GAMEOVER;
+                game_reset();
                 //lose game
                 //destroy animation will be played for both player and enemy
                /* animation(obj1);
@@ -207,7 +210,7 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
             
             obj2->collided = true;
             //process the item and destroy after processing it
-            processItem(obj2);
+            processItem(obj2,obj1);
            
            
         }
@@ -225,22 +228,30 @@ void OBJ2D::destroyObj(OBJ2D* obj)
 }
 
 
-void OBJ2D::processItem(OBJ2D* obj)
+void OBJ2D::processItem(OBJ2D* item,OBJ2D* player)
 {
-    switch (obj->objType)
+    switch (item->itemType)
     {
     case   battery:
-
+        OutputDebugStringA("this is battery");
         break;
     case repair_kit:
-        
+        OutputDebugStringA("this is repair kit");
+        if (player->currentLife < MAX_LIFE)
+        {
+            player->currentLife++;
+            player->HPSpr[currentLife - 1] = sprite_load(L"./Data/Images/filled_HP.png");
+       }
+     
         break;
 
     case fuel:
+        OutputDebugStringA("this is fuel");
         break;
-            
+    default: 
+        OutputDebugStringA("this is def");
     }
-    obj->destroySelf = true;
+    item->destroySelf = true;
 }
 
 void METEOR::meteorInit()

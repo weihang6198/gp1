@@ -8,7 +8,9 @@
 //
 //
 //******************************************************************************
-
+#include <iostream> 
+#include <fstream>
+#include <string>
 // システムやライブラリのヘッダーファイルは上の方へ
 #include "../GameLib/game_lib.h"
 
