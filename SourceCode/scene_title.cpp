@@ -1,4 +1,4 @@
-#include "all.h"
+ï»¿#include "all.h"
 
 int title_state;
 int title_timer;
@@ -7,7 +7,7 @@ int help = 1;
 Sprite* sprbg;
 Sprite* sprarrow;
 //--------------------------------------
-//  ‰Šúİ’è
+//  åˆæœŸè¨­å®š
 //--------------------------------------
 void title_init()
 {
@@ -16,7 +16,7 @@ void title_init()
 }
 
 //--------------------------------------
-//  I—¹ˆ—
+//  çµ‚äº†å‡¦ç†
 //--------------------------------------
 void title_deinit()
 {
@@ -28,14 +28,14 @@ void title_deinit()
 }
 
 //--------------------------------------
-//  ƒ^ƒCƒgƒ‹‚ÌXVˆ—
+//  ã‚¿ã‚¤ãƒˆãƒ«ã®æ›´æ–°å‡¦ç†
 //--------------------------------------
 void title_update()
 {
     switch (title_state)
     {
     case 0:
-        //////// ‰Šúİ’è ////////
+        //////// åˆæœŸè¨­å®š ////////
 
         sprbg = sprite_load(L"./Data/Images/back1.png");
         sprarrow = sprite_load(L"./Data/Images/arrow.png");
@@ -44,7 +44,7 @@ void title_update()
         /*fallthrough*/
 
     case 1:
-        //////// ƒpƒ‰ƒ[ƒ^‚Ìİ’è ////////
+        //////// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®è¨­å®š ////////
 
         GameLib::setBlendMode(Blender::BS_ALPHA);
 
@@ -59,17 +59,35 @@ void title_update()
           // selecting code start=1,help=2,score=3,help page 1 = 4, help page 2 = 11,score page = 5
         if ((selecting==1)  && (TRG(0) & PAD_START))
         {
+           
             sound::play(4, 2);
 
             nextScene = SCENE_GAME;
-           
+            
             break;
         }
         if ((selecting == 11) && (TRG(0) & PAD_START))
         {
             sound::play(4, 2);
+            sprbg = sprite_load(L"./Data/Images/help3.png");
+            selecting = 12;
+           
+            break;
+        }
+        if ((selecting == 12) && (TRG(0) & PAD_SELECT))
+        {
+            sound::play(4, 2);
+            sprbg = sprite_load(L"./Data/Images/help2.png");
+            selecting = 11;
+
+            break;
+        }
+        if ((selecting == 12) && (TRG(0) & PAD_START))
+        {
+            sound::play(4, 2);
+            sprbg = sprite_load(L"./Data/Images/back1.png");
             selecting = 1;
-            nextScene = SCENE_GAME;
+
             break;
         }
 
@@ -90,6 +108,31 @@ void title_update()
             break;
         }
         if ((selecting == 2) && TRG(0) & PAD_LEFT) {
+            sound::play(4, 2);
+            sprbg = sprite_load(L"./Data/Images/back1.png");
+            selecting = 1;
+
+            break;
+        }
+        if ((selecting == 3) && TRG(0) & PAD_START) {
+            sound::play(4, 2);
+       
+            sprbg = sprite_load(L"./Data/Images/score.png");
+      
+            selecting = 5;
+
+            break;
+        }
+        if ((selecting == 5) && TRG(0) & PAD_START) {
+            sound::play(4, 2);
+          
+            sprbg = sprite_load(L"./Data/Images/back1.png");
+
+            selecting = 1;
+
+            break;
+        }
+        if ((selecting == 5) && TRG(0) & PAD_SELECT) {
             sound::play(4, 2);
             sprbg = sprite_load(L"./Data/Images/back1.png");
             selecting = 1;
@@ -144,24 +187,28 @@ void title_update()
 }
 
 //--------------------------------------
-//  ƒ^ƒCƒgƒ‹‚Ì•`‰æˆ—
+//  ã‚¿ã‚¤ãƒˆãƒ«ã®æç”»å‡¦ç†
 //--------------------------------------
 void title_render()
 {
-    // ‰æ–Ê‚ğÂ‚Å“h‚è‚Â‚Ô‚·
+    // ç”»é¢ã‚’é’ã§å¡—ã‚Šã¤ã¶ã™
     GameLib::clear(0.3f, 0.5f, 1.0f);
 
-    // ƒ^ƒCƒgƒ‹‚Ì•¶š
+    // ã‚¿ã‚¤ãƒˆãƒ«ã®æ–‡å­—
    
 
-    // "Push Enter Key" “_–Å
+    // "Push Enter Key" ç‚¹æ»…
     
 
     sprite_render(sprbg, 0, 0);
-    sprite_render(sprarrow, 460, 590,-0.3f,0.3f);
-    sprite_render(sprarrow, 710, 590, 0.3f, 0.3f);
-    font::textOut(4, "A   |   D", VECTOR2(460, 590), VECTOR2(1.4f, 1.4f));
-    font::textOut(4, "BACKSPACE to back", VECTOR2(410, 630), VECTOR2(1.4f, 1.4f));
-    font::textOut(4, "ENTER to continue", VECTOR2(410, 670), VECTOR2(1.4f, 1.4f));
-
+    if (selecting == 5) {
+        font::textOut(4, "ENTER to continue", VECTOR2(390, 670), VECTOR2(1.4f, 1.4f));
+    }
+    if (selecting != 5) {
+        sprite_render(sprarrow, 460, 590, -0.3f, 0.3f);
+        sprite_render(sprarrow, 710, 590, 0.3f, 0.3f);
+        font::textOut(4, "A   |   D", VECTOR2(460, 590), VECTOR2(1.4f, 1.4f));
+        font::textOut(4, "BACKSPACE to back", VECTOR2(410, 630), VECTOR2(1.4f, 1.4f));
+        font::textOut(4, "ENTER to continue", VECTOR2(410, 670), VECTOR2(1.4f, 1.4f));
+    }
 }
