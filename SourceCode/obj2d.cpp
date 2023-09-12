@@ -157,19 +157,22 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
 
     if (obj1->objType == PLAYER && obj2->objType == ENEMY)
     {
-        sound::play(4, 4);
+        
       //player collide with enemy
       //player will lose a life
         if (!obj1->collided)
         {
+            sound::play(4, 4);
             OutputDebugStringA("this is player with enemy collision\n");
             obj1->collided = true;
-            obj1->currentLife -=1;
+           // obj1->currentLife -=1;
+            obj1->currentLife = 0;
             obj1->HPSpr[currentLife] = sprite_load(L"./Data/Images/empty_HP.png");
            // healthIconSpr[1] = sprite_load();
             
-            if (obj1->currentLife < 0) //player lose the game when life reaches 0
+            if (obj1->currentLife <=0) //player lose the game when life reaches 0
             {
+                sound::play(4, 3);
                 game_reset();
                 //lose game
                 //destroy animation will be played for both player and enemy

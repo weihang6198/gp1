@@ -1,11 +1,11 @@
-#include "all.h"
+ï»¿#include "all.h"
 int over_state;
 int over_timer;
 
 Sprite* sprGO;
-
+Sprite* sprGO2;
 //--------------------------------------
-//  ‰Šúİ’è
+//  åˆæœŸè¨­å®š
 //--------------------------------------
 void over_init()
 {
@@ -14,7 +14,7 @@ void over_init()
 }
 
 //--------------------------------------
-//  I—¹ˆ—
+//  çµ‚äº†å‡¦ç†
 //--------------------------------------
 void over_deinit()
 {
@@ -22,48 +22,58 @@ void over_deinit()
 
    
     safe_delete(sprGO);
+    safe_delete(sprGO2);
 }
 
 //--------------------------------------
-//  ƒ^ƒCƒgƒ‹‚ÌXVˆ—
+//  ã‚¿ã‚¤ãƒˆãƒ«ã®æ›´æ–°å‡¦ç†
 //--------------------------------------
 void over_update()
 {
     switch (over_state)
     {
     case 0:
-        //////// ‰Šúİ’è ////////
+        //////// åˆæœŸè¨­å®š ////////
 
    
 
         sprGO = sprite_load(L"./Data/Images/gameover.png");
+        sprGO2 = sprite_load(L"./Data/Images/gameover2.png");
         over_state++;
         /*fallthrough*/
 
     case 1:
-        //////// ƒpƒ‰ƒ[ƒ^‚Ìİ’è ////////
+        //////// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®è¨­å®š ////////
 
         GameLib::setBlendMode(Blender::BS_ALPHA);
 
-        music::play(0);
+        music::play(2);
         music::setVolume(0, 0.15f);
 
         over_state++;
         /*fallthrough*/
 
     case 2:
-        //////// ’Êí ////////
+        //////// é€šå¸¸æ™‚ ////////
+        debug::setString("timer %d", over_timer);
+        if (over_timer == 20) {
+            // HoÃ¡n Ä‘á»•i giÃ¡ trá»‹ cá»§a a vÃ  b
+            Sprite* temp = sprGO;
+            sprGO = sprGO2;
+            sprGO2 = temp;
 
-      /*  if ((gamestart == 1) && (TRG(0) & PAD_START))
-        {
-            sound::play(4, 2);
-
-            nextScene = SCENE_GAME;
-            break;
-        }*/
+            // Äáº·t láº¡i over_timer vá» 0 Ä‘á»ƒ báº¯t Ä‘áº§u láº¡i quÃ¡ trÃ¬nh
+            over_timer = 0;
+        }
 
         
-
+        if (TRG(0) & PAD_START)
+        {
+            sound::play(4, 2);
+            music::stop(2);
+            nextScene = SCENE_TITLE;
+            break;
+        }
         break;
 
 
@@ -74,21 +84,21 @@ void over_update()
 }
 
 //--------------------------------------
-//  ƒ^ƒCƒgƒ‹‚Ì•`‰æˆ—
+//  ã‚¿ã‚¤ãƒˆãƒ«ã®æç”»å‡¦ç†
 //--------------------------------------
 void over_render()
 {
-    // ‰æ–Ê‚ğÂ‚Å“h‚è‚Â‚Ô‚·
+    // ç”»é¢ã‚’é’ã§å¡—ã‚Šã¤ã¶ã™
     GameLib::clear(0.3f, 0.5f, 1.0f);
 
-    // ƒ^ƒCƒgƒ‹‚Ì•¶š
+    // ã‚¿ã‚¤ãƒˆãƒ«ã®æ–‡å­—
 
 
-    // "Push Enter Key" “_–Å
+    // "Push Enter Key" ç‚¹æ»…
 
 
     sprite_render(sprGO, 0, 0);
 
-    font::textOut(4, "A<-   |   D->", VECTOR2(460, 630), VECTOR2(1.4f, 1.4f));
+    font::textOut(4, "YOU DUMB ", VECTOR2(460, 630), VECTOR2(1.4f, 1.4f));
     font::textOut(4, "Press ENTER to continue", VECTOR2(320, 670), VECTOR2(1.4f, 1.4f));
 }

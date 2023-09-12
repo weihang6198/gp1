@@ -8,6 +8,7 @@ void audio_init()
     // 音楽の読み込み
     music::load(0, L"./Data/Musics/theme.wav");
     music::load(1, L"./Data/Musics/MUSIC.wav");
+    music::load(2, L"./Data/Musics/gameover.wav");
     sound::load(XWB_SYSTEM, L"./Data/Sounds/system.xwb");    // メニューなどのSE
     sound::load(XWB_STAGE1, L"./Data/Sounds/stage1.xwb");    // ステージ用のSE
     sound::load(4, L"./Data/Sounds/wadaheck.xwb");

@@ -116,11 +116,11 @@ void game_update()
             OutputDebugStringA("insidde run once\n");
           // readScore();
           }
-        if (TRG(0) & PAD_SELECT)
+       /* if (TRG(0) & PAD_SELECT)
         {
             nextScene = SCENE_TITLE;
             break;
-        }
+        }*/
        
         mapLoopLogic();
         item_update();
@@ -129,6 +129,7 @@ void game_update()
         spaceShip->collisionDetector(spaceShip, &meteor);
         if (spaceShip->turboMode)
         {
+          
             mapMoveSpeed = 10;
         }
         else
@@ -175,14 +176,14 @@ void game_render()
     item_render();
     player_render();
     meteor_render(); 
-
+  /*  text_out(1, "moh wei hang", 500, 500);*/
 
 
 }
 
 void game_reset()
 {
-    nextScene = SCENE_TITLE;
+    nextScene = SCENE_GAMEOVER;
    //// game_deinit();
     game_state = 0;
     meteor_state = 0;
