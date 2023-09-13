@@ -63,7 +63,7 @@ void title_update()
 
     case 2:
         
-        debug::setString("selecting %d", selecting);
+     
           // selecting code start=1,help=2,score=3,help page 1 = 4, help page 2 = 11,score page = 5
         if ((selecting==1)  && (TRG(0) & PAD_START))
         {
