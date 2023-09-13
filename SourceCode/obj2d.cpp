@@ -1,5 +1,5 @@
 #include "all.h"
-#include "scene_game.cpp"
+
 
 void SPACE_SHIP::spaceShipInit()
 {

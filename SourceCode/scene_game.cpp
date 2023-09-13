@@ -181,7 +181,7 @@ void game_render()
   
     item_render();
     player_render();
-   // meteor_render(); 
+    meteor_render(); 
 
 
 

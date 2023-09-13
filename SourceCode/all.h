@@ -53,5 +53,5 @@ using namespace GameLib;
 using namespace input;
 
 
-extern int x;
+
 #endif//ALL_H
