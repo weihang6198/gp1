@@ -33,7 +33,7 @@ void item_update() {
             
             itemspr[0] = sprite_load(L"./Data/Images/battery.png");
             itemspr[1] = sprite_load(L"./Data/Images/repair_kit.png");
-            //itemspr[2] = sprite_load(L"./Data/Images/fuel.png");
+            itemspr[2] = sprite_load(L"./Data/Images/fuel.png");
 
             for (int i = 0; i < 3; i++) {
                 float j = i;
@@ -48,7 +48,7 @@ void item_update() {
                 }
                 else if (i < 3)
                 {
-                    item[i]->itemInit(300, 100 + i * 100, ITEM::repair_kit, itemspr[1]);
+                    item[i]->itemInit(300, 100 + i * 100, ITEM::fuel, itemspr[2]);
                 }
 
             }
