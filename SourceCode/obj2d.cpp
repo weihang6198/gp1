@@ -168,7 +168,8 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
             sound::play(4, 4);
             OutputDebugStringA("this is player with enemy collision\n");
             obj1->collided = true;
-            obj1->currentLife -=1;
+           // obj1->currentLife -=1;
+            obj1->currentLife = 0;
             obj1->HPSpr[currentLife] = sprite_load(L"./Data/Images/empty_HP.png");
             obj2->destroySelf = true;
             obj1->processTimer = true;

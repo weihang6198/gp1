@@ -178,6 +178,7 @@ attrib +h SourceCode\gp1.log
     <ClInclude Include="SourceCode\all.h" />
     <ClInclude Include="SourceCode\audio.h" />
     <ClInclude Include="SourceCode\common.h" />
+    <ClInclude Include="SourceCode\gameover.h" />
     <ClInclude Include="SourceCode\item.h" />
     <ClInclude Include="SourceCode\enemy.h" />
     <ClInclude Include="SourceCode\obj2d.h" />
@@ -203,6 +204,7 @@ attrib +h SourceCode\gp1.log
     <ClCompile Include="GameLib\wnd_proc.cpp" />
     <ClCompile Include="SourceCode\audio.cpp" />
     <ClCompile Include="SourceCode\common.cpp" />
+    <ClCompile Include="SourceCode\gameover.cpp" />
     <ClCompile Include="SourceCode\item.cpp" />
     <ClCompile Include="SourceCode\main.cpp" />
     <ClCompile Include="SourceCode\enemy.cpp" />
