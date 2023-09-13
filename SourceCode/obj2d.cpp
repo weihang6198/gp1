@@ -215,7 +215,7 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
     //CONSUMABLE can only be collide once and destroy after that
     if (obj1->objType == PLAYER && obj2->objType == CONSUMABLE)
     {
-        sound::play(4, 5);
+        sound::play(4, 7);
         if ( !obj2->collided)
         {
             OutputDebugStringA("this is consumable with player \n");
