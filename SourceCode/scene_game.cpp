@@ -175,7 +175,7 @@ void game_render()
 void game_reset()
 {
    
-    nextScene = SCENE_TITLE;
+    nextScene = SCENE_GAMEOVER;
    //// game_deinit();
     game_state = 0;
     meteor_state = 0;

@@ -57,10 +57,10 @@ void scoreboard_update()
         //////// 通常時 ////////
       
         
-        if (TRG(0) & PAD_START)
+        if ((TRG(0) & PAD_START) || (TRG(0) & PAD_SELECT))
         {
             sound::play(4, 2);
-            music::stop(2);
+           
             nextScene = SCENE_TITLE;
             break;
         }

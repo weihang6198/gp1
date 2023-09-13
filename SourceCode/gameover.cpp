@@ -67,11 +67,18 @@ void over_update()
         }
 
         
-        if (TRG(0) & PAD_START)
+        if (TRG(0) & PAD_SELECT)
         {
             sound::play(4, 2);
             music::stop(2);
             nextScene = SCENE_TITLE;
+            break;
+        }
+        if (TRG(0) & PAD_START)
+        {
+            sound::play(4, 2);
+            music::stop(2);
+            nextScene = SCENE_SCOREBOARD;
             break;
         }
         break;
@@ -99,6 +106,6 @@ void over_render()
 
     sprite_render(sprGO, 0, 0);
 
-    font::textOut(4, "YOU DUMB ", VECTOR2(460, 630), VECTOR2(1.4f, 1.4f));
-    font::textOut(4, "Press ENTER to continue", VECTOR2(320, 670), VECTOR2(1.4f, 1.4f));
+    font::textOut(4, "Press ENTER to check SCOREBOARD", VECTOR2(320, 630), VECTOR2(1.0f, 1.0f));
+    font::textOut(4, " Press BACKSPACE to main menu", VECTOR2(320, 670), VECTOR2(1.0f, 1.0f));
 }

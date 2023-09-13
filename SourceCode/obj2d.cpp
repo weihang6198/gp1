@@ -177,6 +177,8 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
             
             if (obj1->currentLife <= 0) //player lose the game when life reaches 0
             {
+                sound::stop(4, 4);
+                sound::play(4, 3);
                // endGameResult(score,obj1);
                 game_reset();
                 //lose game
