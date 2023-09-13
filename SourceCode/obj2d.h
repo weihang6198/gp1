@@ -63,10 +63,11 @@ struct OBJ2D
     Sprite* sprImg;
     Sprite* HPSpr[3];
     ITEM_TYPE itemType;
+    SCORE playerScore;
     bool collided = false;
     int currentLife;
     bool destroySelf = false;
-
+    bool processTimer = false;
     //TODO collision
     void drawCollision(int posX, int posY, int width, int height);
     //to detect collision
@@ -82,11 +83,17 @@ struct OBJ2D
     void destroyObj(OBJ2D* obj);
 
     void processItem(OBJ2D* item, OBJ2D* player);
+   
+    void endGameResult(SCORE *score[], OBJ2D* player);
+
+ /*   bool compareByScoreDescending(const SCORE& a, const SCORE& b) {
+        return a.distanceTraveled > b.distanceTraveled;
+    }*/
 };
 
 struct METEOR : public OBJ2D //heinŒN ’S“–
 {
-    void meteorInit();
+    void meteorInit(float posX, float posY);
 };
 
 struct ITEM :public OBJ2D //dang ŒN’S“–

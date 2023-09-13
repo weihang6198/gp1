@@ -9,6 +9,7 @@
 //
 //******************************************************************************
 #include <iostream> 
+#include <algorithm>
 #include <fstream>
 #include <string>
 // システムやライブラリのヘッダーファイルは上の方へ
@@ -55,5 +56,5 @@ using namespace GameLib;
 using namespace input;
 
 
-extern int x;
+
 #endif//ALL_H
