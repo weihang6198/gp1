@@ -21,7 +21,7 @@ void SPACE_SHIP::spaceShipInit()
    beamCount = 0;
    objType = PLAYER;
    collided = false;
-   currentLife = 1;
+   currentLife = 3;
    playerScore.distanceTraveled = 0;
    playerScore.name = "tester1";
    playerScore.rank = 0;
@@ -169,7 +169,7 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
             OutputDebugStringA("this is player with enemy collision\n");
             obj1->collided = true;
            // obj1->currentLife -=1;
-            obj1->currentLife = 0;
+            obj1->currentLife -= 1;
             obj1->HPSpr[currentLife] = sprite_load(L"./Data/Images/empty_HP.png");
             obj2->destroySelf = true;
             obj1->processTimer = true;
@@ -177,8 +177,8 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
             
             if (obj1->currentLife <= 0) //player lose the game when life reaches 0
             {
-                endGameResult(score,obj1);
-                
+               // endGameResult(score,obj1);
+                game_reset();
                 //lose game
                 //destroy animation will be played for both player and enemy
                /* animation(obj1);
@@ -266,23 +266,29 @@ void OBJ2D::processItem(OBJ2D* item,OBJ2D* player)
 
 void OBJ2D::endGameResult(SCORE* score[], OBJ2D* player)
 {
-    float highest;
-    int highestIndex = -1;
-    for (int i = 0; i < SCOREBOARD_PLAYER; i++)
+    score[SCOREBOARD_PLAYER - 1]->name = "fuck this shit";
+    score[SCOREBOARD_PLAYER-1]->rank = player->playerScore.rank;
+    score[SCOREBOARD_PLAYER-1]->distanceTraveled = player->playerScore.distanceTraveled;
+   
+   // debug::setString("inside end game result distance travelled %d", score[SCOREBOARD_PLAYER - 1]->distanceTraveled);
+    std::sort(score, score + SCOREBOARD_PLAYER,
+        [](const SCORE* a, const SCORE* b) { return a->distanceTraveled > b->distanceTraveled; });
+
+
+    for (int i = 0; i < 4; i++)
     {
-        highest = player->playerScore.distanceTraveled;
-        if (highest < score[i]->distanceTraveled)
-        {
-            highestIndex = i;
-            highest = score[i]->distanceTraveled;
-        }
+        debug::setString("distance travelled %d", score[i]->distanceTraveled);
+        debug::setString("name is %s", score[i]->name.c_str());
+
     }
+    /*for (int i = 0; i < SCOREBOARD_PLAYER; i++)
+    {
+        debug::setString("distance travelled in result %d", score[i]->distanceTraveled);
+    }*/
+
 }
 
-bool OBJ2D::compareScores(const SCORE& a, const SCORE& b)
-{
-    return a.distanceTraveled > b.distanceTraveled;// Sort in descending order of score
-}
+
 
 void METEOR::meteorInit(float posX, float posY)
 {

@@ -86,7 +86,9 @@ struct OBJ2D
    
     void endGameResult(SCORE *score[], OBJ2D* player);
 
-    bool compareScores(const SCORE& a, const SCORE& b);
+ /*   bool compareByScoreDescending(const SCORE& a, const SCORE& b) {
+        return a.distanceTraveled > b.distanceTraveled;
+    }*/
 };
 
 struct METEOR : public OBJ2D //heinŒN ’S“–

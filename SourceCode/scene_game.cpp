@@ -32,6 +32,7 @@ int totalDistanceTravelled;
 bool runOnce = true;
 Sprite* sprBack;
 SCORE *score[SCOREBOARD_PLAYER];
+float scoreMultiplier;
 
 
 //--------------------------------------
@@ -100,7 +101,7 @@ void game_update()
       moveSecondMap = false;
       mapMoveSpeed = MIN_MAP_MOVE_SPEED;
       totalDistanceTravelled = 0;
-    
+      scoreMultiplier = 1;
    
      
     
@@ -122,17 +123,12 @@ void game_update()
             {
                 spaceShip->collisionDetector(spaceShip, meteor[i]);
             }
-           
         }
+        RWBinary(score);
+        readScore(score);
         spaceShip->playerScore.distanceTraveled = totalDistanceTravelled;
-        if (spaceShip->turboMode)
-        {
-            mapMoveSpeed = MAX_MAP_MOVE_SPEED;
-        }
-        else
-        {
-            mapMoveSpeed = MIN_MAP_MOVE_SPEED;
-        }
+        spaceShip->endGameResult(score, spaceShip);
+        mapSpeedUpLogic();
         for (int i = 0; i < MAX_ITEM; i++)
         {
             if (item[i]) 
@@ -141,18 +137,7 @@ void game_update()
             }
         }
         debug::setString("total distance travelled %d", spaceShip->playerScore.distanceTraveled);
-       
-       // RWBinary(score);
-        readScore(score);
-        for (int i = 0; i < 3; i++)
-        {
-           // debug::setString("distance travelled %d", score[i]->distanceTraveled);
-           // debug::setString("name is %s", score[i]->name.c_str());
-           
-        }
-       // debug::setString("name is %s", );
-
-       
+        debug::setString("score multiplier %f", scoreMultiplier);
         break;
     }
 
@@ -178,7 +163,7 @@ void game_render()
             sprite_render(sprBack, map2PosX , 0,
                 MAP_SCALE, MAP_SCALE); //scale
         }
-  
+        text_out(1, std::to_string(totalDistanceTravelled), 640, 0, 1, 1);
     item_render();
     player_render();
     meteor_render(); 
@@ -202,7 +187,7 @@ void game_reset()
 
 void mapLoopLogic()
 {
-    totalDistanceTravelled += mapMoveSpeed;
+    totalDistanceTravelled += mapMoveSpeed*scoreMultiplier;
     //screen size is 1280
       //image is 1920x1080
       //1920-1280=640
@@ -307,7 +292,7 @@ void RWBinary(SCORE* score[])
    
     string str[3] = { "mohfuk 123","wei","hang" };
     int integer[3] = { 1,2,3 }; //rank
-    int integer2[3] = { 4,5,6 }; //distance
+    int integer2[3] = { 110,100,120 }; //distance
     // Write data to a binary file
     std::ofstream binaryFileOut("data.bin", std::ios::binary);
 
@@ -333,49 +318,6 @@ void RWBinary(SCORE* score[])
 
     binaryFileOut.close();
 
-    // Read data from the same binary file
-    std::ifstream binaryFileIn("data.bin", std::ios::binary);
-
-    if (!binaryFileIn) {
-        OutputDebugStringA("Error opening the binary file for reading.\n");
-        return;
-    }
-
-    // Read the strings from the binary file
-    std::string readStr[3];
-    for (int i = 0; i < 3; ++i) {
-        size_t strLength;
-        binaryFileIn.read(reinterpret_cast<char*>(&strLength), sizeof(strLength));
-        readStr[i].resize(strLength);
-        binaryFileIn.read(&readStr[i][0], strLength);
-    }
-
-    // Read the integers from the binary file
-    int readInt[3];
-    binaryFileIn.read(reinterpret_cast<char*>(readInt), 3 * sizeof(int));
-    int readInt2[3];
-    binaryFileIn.read(reinterpret_cast<char*>(readInt2), 3 * sizeof(int));
-    binaryFileIn.close();
-
-    // Display the read data
-    //store the value into score
-   // OutputDebugStringA("Read Strings:\n");
-    for (int i = 0; i < 3; ++i) {
-        score[i]->name = readStr[i];
-      //  OutputDebugStringA((score[i]->name+ "\n").c_str());
-        
-    }
-
-   // OutputDebugStringA("Read Integers:\n");
-    for (int i = 0; i < 3; ++i) {
-        score[i]->rank = readInt[i];
-        std::string message = std::to_string(score[i]->rank);
-        const char* charMessage = message.c_str();
-       // OutputDebugStringA((charMessage));
-      
-        score[i]->distanceTraveled = readInt2[i];
-       // OutputDebugStringA((std::to_string(readInt2[i]) + "\n").c_str());
-    }
 }
 
 void readScore(SCORE* score[])
@@ -423,16 +365,32 @@ void readScore(SCORE* score[])
         score[i]->distanceTraveled = readInt2[i];
         // OutputDebugStringA((std::to_string(readInt2[i]) + "\n").c_str());
     }
+   sortScore(score);
+}
+
+void sortScore(SCORE* score[])
+{
+    std::sort(score, score + SCOREBOARD_PLAYER,
+        [](const SCORE* a, const SCORE* b) { return a->distanceTraveled > b->distanceTraveled; });
+   // std::sort(score, score + SCOREBOARD_PLAYER, compareByScoreDescending);
 }
 
 
 void processScore(string input[], SCORE* score[])
 {
-    /*  int rank;
-    std::string name;
-    int distanceTraveled;*/
- /*   SCORE score; */
-  //  score[0]->rank = std::stoi(input[0]);
-    score[0]->name = input[0];
-    score[0]->distanceTraveled= std::stoi(input[2]);
+   
+}
+
+void mapSpeedUpLogic()
+{
+    if (spaceShip->turboMode)
+    {
+        mapMoveSpeed = MAX_MAP_MOVE_SPEED;
+        scoreMultiplier = TURBO_SCORE_MUL;
+    }
+    else
+    {
+        mapMoveSpeed = MIN_MAP_MOVE_SPEED;
+        scoreMultiplier = DEFAULT_SCORE_MUL;
+    }
 }
