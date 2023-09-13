@@ -181,12 +181,10 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
             {
                 sound::stop(4, 4);
                 sound::play(4, 3);
-               // endGameResult(score,obj1);
+               // writeScore(score);
+                spaceShip->endGameResult(score, spaceShip);
                 game_reset();
-                //lose game
-                //destroy animation will be played for both player and enemy
-               /* animation(obj1);
-                animation(obj2);*/
+             
 
             }
            // obj2->collided = true;
@@ -248,13 +246,12 @@ void OBJ2D::processItem(OBJ2D* item,OBJ2D* player)
     {
     case   battery:
         OutputDebugStringA("this is battery");
-        if (player->batteryLife += 20>MAX_BATTERY)
-        {
-            player->batteryLife = MAX_BATTERY;
-        }
-        else
-        {
+      
+           
             player->batteryLife += 20;
+            if (player->batteryLife > 100)
+            {
+                player->batteryLife = 100;
         }
 
         break;
@@ -275,7 +272,7 @@ void OBJ2D::processItem(OBJ2D* item,OBJ2D* player)
 
 void OBJ2D::endGameResult(SCORE* score[], OBJ2D* player)
 {
-    score[SCOREBOARD_PLAYER - 1]->name = "fuck this shit";
+    score[SCOREBOARD_PLAYER - 1]->name = "player-1";
     score[SCOREBOARD_PLAYER-1]->rank = player->playerScore.rank;
     score[SCOREBOARD_PLAYER-1]->distanceTraveled = player->playerScore.distanceTraveled;
    
@@ -284,12 +281,14 @@ void OBJ2D::endGameResult(SCORE* score[], OBJ2D* player)
         [](const SCORE* a, const SCORE* b) { return a->distanceTraveled > b->distanceTraveled; });
 
 
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 3; i++)
     {
         debug::setString("distance travelled %d", score[i]->distanceTraveled);
         debug::setString("name is %s", score[i]->name.c_str());
 
     }
+
+    writeScore(score);
     /*for (int i = 0; i < SCOREBOARD_PLAYER; i++)
     {
         debug::setString("distance travelled in result %d", score[i]->distanceTraveled);

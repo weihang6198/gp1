@@ -10,16 +10,16 @@ ITEM* item[MAX_ITEM];
 void item_init() {
     item_state = 0;
 
-    // Khởi tạo giá trị mặc định cho mảng increasing
-    for (int i = 0; i < MAX_ITEM; ++i) {
-        increasing[i] = true;
-    }
+    //// Khởi tạo giá trị mặc định cho mảng increasing
+    //for (int i = 0; i < MAX_ITEM; ++i) {
+    //    increasing[i] = true;
+    //}
 
 }
 
 void item_deinit() {
     for (int i = 0; i < MAX_ITEM; i++) {
-        safe_delete(itemspr[i]);
+      //  safe_delete(itemspr[i]);
         safe_delete(item[i]);
     }
 }
@@ -35,21 +35,21 @@ void item_update() {
             itemspr[1] = sprite_load(L"./Data/Images/repair_kit.png");
             //itemspr[2] = sprite_load(L"./Data/Images/fuel.png");
 
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < MAX_ITEM; i++) {
                 float j = i;
                 item[i] = new ITEM();
-                if (i < 1)
+                if (i %2== 0)
                 {
-                    item[i]->itemInit(300, 100 + i * 100, ITEM::battery, itemspr[0]);
+                    item[i]->itemInit(random_spawning(500, 600)+i*850, random_spawning(50,550), ITEM::repair_kit, itemspr[1]);
                 }
-                else if (i < 2)
+                else if (i % 2 == 1)
+                {
+                    item[i]->itemInit(random_spawning(500,600) + i * 850, random_spawning(0, 550), ITEM::battery, itemspr[0]);
+                }
+              /*  else if (i % 3 ==2)
                 {
                     item[i]->itemInit(300, 100 + i * 100, ITEM::repair_kit, itemspr[1]);
-                }
-                else if (i < 3)
-                {
-                    item[i]->itemInit(300, 100 + i * 100, ITEM::repair_kit, itemspr[1]);
-                }
+                }*/
 
             }
         ++item_state;
@@ -65,18 +65,33 @@ void item_update() {
         for (int i = 0; i < MAX_ITEM; i++) {
             if (item[i])
             {
+               // debug::setString("item");
                 if (item[i]->destroySelf)
                 {
                     safe_delete(item[i]);
-
                 }
                 else
                 {
-                    debug::setString("item enum %d",item[i]->itemType);
+                    if (spaceShip->turboMode)
+                    {
+                        item[i]->pos.x -= MIN_ITEM_SPEED;
+                    }
+                    else
+                    {
+                        item[i]->pos.x -= TURBO_ITEM_SPEED;
+                    }
+                   
+                    //debug::setString("item enum %d",item[i]->itemType);
                     item[i]->updateCollisionCoord(&item[i]->collisionCoord, item[i]->pos.x, item[i]->pos.x + item[i]->inGameSize.x,
                         item[i]->pos.y, item[i]->pos.y + item[i]->inGameSize.y);
                 }
-               
+                if (item[i])
+                {
+                    if (item[i]->pos.x < -1000)
+                    {
+                        safe_delete(item[i]);
+                   }
+               }
             }
            
         }

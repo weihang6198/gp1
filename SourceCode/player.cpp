@@ -90,7 +90,7 @@ void player_update()
       
         //player movement
         spaceShipLogic();
-   
+        batteryLogic();
         debug::setString("player life is %d", spaceShip->currentLife);
         debug::setString("turbo mode is %d", spaceShip->turboMode);
         debug::setString("player speed x is %f", spaceShip->speed.x);
@@ -126,12 +126,12 @@ void player_render()
    
     sprite_render(panelSpr, 0, 560,0.68,0.6);
     //background rect
-    primitive::rect(900, 640, 350, 40);
+   // primitive::rect(900, 640, 350, 40);
     //the battery gauge panel
-    primitive::rect(905, 645, 340*(spaceShip->batteryLife/100), 30,
+    primitive::rect(895, 632, 340*(spaceShip->batteryLife/100), 45,
         0,0,0,
         1,0,0);
-    primitive::line(0, 600, 1280, 600, 1, 1, 1, 1, 5);
+    //primitive::line(0, 600, 1280, 600, 1, 1, 1, 1, 5);
     //for hp
         for (int i = 0; i < MAX_LIFE ; i++)
         {
@@ -139,7 +139,7 @@ void player_render()
                 0.6, 0.6); //scale
         }
     
-     sprite_render(batterySpr, 860, 635, 0.4, 0.6);
+     //sprite_render(batterySpr, 860, 635, 0.4, 0.6);
  
     //rendering for spaceship
     sprite_render(spaceShipSpr,
@@ -194,6 +194,27 @@ void spaceShipLogic()
     }
     fireBeam();
   
+}
+void batteryLogic()
+{
+    if (spaceShip->batteryLife < 0)
+    {
+        spaceShip->batteryLife = 0;
+    }
+    else
+    {
+        if (spaceShip->turboMode)
+        {
+            spaceShip->batteryLife -= TURBO_BATTERY_USAGE;
+        }
+        else
+        {
+            spaceShip->batteryLife -= DEFAULT_BATTERY_USAGE;
+        }
+    }
+   
+   
+ 
 }
 void player_moveY()
 {
@@ -269,7 +290,7 @@ void fireBeam()
             beam[spaceShip->beamCount]->canFire = true;
             beam[spaceShip->beamCount]->visibility = true;
             spaceShip->beamCount++;
-            spaceShip->batteryLife -=1;
+            spaceShip->batteryLife-=3;
         }
     }
         for (int i = 0; i < spaceShip->beamCount; i++)
@@ -302,9 +323,6 @@ void fireBeam()
                         }
 
                     }
-
-
-
                     if (beam[i]->destroySelf)
                     {
                         safe_delete(beam[i]);

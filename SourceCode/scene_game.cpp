@@ -127,10 +127,11 @@ void game_update()
                 spaceShip->collisionDetector(spaceShip, meteor[i]);
             }
         }
-        RWBinary(score);
+        
+        (score);
         readScore(score);
         spaceShip->playerScore.distanceTraveled = totalDistanceTravelled;
-        spaceShip->endGameResult(score, spaceShip);
+      //  spaceShip->endGameResult(score, spaceShip);
         mapSpeedUpLogic();
         for (int i = 0; i < MAX_ITEM; i++)
         {
@@ -172,8 +173,8 @@ void game_render()
                 MAP_SCALE, MAP_SCALE); //scale
         }
        
-        sprite_render(scoreSpr, 535, -50,2,2);
-        text_out(1, std::to_string(totalDistanceTravelled), 640, 0, 1, 1);
+    sprite_render(scoreSpr, 535, -50,2,2);
+    text_out(1, std::to_string(totalDistanceTravelled), 640, 0, 1, 1);
     item_render();
     player_render();
     meteor_render(); 
@@ -297,12 +298,27 @@ string readAndWriteString(SCORE* score[])
     return "test";
 }
 
-void RWBinary(SCORE* score[])
+void writeScore(SCORE* score[])
 {
-   
-    string str[3] = { "mohfuk 123","wei","hang" };
-    int integer[3] = { 1,2,3 }; //rank
-    int integer2[3] = { 110,100,120 }; //distance
+    OutputDebugStringA("writting score \n");
+    string str[3];
+    int integer[3];
+    int integer2[3];
+    for (int i = 0; i < 3; i++)
+    {
+       
+
+        {
+            str[i] = { "player"+i};
+            integer[i] = { score[i]->rank };
+            integer2[i] = { score[i]->distanceTraveled };
+        }
+     
+    
+    }
+    //string str[3] = { "mohfuk 123","wei","hang" };
+    //int integer[3] = { 1,2,3 }; //rank
+    //int integer2[3] = { 110,100,120 }; //distance
     // Write data to a binary file
     std::ofstream binaryFileOut("data.bin", std::ios::binary);
 
@@ -386,10 +402,7 @@ void sortScore(SCORE* score[])
 }
 
 
-void processScore(string input[], SCORE* score[])
-{
-   
-}
+
 
 void mapSpeedUpLogic()
 {

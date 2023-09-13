@@ -6,6 +6,8 @@
 #define MAX_SPEED	25
 #define MIN_SPEED	12
 #define MAX_BATTERY 100
+#define DEFAULT_BATTERY_USAGE 0.05
+#define TURBO_BATTERY_USAGE	  0.1
 void player_init();
 void player_deinit();
 void player_update();
@@ -23,6 +25,6 @@ void triggerAccelerateMode();
 void fireBeam();
 void LimitSpaceShipToScreen();
 void spaceShipLogic();
-
+void batteryLogic();
 
 #endif//PLAYER_H

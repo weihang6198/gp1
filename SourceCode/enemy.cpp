@@ -44,7 +44,7 @@ void meteor_update() {
         for (int i = 0; i < METEOR_MAX; i++)
         {
             meteor[i] = new METEOR();
-            meteor[i]->meteorInit(meteor_random_spawning(700+i*400,900+i*400), meteor_random_spawning(0, 500));
+            meteor[i]->meteorInit(random_spawning(700+i*400,900+i*400),random_spawning(0, 500));
       }
      
         /*fallthrough*/
@@ -57,6 +57,7 @@ void meteor_update() {
         {
             if (meteor[i])
             {
+              //  debug::setString("meteor exissitng");
                 if (meteor[i]->pos.x < -1000)
                 {
                     safe_delete(meteor[i]);
@@ -117,7 +118,7 @@ void meteor_move() {
     }
 }
 
-float meteor_random_spawning(int lower_bound, int upper_bound) {
+float random_spawning(int lower_bound, int upper_bound) {
     std::random_device rd;
     std::mt19937 gen(rd());
     // Create a distribution that maps the random numbers within the specified range

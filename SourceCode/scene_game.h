@@ -41,10 +41,10 @@ void mapLoopLogic();
 
 */
 string readAndWriteString(SCORE* score[]);
-void RWBinary(SCORE* score[]);
+extern int totalDistanceTravelled;
+void writeScore(SCORE* score[]);
 void readScore(SCORE* score[]);
 void sortScore(SCORE* score[]);
-void processScore(string input[], SCORE* score[]);
 void mapSpeedUpLogic();
 //bool compareByScoreDescending(const SCORE* a, const SCORE* b) {
 //    return a->distanceTraveled > b->distanceTraveled;
