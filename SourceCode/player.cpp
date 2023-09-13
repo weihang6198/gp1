@@ -208,7 +208,7 @@ void triggerAccelerateMode()
         if (spaceShip->maxSpeed.x == MAX_SPEED)
         {
             sound::stop(4, 5);
-            sound::setVolume(4, 6, 2.0f);
+            sound::setVolume(4, 6, 3.0f);
             sound::play(4, 6);
          
             spaceShip->maxSpeed = { MIN_SPEED,MIN_SPEED };
@@ -217,7 +217,7 @@ void triggerAccelerateMode()
         else
         {
             sound::stop(4, 6);
-            sound::setVolume(4, 5, 0.5f);
+            sound::setVolume(4, 5, 0.4f);
             sound::play(4, 5);
             spaceShip->maxSpeed = { MAX_SPEED,MAX_SPEED };
            spaceShip->turboMode = true;
