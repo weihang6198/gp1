@@ -231,13 +231,21 @@ void triggerAccelerateMode()
 {
     if (TRG(0) &PAD_TRG1 )
     {
+        
         if (spaceShip->maxSpeed.x == MAX_SPEED)
         {
+            sound::stop(4, 5);
+            sound::setVolume(4, 6, 2.0f);
+            sound::play(4, 6);
+         
             spaceShip->maxSpeed = { MIN_SPEED,MIN_SPEED };
             spaceShip->turboMode = false;
         }
         else
         {
+            sound::stop(4, 6);
+            sound::setVolume(4, 5, 0.5f);
+            sound::play(4, 5);
             spaceShip->maxSpeed = { MAX_SPEED,MAX_SPEED };
            spaceShip->turboMode = true;
         }
