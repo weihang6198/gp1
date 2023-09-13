@@ -95,8 +95,11 @@ void game_update()
         //////// ÉpÉâÉÅÅ[É^ÇÃê›íË ////////
 
         //GameLib::setBlendMode(Blender::BS_ALPHA);
-      //  music::play(1);
-        music::setVolume(1, 0.15f);
+        music::play(1, 1);
+        
+
+       
+        music::setVolume(1, 0.13f);
        mapPosX = 0;
        map2PosX = 1280;
       moveFirstMap = true;
@@ -185,7 +188,7 @@ void game_render()
 
 void game_reset()
 {
-   
+    music::stop(1);
     nextScene = SCENE_GAMEOVER;
    //// game_deinit();
     game_state = 0;
