@@ -2,8 +2,8 @@
 #define PLAYER_H
 
 #define MAX_LIFE	3
-#define MAX_BULLET	99
-#define MAX_SPEED	20
+#define MAX_BULLET	100000
+#define MAX_SPEED	25
 #define MIN_SPEED	12
 
 void player_init();
