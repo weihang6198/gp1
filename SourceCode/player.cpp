@@ -91,10 +91,10 @@ void player_update()
         //player movement
         spaceShipLogic();
         batteryLogic();
-        debug::setString("player life is %d", spaceShip->currentLife);
+       /* debug::setString("player life is %d", spaceShip->currentLife);
         debug::setString("turbo mode is %d", spaceShip->turboMode);
         debug::setString("player speed x is %f", spaceShip->speed.x);
-        debug::setString("battery life  is %f", spaceShip->batteryLife);
+        debug::setString("battery life  is %f", spaceShip->batteryLife);*/
        
         //debug::setString("player hp is %d",spaceShip->)
         if (spaceShip->processTimer)
@@ -103,7 +103,7 @@ void player_update()
             {
                 spaceShip->timer++;
                 spaceShip->color.a = spaceShip->timer%7;
-                debug::setString("timer is %d", spaceShip->timer);
+               // debug::setString("timer is %d", spaceShip->timer);
             }
             else
             {
@@ -180,7 +180,7 @@ void spaceShipLogic()
     }*/
     if (spaceShip->batteryLife>0)
     {
-        debug::setString("inside moving");
+      //  debug::setString("inside moving");
         spaceShip->pos.x += spaceShip->speed.x;
         spaceShip->pos.y += spaceShip->speed.y;
         //testing for pushing and pull

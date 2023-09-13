@@ -55,7 +55,7 @@ void over_update()
 
     case 2:
         //////// 通常時 ////////
-        debug::setString("timer %d", over_timer);
+      //  debug::setString("timer %d", over_timer);
         if (over_timer == 20) {
             // Hoán đổi giá trị của a và b
             Sprite* temp = sprGO;

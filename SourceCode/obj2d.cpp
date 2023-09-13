@@ -103,7 +103,7 @@ void OBJ2D::collisionDetector(OBJ2D* obj1, OBJ2D* obj2)
         && obj1->collisionCoord.top <obj2->collisionCoord.bottom && obj1->collisionCoord.bottom >obj2->collisionCoord.top)
 
     {
-        debug::setString("collided the left side ");
+       // debug::setString("collided the left side ");
         processCollision(obj1, obj2);
     }
 
@@ -115,7 +115,7 @@ void OBJ2D::collisionDetector(OBJ2D* obj1, OBJ2D* obj2)
         && obj2->collisionCoord.top <obj1->collisionCoord.bottom && obj2->collisionCoord.bottom >obj1->collisionCoord.top)
 
     {
-        debug::setString("collided the right side ");
+      //  debug::setString("collided the right side ");
         processCollision(obj1, obj2);
     }
     else
@@ -283,8 +283,8 @@ void OBJ2D::endGameResult(SCORE* score[], OBJ2D* player)
 
     for (int i = 0; i < 3; i++)
     {
-        debug::setString("distance travelled %d", score[i]->distanceTraveled);
-        debug::setString("name is %s", score[i]->name.c_str());
+       // debug::setString("distance travelled %d", score[i]->distanceTraveled);
+     //   debug::setString("name is %s", score[i]->name.c_str());
 
     }
 

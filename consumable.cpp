@@ -54,7 +54,8 @@
 //        }
 //        if (item[0]->sprImg)
 //        {
-//            debug::setString("the img exist");
+//            
+// String("the img exist");
 //        }
 //
 //

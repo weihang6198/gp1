@@ -143,8 +143,8 @@ void game_update()
                 spaceShip->collisionDetector(spaceShip, item[i]);
             }
         }
-        debug::setString("total distance travelled %d", spaceShip->playerScore.distanceTraveled);
-        debug::setString("score multiplier %f", scoreMultiplier);
+       // debug::setString("total distance travelled %d", spaceShip->playerScore.distanceTraveled);
+      //  debug::setString("score multiplier %f", scoreMultiplier);
        
         break;
     }
@@ -171,7 +171,7 @@ void game_render()
       
         if (moveSecondMap)
         {
-            debug::setString("second screen");
+            //debug::setString("second screen");
             sprite_render(sprBack, map2PosX , 0,
                 MAP_SCALE, MAP_SCALE); //scale
         }
@@ -282,8 +282,8 @@ string readAndWriteString(SCORE* score[])
 
                 score[0]->name = read_strings[row][col].c_str();
                 score[0]->distanceTraveled =10;
-                debug::setString("name output is %s", score[row]->name.c_str());
-                debug::setString("output is %s", read_strings[row][col].c_str());
+               // debug::setString("name output is %s", score[row]->name.c_str());
+              //  debug::setString("output is %s", read_strings[row][col].c_str());
             }
            /* else if (col == 2)
             {
