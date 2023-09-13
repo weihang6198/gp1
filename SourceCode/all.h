@@ -50,6 +50,7 @@
 #include "../consumable.h"
 #include "item.h"
 #include "gameover.h"
+#include "scoreboard.h"
 // namespace
 using namespace GameLib;
 using namespace input;

@@ -54,6 +54,8 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
                 break;
             case SCENE_GAMEOVER:
                 over_init();
+            case SCENE_SCOREBOARD:
+                scoreboard_init();
             }
 
             curScene = nextScene;
@@ -81,6 +83,9 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
             over_update();
             over_render();
             break;
+        case SCENE_SCOREBOARD:
+            scoreboard_update();
+            scoreboard_render();
         }
 
         // デバッグ文字列の描画
@@ -105,6 +110,8 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
     case SCENE_GAMEOVER:
         over_deinit();
         break;
+    case SCENE_SCOREBOARD:
+        scoreboard_deinit();
     }
 
     // オーディオの終了処理

@@ -114,24 +114,15 @@ void title_update()
 
             break;
         }
-        if ((selecting == 3) && TRG(0) & PAD_START) {
+        if ((selecting == 3) && TRG(0) & PAD_START) {//enter scoreboard
             sound::play(4, 2);
-       
-            sprbg = sprite_load(L"./Data/Images/score.png");
-      
-            selecting = 5;
-
-            break;
-        }
-        if ((selecting == 5) && TRG(0) & PAD_START) {
-            sound::play(4, 2);
-          
-            sprbg = sprite_load(L"./Data/Images/back1.png");
-
             selecting = 1;
+            nextScene = SCENE_SCOREBOARD;
+      
 
             break;
         }
+      
         if ((selecting == 5) && TRG(0) & PAD_SELECT) {
             sound::play(4, 2);
             sprbg = sprite_load(L"./Data/Images/back1.png");
@@ -195,20 +186,19 @@ void title_render()
     GameLib::clear(0.3f, 0.5f, 1.0f);
 
     // タイトルの文字
-   
+
 
     // "Push Enter Key" 点滅
-    
+
 
     sprite_render(sprbg, 0, 0);
-    if (selecting == 5) {
-        font::textOut(4, "ENTER to continue", VECTOR2(390, 670), VECTOR2(1.4f, 1.4f));
-    }
-    if (selecting != 5) {
-        sprite_render(sprarrow, 460, 590, -0.3f, 0.3f);
-        sprite_render(sprarrow, 710, 590, 0.3f, 0.3f);
-        font::textOut(4, "A   |   D", VECTOR2(460, 590), VECTOR2(1.4f, 1.4f));
-        font::textOut(4, "BACKSPACE to back", VECTOR2(410, 630), VECTOR2(1.4f, 1.4f));
-        font::textOut(4, "ENTER to continue", VECTOR2(410, 670), VECTOR2(1.4f, 1.4f));
-    }
+  
+
+    sprite_render(sprarrow, 460, 590, -0.3f, 0.3f);
+    sprite_render(sprarrow, 710, 590, 0.3f, 0.3f);
+    font::textOut(4, "A   |   D", VECTOR2(460, 590), VECTOR2(1.4f, 1.4f));
+    font::textOut(4, "BACKSPACE to back", VECTOR2(410, 630), VECTOR2(1.4f, 1.4f));
+    font::textOut(4, "ENTER to continue", VECTOR2(410, 670), VECTOR2(1.4f, 1.4f));
+
+
 }
