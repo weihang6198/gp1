@@ -31,7 +31,8 @@ bool moveSecondMap = false;
 int totalDistanceTravelled;
 bool runOnce = true;
 Sprite* sprBack;
-SCORE *score[SCOREBOARD_PLAYER];
+Sprite* scoreSpr;
+//SCORE *score[SCOREBOARD_PLAYER];
 float scoreMultiplier;
 
 
@@ -79,13 +80,14 @@ void game_update()
         //////// èâä˙ê›íË ////////
 
         sprBack = sprite_load(L"./Data/Images/space.png");
-        for (int i = 0; i < SCOREBOARD_PLAYER; i++)
+        scoreSpr = sprite_load(L"./Data/Images/scorebar.png");
+       /* for (int i = 0; i < SCOREBOARD_PLAYER; i++)
         {
             score[i] = new SCORE();
             score[i]->rank = 0;
             score[i]->distanceTraveled = 0;
             score[i]->name = "test";
-       }
+       }*/
         game_state++;
         /*fallthrough*/
 
@@ -117,6 +119,7 @@ void game_update()
         item_update();
         player_update();
         meteor_update(); 
+       
         for (int i = 0; i < METEOR_MAX; i++)
         {
             if (meteor[i])
@@ -153,6 +156,8 @@ void game_render()
    
     GameLib::clear(0.2f, 0.2f, 0.4f);
     //firrst screen
+    //
+  
    
     if (moveFirstMap)
         {
@@ -166,6 +171,8 @@ void game_render()
             sprite_render(sprBack, map2PosX , 0,
                 MAP_SCALE, MAP_SCALE); //scale
         }
+       
+        sprite_render(scoreSpr, 535, -50,2,2);
         text_out(1, std::to_string(totalDistanceTravelled), 640, 0, 1, 1);
     item_render();
     player_render();
@@ -178,7 +185,7 @@ void game_render()
 void game_reset()
 {
    
-    nextScene = SCENE_TITLE;
+    nextScene = SCENE_GAMEOVER;
    //// game_deinit();
     game_state = 0;
     meteor_state = 0;

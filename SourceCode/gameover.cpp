@@ -98,7 +98,7 @@ void over_render()
 
 
     sprite_render(sprGO, 0, 0);
-
+   
     font::textOut(4, "YOU DUMB ", VECTOR2(460, 630), VECTOR2(1.4f, 1.4f));
     font::textOut(4, "Press ENTER to continue", VECTOR2(320, 670), VECTOR2(1.4f, 1.4f));
 }

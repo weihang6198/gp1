@@ -25,6 +25,8 @@ void SPACE_SHIP::spaceShipInit()
    playerScore.distanceTraveled = 0;
    playerScore.name = "tester1";
    playerScore.rank = 0;
+   batteryLife = 100;
+   batteryDepleted = false;
 }
 
 void BEAM::beamInit()
@@ -244,6 +246,15 @@ void OBJ2D::processItem(OBJ2D* item,OBJ2D* player)
     {
     case   battery:
         OutputDebugStringA("this is battery");
+        if (player->batteryLife += 20>MAX_BATTERY)
+        {
+            player->batteryLife = MAX_BATTERY;
+        }
+        else
+        {
+            player->batteryLife += 20;
+        }
+
         break;
     case repair_kit:
         OutputDebugStringA("this is repair kit");
@@ -253,10 +264,6 @@ void OBJ2D::processItem(OBJ2D* item,OBJ2D* player)
             player->HPSpr[currentLife - 1] = sprite_load(L"./Data/Images/filled_HP.png");
        }
      
-        break;
-
-    case fuel:
-        OutputDebugStringA("this is fuel");
         break;
     default: 
         OutputDebugStringA("this is def");

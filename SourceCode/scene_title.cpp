@@ -6,6 +6,7 @@ int selecting=1;
 int help = 1;
 Sprite* sprbg;
 Sprite* sprarrow;
+SCORE* score[SCOREBOARD_PLAYER];
 //--------------------------------------
 //  初期設定
 //--------------------------------------
@@ -39,7 +40,13 @@ void title_update()
 
         sprbg = sprite_load(L"./Data/Images/back1.png");
         sprarrow = sprite_load(L"./Data/Images/arrow.png");
-      
+         for (int i = 0; i < SCOREBOARD_PLAYER; i++)
+        {
+            score[i] = new SCORE();
+            score[i]->rank = 0;
+            score[i]->distanceTraveled = 0;
+            score[i]->name = "test";
+       }
         title_state++;
         /*fallthrough*/
 
@@ -55,6 +62,7 @@ void title_update()
         /*fallthrough*/
 
     case 2:
+        
         debug::setString("selecting %d", selecting);
           // selecting code start=1,help=2,score=3,help page 1 = 4, help page 2 = 11,score page = 5
         if ((selecting==1)  && (TRG(0) & PAD_START))

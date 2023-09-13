@@ -64,6 +64,13 @@ void scoreboard_update()
             nextScene = SCENE_TITLE;
             break;
         }
+        readScore(score);
+        for (int i = 0; i < 4; i++)
+        {
+            debug::setString("distance travelled %d", score[i]->distanceTraveled);
+            debug::setString("name is %s", score[i]->name.c_str());
+
+        }
         break;
 
 
@@ -88,7 +95,24 @@ void scoreboard_render()
 
 
     sprite_render(sprSB, 0, 0);
+    //write ranking pos
+    //every 70 is new row 
+    for (int i = 0; i < 3; i++)
+    {
+        font::textOut(4, std::to_string(i+1), 250, 230+70*i, 1, 1);
+        font::textOut(4, score[i]->name, 450, 230 + 70 * i, 1, 1);
+        font::textOut(4, std::to_string(score[i]->distanceTraveled), 850, 230+70*i, 1, 1);
+    }
+  
 
-   
+    ////write name
+    //font::textOut(4, "test name", 450, 230, 1, 1);
+    //font::textOut(4, "test", 450, 300, 1, 1);
+    //font::textOut(4, "test", 450, 370, 1, 1);
+
+    ////write score
+    //font::textOut(4, "score", 850, 230, 1, 1);
+    //font::textOut(4, "test", 850, 300, 1, 1);
+    //font::textOut(4, "test", 850, 370, 1, 1);
     font::textOut(4, "Press ENTER/BACKSPACE to go back", VECTOR2(390, 670), VECTOR2(1.0f, 1.0f));
 }

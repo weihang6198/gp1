@@ -44,7 +44,7 @@ void meteor_update() {
         for (int i = 0; i < METEOR_MAX; i++)
         {
             meteor[i] = new METEOR();
-            meteor[i]->meteorInit(meteor_random_spawning(700+i*400,900+i*400), meteor_random_spawning(0, 700));
+            meteor[i]->meteorInit(meteor_random_spawning(700+i*400,900+i*400), meteor_random_spawning(0, 500));
       }
      
         /*fallthrough*/

@@ -5,7 +5,7 @@
 #define MAX_BULLET	100000
 #define MAX_SPEED	25
 #define MIN_SPEED	12
-
+#define MAX_BATTERY 100
 void player_init();
 void player_deinit();
 void player_update();

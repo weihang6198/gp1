@@ -64,10 +64,15 @@ struct OBJ2D
     Sprite* HPSpr[3];
     ITEM_TYPE itemType;
     SCORE playerScore;
+
+    float batteryLife;
     bool collided = false;
     int currentLife;
     bool destroySelf = false;
     bool processTimer = false;
+    bool batteryDepleted = false;
+
+
     //TODO collision
     void drawCollision(int posX, int posY, int width, int height);
     //to detect collision

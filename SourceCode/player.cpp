@@ -21,6 +21,8 @@ SPACE_SHIP* spaceShip;
 Sprite* beamSpr;
 BEAM *beam[99];
 Sprite* HPSpr[3];
+Sprite* batterySpr;
+Sprite* panelSpr;
 
 int player_state = 0;
 //--------------------------------------
@@ -62,6 +64,9 @@ void player_update()
     case 0:
         spaceShipSpr = sprite_load(L"./Data/Images/spaceship_renya.png");
         beamSpr = sprite_load(L"./Data/Images/beam.png");
+        batterySpr = sprite_load(L"./Data/Images/battery.png");
+        panelSpr= sprite_load(L"./Data/Images/panel.png");
+        
         for (int i = 0; i < MAX_LIFE; i++)
         {
            HPSpr[i] = sprite_load(L"./Data/Images/filled_HP.png");
@@ -89,6 +94,8 @@ void player_update()
         debug::setString("player life is %d", spaceShip->currentLife);
         debug::setString("turbo mode is %d", spaceShip->turboMode);
         debug::setString("player speed x is %f", spaceShip->speed.x);
+        debug::setString("battery life  is %f", spaceShip->batteryLife);
+       
         //debug::setString("player hp is %d",spaceShip->)
         if (spaceShip->processTimer)
         {
@@ -113,17 +120,26 @@ void player_update()
 
 void player_render()
 {
-    primitive::line(0, 600, 1280, 600, 1, 1, 1, 1, 5);
-    // spaceShip->sprImg = sprite_load(L"./Data/Images/empty_HP.png");
+  //  sprite_render(panelSpr)
+    
+
    
+    sprite_render(panelSpr, 0, 560,0.68,0.6);
+    //background rect
+    primitive::rect(900, 640, 350, 40);
+    //the battery gauge panel
+    primitive::rect(905, 645, 340*(spaceShip->batteryLife/100), 30,
+        0,0,0,
+        1,0,0);
+    primitive::line(0, 600, 1280, 600, 1, 1, 1, 1, 5);
+    //for hp
         for (int i = 0; i < MAX_LIFE ; i++)
         {
-
-            sprite_render(spaceShip->HPSpr[i], 25 + i * 70, 10,
+            sprite_render(spaceShip->HPSpr[i], 30 + i * 80, 627,
                 0.6, 0.6); //scale
         }
     
-    
+     sprite_render(batterySpr, 860, 635, 0.4, 0.6);
  
     //rendering for spaceship
     sprite_render(spaceShipSpr,
@@ -158,16 +174,26 @@ void player_render()
 
 void spaceShipLogic()
 {
-    spaceShip->pos.x += spaceShip->speed.x;
-    spaceShip->pos.y += spaceShip->speed.y;
-    //testing for pushing and pull
-    spaceShip->updateCollisionCoord(&spaceShip->collisionCoord, spaceShip->pos.x, spaceShip->pos.x + spaceShip->inGameSize.x,
-        spaceShip->pos.y, spaceShip->pos.y + spaceShip->inGameSize.y);
-    player_moveX();
-    player_moveY();
-    triggerAccelerateMode();
+    /*if (spaceShip->battery == 0)
+    {
+        spaceShip->batteryDepleted =true;
+    }*/
+    if (spaceShip->batteryLife>0)
+    {
+        debug::setString("inside moving");
+        spaceShip->pos.x += spaceShip->speed.x;
+        spaceShip->pos.y += spaceShip->speed.y;
+        //testing for pushing and pull
+        spaceShip->updateCollisionCoord(&spaceShip->collisionCoord, spaceShip->pos.x, spaceShip->pos.x + spaceShip->inGameSize.x,
+            spaceShip->pos.y, spaceShip->pos.y + spaceShip->inGameSize.y);
+        player_moveX();
+        player_moveY();
+        triggerAccelerateMode();
+        
+        LimitSpaceShipToScreen();
+    }
     fireBeam();
-    LimitSpaceShipToScreen();
+  
 }
 void player_moveY()
 {
@@ -221,65 +247,72 @@ void triggerAccelerateMode()
 
 void fireBeam()
 {
+    
     if (TRG(0) & PAD_TRG4)
     {
-        sound::play(4, 1);
-      //  OutputDebugStringA("firing beam");
-        //create beam obj as soon as fire trigger is pressed
-        beam[spaceShip->beamCount] = new BEAM();
-        beam[spaceShip->beamCount]->beamInit();
-        beam[spaceShip->beamCount]->canFire = true;
-        beam[spaceShip->beamCount]->visibility = true;
-        spaceShip->beamCount++;
-       
-    }
-   for (int i=0;i< spaceShip->beamCount;i++  )
-   {
-       if (beam[i])
-       {
-           if (beam[i]->canFire)
-           {
-              /* debug::setString("obj1->collided is %d", beam[i]->collided);
-               debug::setString(" i is %d", i);*/
-               //set init spawn loc of the beam
-               if (!beam[i]->setInitLoc)
-               {
-                   beam[i]->setInitLoc = true;
-                   beam[i]->pos.x = spaceShip->pos.x+45;
-                   beam[i]->pos.y = spaceShip->pos.y+25;
-                   beam[i]->collisionCoord =
-                   { beam[i]->pos.x,beam[i]->pos.x + beam[i]->inGameSize.x ,
-                     beam[i]->pos.y,beam[i]->pos.y + beam[i]->inGameSize.y };
-               }
-               //update beam's loc,collision cord and check for collision detector
-               beam[i]->pos.x += beam[i]->maxSpeed.x;
-               beam[i]->updateCollisionCoord(&beam[i]->collisionCoord, beam[i]->pos.x, beam[i]->pos.x + beam[i]->inGameSize.x,
-                   beam[i]->pos.y, beam[i]->pos.y + beam[i]->inGameSize.y);
-               for (int z = 0; z < METEOR_MAX; z++)
-               {
-                   if (meteor[z])
-                   {
-                       beam[i]->collisionDetector(beam[i], meteor[z]);
-                   }
-                  
-               }
-               
+        if (spaceShip->batteryLife>0)
+        {
 
-              
-               if (beam[i]->destroySelf)
-               {
-                   safe_delete(beam[i]);
-                   break;
-               }
-               if (beam[i]->pos.x > SCREEN_W)
-               {
-                   safe_delete(beam[i]);
-               }
-              
-           }
-       }
-     
+            sound::play(4, 1);
+            //  OutputDebugStringA("firing beam");
+              //create beam obj as soon as fire trigger is pressed
+            beam[spaceShip->beamCount] = new BEAM();
+            beam[spaceShip->beamCount]->beamInit();
+            beam[spaceShip->beamCount]->canFire = true;
+            beam[spaceShip->beamCount]->visibility = true;
+            spaceShip->beamCount++;
+            spaceShip->batteryLife -=1;
+        }
     }
+        for (int i = 0; i < spaceShip->beamCount; i++)
+        {
+            if (beam[i])
+            {
+                if (beam[i]->canFire)
+                {
+                    /* debug::setString("obj1->collided is %d", beam[i]->collided);
+                     debug::setString(" i is %d", i);*/
+                     //set init spawn loc of the beam
+                    if (!beam[i]->setInitLoc)
+                    {
+                        beam[i]->setInitLoc = true;
+                        beam[i]->pos.x = spaceShip->pos.x + 45;
+                        beam[i]->pos.y = spaceShip->pos.y + 25;
+                        beam[i]->collisionCoord =
+                        { beam[i]->pos.x,beam[i]->pos.x + beam[i]->inGameSize.x ,
+                          beam[i]->pos.y,beam[i]->pos.y + beam[i]->inGameSize.y };
+                    }
+                    //update beam's loc,collision cord and check for collision detector
+                    beam[i]->pos.x += beam[i]->maxSpeed.x;
+                    beam[i]->updateCollisionCoord(&beam[i]->collisionCoord, beam[i]->pos.x, beam[i]->pos.x + beam[i]->inGameSize.x,
+                        beam[i]->pos.y, beam[i]->pos.y + beam[i]->inGameSize.y);
+                    for (int z = 0; z < METEOR_MAX; z++)
+                    {
+                        if (meteor[z])
+                        {
+                            beam[i]->collisionDetector(beam[i], meteor[z]);
+                        }
+
+                    }
+
+
+
+                    if (beam[i]->destroySelf)
+                    {
+                        safe_delete(beam[i]);
+                        break;
+                    }
+                    if (beam[i]->pos.x > SCREEN_W)
+                    {
+                        safe_delete(beam[i]);
+                    }
+
+                }
+            }
+
+        }
+    
+    
 }
 
 void  LimitSpaceShipToScreen()
@@ -296,10 +329,10 @@ void  LimitSpaceShipToScreen()
 
     }
 
-    if (spaceShip->pos.y + spaceShip->inGameSize.y > SCREEN_H)
+    if (spaceShip->pos.y + spaceShip->inGameSize.y > SCREEN_H-120)
     {
         debug::setString("over the line");
-        spaceShip->pos.y = SCREEN_H - spaceShip->inGameSize.y;
+        spaceShip->pos.y = SCREEN_H-120 - spaceShip->inGameSize.y;
     }
 
     if (spaceShip->pos.x + spaceShip->inGameSize.x > SCREEN_W)

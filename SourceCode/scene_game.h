@@ -49,5 +49,5 @@ void mapSpeedUpLogic();
 //bool compareByScoreDescending(const SCORE* a, const SCORE* b) {
 //    return a->distanceTraveled > b->distanceTraveled;
 //}
-extern SCORE* score[SCOREBOARD_PLAYER];
+//extern SCORE* score[SCOREBOARD_PLAYER];
 #endif//SCENE_GAME_H
