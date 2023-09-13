@@ -11,6 +11,7 @@
 #include "player.h"
 #include "enemy.h"
 #include "item.h"
+#include <sstream>
 using namespace std;
 
 //------< íËêî >----------------------------------------------------------------
@@ -30,7 +31,7 @@ bool moveSecondMap = false;
 int totalDistanceTravelled;
 bool runOnce = true;
 Sprite* sprBack;
-SCORE score[SCOREBOARD_PLAYER];
+SCORE *score[SCOREBOARD_PLAYER];
 
 
 //--------------------------------------
@@ -77,9 +78,13 @@ void game_update()
         //////// èâä˙ê›íË ////////
 
         sprBack = sprite_load(L"./Data/Images/space.png");
-
-
-
+        for (int i = 0; i < SCOREBOARD_PLAYER; i++)
+        {
+            score[i] = new SCORE();
+            score[i]->rank = 0;
+            score[i]->distanceTraveled = 0;
+            score[i]->name = "test";
+       }
         game_state++;
         /*fallthrough*/
 
@@ -93,16 +98,12 @@ void game_update()
        map2PosX = 1280;
       moveFirstMap = true;
       moveSecondMap = false;
-      mapMoveSpeed = 5;
+      mapMoveSpeed = MIN_MAP_MOVE_SPEED;
       totalDistanceTravelled = 0;
+    
+   
      
-      for (int i = 0; i < SCOREBOARD_PLAYER; i++)
-      {
-          score[i] = { i+1,"moh wei hang",50+i*50 };
-          
-       }
-      readAndWrite();
-     // recordScore(score);
+    
         game_state++;
         /*fallthrough*/
         
@@ -110,30 +111,27 @@ void game_update()
         
         //////// í èÌéû ////////
 
-        if (runOnce)
-        {
-            runOnce = false;
-            OutputDebugStringA("insidde run once\n");
-          // readScore();
-          }
-        if (TRG(0) & PAD_SELECT)
-        {
-            nextScene = SCENE_TITLE;
-            break;
-        }
        
         mapLoopLogic();
         item_update();
         player_update();
         meteor_update(); 
-        spaceShip->collisionDetector(spaceShip, &meteor);
+        for (int i = 0; i < METEOR_MAX; i++)
+        {
+            if (meteor[i])
+            {
+                spaceShip->collisionDetector(spaceShip, meteor[i]);
+            }
+           
+        }
+        spaceShip->playerScore.distanceTraveled = totalDistanceTravelled;
         if (spaceShip->turboMode)
         {
-            mapMoveSpeed = 10;
+            mapMoveSpeed = MAX_MAP_MOVE_SPEED;
         }
         else
         {
-            mapMoveSpeed = 5;
+            mapMoveSpeed = MIN_MAP_MOVE_SPEED;
         }
         for (int i = 0; i < MAX_ITEM; i++)
         {
@@ -142,8 +140,17 @@ void game_update()
                 spaceShip->collisionDetector(spaceShip, item[i]);
             }
         }
-        debug::setString("total distance travelled %d", totalDistanceTravelled);
-      
+        debug::setString("total distance travelled %d", spaceShip->playerScore.distanceTraveled);
+       
+       // RWBinary(score);
+        readScore(score);
+        for (int i = 0; i < 3; i++)
+        {
+           // debug::setString("distance travelled %d", score[i]->distanceTraveled);
+           // debug::setString("name is %s", score[i]->name.c_str());
+           
+        }
+       // debug::setString("name is %s", );
 
        
         break;
@@ -174,7 +181,7 @@ void game_render()
   
     item_render();
     player_render();
-    meteor_render(); 
+   // meteor_render(); 
 
 
 
@@ -182,6 +189,7 @@ void game_render()
 
 void game_reset()
 {
+   
     nextScene = SCENE_TITLE;
    //// game_deinit();
     game_state = 0;
@@ -225,100 +233,206 @@ void mapLoopLogic()
     }
 }
 
-void recordScore(SCORE score[3])
+
+
+string readAndWriteString(SCORE* score[])
 {
-    std::ofstream outFile("binary_data.bin", std::ios::binary);
-    if (!outFile) {
-        OutputDebugStringA("Failed to open the file for writing.\n");
-        return;
+    // Strings to write to the binary file (5 rows and 3 columns)
+    std::string data_to_write[5][3] = {
+        { "1", "moh", "50" },
+        { "2", "alice", "75" },
+        { "3", "bob", "60" },
+        { "4", "carol", "90" },
+        { "5", "dave", "70" }
+    };
+
+    // Writing the strings to a binary file
+    std::ofstream binary_file("string_data.bin", std::ios::binary);
+    for (int row = 0; row < 5; row++) {
+        for (int col = 0; col < 3; col++) {
+            int str_len = data_to_write[row][col].size();
+            binary_file.write(reinterpret_cast<char*>(&str_len), sizeof(int)); // Write string length
+            binary_file.write(data_to_write[row][col].c_str(), str_len); // Write the string
+        }
     }
-    std::string test = "mohweihang";
-        outFile.write(reinterpret_cast<const char*>(&test), sizeof(test));
-   
-
-    // Close the file
-    outFile.close();
-
-    OutputDebugStringA("Data has been written to binary_data.bin.");
-
-    return;
-}
-
-void readScore()
-{
-    OutputDebugStringA("inside read score func\n");
-    // Open the binary file for input
-    std::ifstream inFile("binary_data.bin", std::ios::binary);
-
-    if (!inFile) {
-       // std::cerr << "Failed to open the file for reading." << std::endl;
-        OutputDebugStringA("Failed to open the file for reading.\n");
-        return;
-    }
-    OutputDebugStringA("inside read score func 3 \n");
-    // Data variables to store the read values
-
-    SCORE readData[3];
-    // Read binary data from the file
-
-    std::string test = "";
-        inFile.read(reinterpret_cast<char*>(&test), sizeof(test));
-    
-   
-    // Check if the read was successful
-    if (!inFile) {
-        //std::cerr << "Error while reading from the file." << std::endl;
-        OutputDebugStringA("Error while reading from the file.\n");
-        return;
-    }
-    OutputDebugStringA("inside read score func 2 \n");
-    // Close the file
-    inFile.close();
-
-    // Use the read data
- 
-  //  std::string doubleAsString = std::to_string(readData[0].distanceTraveled);
-    //OutputDebugStringA(doubleAsString.c_str());
-    OutputDebugStringA(test.c_str());
-   /* for (int i = 0; i < SCOREBOARD_PLAYER; i++)
-    {
-        std::string doubleAsString = std::to_string(readData[i].distanceTraveled);
-        OutputDebugStringA("fuck");
-    }*/
-    return;
-}
-
-void readAndWrite()
-
-{       // Writing data to a binary file
-    int data_to_write[2] = { 42,44 };
-    std::ofstream binary_file("data.bin", std::ios::binary);
-
-    if (!binary_file) {
-        std::cerr << "Error opening file for writing!" << std::endl;
-        return;
-    }
-
-    binary_file.write(reinterpret_cast<char*>(&data_to_write), sizeof(data_to_write));
     binary_file.close();
 
-    // Reading data from the binary file
-    int data_read[2];
-    std::ifstream read_file("data.bin", std::ios::binary);
+    // Reading the strings from the binary file into a two-dimensional array
+    std::ifstream read_file("string_data.bin", std::ios::binary);
+    std::string read_strings[5][3];
 
-    if (!read_file) {
-        std::cerr << "Error opening file for reading!" << std::endl;
-        return ;
+    for (int row = 0; row < 5; row++) {
+        for (int col = 0; col < 3; col++) {
+            int str_len;
+            read_file.read(reinterpret_cast<char*>(&str_len), sizeof(int)); // Read string length
+            char* buffer = new char[str_len + 1];
+            read_file.read(buffer, str_len); // Read the string
+            buffer[str_len] = '\0'; // Null-terminate the string
+            read_strings[row][col] = buffer;
+            delete[] buffer;
+        }
+    }
+    read_file.close();
+    
+    // Send the read strings to the Debug Output
+    for (int row = 0; row < 5; row++) {
+        for (int col = 0; col < 3; col++) {
+          //  std::string test = read_strings[row][col];
+            if (col == 1)
+            {
+
+                score[0]->name = read_strings[row][col].c_str();
+                score[0]->distanceTraveled =10;
+                debug::setString("name output is %s", score[row]->name.c_str());
+                debug::setString("output is %s", read_strings[row][col].c_str());
+            }
+           /* else if (col == 2)
+            {
+                score[row]->name = read_strings[row][col].c_str();
+            }
+            else if (col == 3)
+            {
+                score[row]->distanceTraveled = std::stoi(read_strings[row][col].c_str());
+            }*/
+           // debug::setString("output is %s", read_strings[row][col].c_str());
+            
+        }
+    }
+ 
+    return "test";
+}
+
+void RWBinary(SCORE* score[])
+{
+   
+    string str[3] = { "mohfuk 123","wei","hang" };
+    int integer[3] = { 1,2,3 }; //rank
+    int integer2[3] = { 4,5,6 }; //distance
+    // Write data to a binary file
+    std::ofstream binaryFileOut("data.bin", std::ios::binary);
+
+    if (!binaryFileOut) {
+        OutputDebugStringA("Error opening the binary file for writing.\n");
+        return;
     }
 
-    read_file.read(reinterpret_cast<char*>(&data_read), sizeof(data_read));
-    read_file.close();
+    // Write the strings to the binary file
+    for (int i = 0; i < 3; ++i) {
+        const std::string& currentStr = str[i];
+        size_t strLength = currentStr.size();
+        binaryFileOut.write(reinterpret_cast<const char*>(&strLength), sizeof(strLength));
+        binaryFileOut.write(currentStr.c_str(), strLength);
+    }
 
-    // Send the data read to the Debug Output
-    char debugMessage[100];
-    sprintf_s(debugMessage, "Data read from file: %d", data_read[1]);
-    OutputDebugStringA(debugMessage);
+    // Write the integers to the binary file
+    //this is for rank
+    binaryFileOut.write(reinterpret_cast<const char*>(integer), 3 * sizeof(int));
+    //write 2nd integer to binary file
+    //this is for distance
+    binaryFileOut.write(reinterpret_cast<const char*>(integer2), 3 * sizeof(int));
 
-    return;
+    binaryFileOut.close();
 
+    // Read data from the same binary file
+    std::ifstream binaryFileIn("data.bin", std::ios::binary);
+
+    if (!binaryFileIn) {
+        OutputDebugStringA("Error opening the binary file for reading.\n");
+        return;
+    }
+
+    // Read the strings from the binary file
+    std::string readStr[3];
+    for (int i = 0; i < 3; ++i) {
+        size_t strLength;
+        binaryFileIn.read(reinterpret_cast<char*>(&strLength), sizeof(strLength));
+        readStr[i].resize(strLength);
+        binaryFileIn.read(&readStr[i][0], strLength);
+    }
+
+    // Read the integers from the binary file
+    int readInt[3];
+    binaryFileIn.read(reinterpret_cast<char*>(readInt), 3 * sizeof(int));
+    int readInt2[3];
+    binaryFileIn.read(reinterpret_cast<char*>(readInt2), 3 * sizeof(int));
+    binaryFileIn.close();
+
+    // Display the read data
+    //store the value into score
+   // OutputDebugStringA("Read Strings:\n");
+    for (int i = 0; i < 3; ++i) {
+        score[i]->name = readStr[i];
+      //  OutputDebugStringA((score[i]->name+ "\n").c_str());
+        
+    }
+
+   // OutputDebugStringA("Read Integers:\n");
+    for (int i = 0; i < 3; ++i) {
+        score[i]->rank = readInt[i];
+        std::string message = std::to_string(score[i]->rank);
+        const char* charMessage = message.c_str();
+       // OutputDebugStringA((charMessage));
+      
+        score[i]->distanceTraveled = readInt2[i];
+       // OutputDebugStringA((std::to_string(readInt2[i]) + "\n").c_str());
+    }
+}
+
+void readScore(SCORE* score[])
+{
+    // Read data from the same binary file
+    std::ifstream binaryFileIn("data.bin", std::ios::binary);
+
+    if (!binaryFileIn) {
+        OutputDebugStringA("Error opening the binary file for reading.\n");
+        return;
+    }
+
+    // Read the strings from the binary file
+    std::string readStr[3];
+    for (int i = 0; i < 3; ++i) {
+        size_t strLength;
+        binaryFileIn.read(reinterpret_cast<char*>(&strLength), sizeof(strLength));
+        readStr[i].resize(strLength);
+        binaryFileIn.read(&readStr[i][0], strLength);
+    }
+
+    // Read the integers from the binary file
+    int readInt[3];
+    binaryFileIn.read(reinterpret_cast<char*>(readInt), 3 * sizeof(int));
+    int readInt2[3];
+    binaryFileIn.read(reinterpret_cast<char*>(readInt2), 3 * sizeof(int));
+    binaryFileIn.close();
+
+    // Display the read data
+    //store the value into score
+   // OutputDebugStringA("Read Strings:\n");
+    for (int i = 0; i < 3; ++i) {
+        score[i]->name = readStr[i];
+        //  OutputDebugStringA((score[i]->name+ "\n").c_str());
+
+    }
+
+    // OutputDebugStringA("Read Integers:\n");
+    for (int i = 0; i < 3; ++i) {
+        score[i]->rank = readInt[i];
+        std::string message = std::to_string(score[i]->rank);
+        const char* charMessage = message.c_str();
+        // OutputDebugStringA((charMessage));
+
+        score[i]->distanceTraveled = readInt2[i];
+        // OutputDebugStringA((std::to_string(readInt2[i]) + "\n").c_str());
+    }
+}
+
+
+void processScore(string input[], SCORE* score[])
+{
+    /*  int rank;
+    std::string name;
+    int distanceTraveled;*/
+ /*   SCORE score; */
+  //  score[0]->rank = std::stoi(input[0]);
+    score[0]->name = input[0];
+    score[0]->distanceTraveled= std::stoi(input[2]);
 }

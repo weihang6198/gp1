@@ -1,4 +1,5 @@
 #include "all.h"
+#include "scene_game.cpp"
 
 void SPACE_SHIP::spaceShipInit()
 {
@@ -16,12 +17,14 @@ void SPACE_SHIP::spaceShipInit()
    collisionCoord = {pos.x,pos.x +inGameSize.x,
        pos.y,pos.y +inGameSize.y };
    turboMode = false;
-   
+   timer = 0;
    beamCount = 0;
    objType = PLAYER;
    collided = false;
-   currentLife = 3;
-   //testing
+   currentLife = 1;
+   playerScore.distanceTraveled = 0;
+   playerScore.name = "tester1";
+   playerScore.rank = 0;
 }
 
 void BEAM::beamInit()
@@ -157,20 +160,24 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
 
     if (obj1->objType == PLAYER && obj2->objType == ENEMY)
     {
-        sound::play(4, 4);
+       
       //player collide with enemy
       //player will lose a life
         if (!obj1->collided)
         {
+            sound::play(4, 4);
             OutputDebugStringA("this is player with enemy collision\n");
             obj1->collided = true;
             obj1->currentLife -=1;
             obj1->HPSpr[currentLife] = sprite_load(L"./Data/Images/empty_HP.png");
+            obj2->destroySelf = true;
+            obj1->processTimer = true;
            // healthIconSpr[1] = sprite_load();
             
-            if (obj1->currentLife < 0) //player lose the game when life reaches 0
+            if (obj1->currentLife <= 0) //player lose the game when life reaches 0
             {
-                game_reset();
+                endGameResult(score,obj1);
+                
                 //lose game
                 //destroy animation will be played for both player and enemy
                /* animation(obj1);
@@ -194,7 +201,9 @@ void OBJ2D::processCollision(OBJ2D* obj1, OBJ2D* obj2)
             OutputDebugStringA("this is projectile with enemy collision\n");
             obj1->collided = true;
             obj1->destroySelf = true;
-          
+            obj2->destroySelf = true;
+            //obj2->collided = true;
+            
         }
       
     }
@@ -254,14 +263,36 @@ void OBJ2D::processItem(OBJ2D* item,OBJ2D* player)
     item->destroySelf = true;
 }
 
-void METEOR::meteorInit()
+void OBJ2D::endGameResult(SCORE* score[], OBJ2D* player)
 {
-    meteor.timer = 0;
-    meteor.pos = { 800, meteor_random_spawning(0, 400) };
-    meteor.scale = { 0.3f, 0.3f };
-    meteor.texPos = { 0,0 };
-    meteor.texSize = { 500, 500 };
-    meteor.pivot = { 0,0 };
-    meteor.color = { 1,1,1,1 };
-    meteor.objType = OBJ_TYPE::ENEMY;
+    float highest;
+    int highestIndex = -1;
+    for (int i = 0; i < SCOREBOARD_PLAYER; i++)
+    {
+        highest = player->playerScore.distanceTraveled;
+        if (highest < score[i]->distanceTraveled)
+        {
+            highestIndex = i;
+            highest = score[i]->distanceTraveled;
+        }
+    }
+}
+
+bool OBJ2D::compareScores(const SCORE& a, const SCORE& b)
+{
+    return a.distanceTraveled > b.distanceTraveled;// Sort in descending order of score
+}
+
+void METEOR::meteorInit(float posX, float posY)
+{
+  timer = 0;
+  pos = {posX,posY};
+  scale = { 0.3f, 0.3f };
+  texPos = { 0,0 };
+  texSize = { 500, 500 };
+  pivot = { 0,0 };
+  color = { 1,1,1,1 };
+  objType = OBJ_TYPE::ENEMY;
+  collisionCoord = {pos.x ,(pos.x) + texSize.x * 3 / 10,
+                                    pos.y,pos.y + texSize.y * 3 / 10 };
 }

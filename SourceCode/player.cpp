@@ -90,7 +90,23 @@ void player_update()
         debug::setString("turbo mode is %d", spaceShip->turboMode);
         debug::setString("player speed x is %f", spaceShip->speed.x);
         //debug::setString("player hp is %d",spaceShip->)
-      
+        if (spaceShip->processTimer)
+        {
+            if (spaceShip->timer < 100)
+            {
+                spaceShip->timer++;
+                spaceShip->color.a = spaceShip->timer%7;
+                debug::setString("timer is %d", spaceShip->timer);
+            }
+            else
+            {
+                spaceShip->color.a = 1;
+                spaceShip->timer = 0;
+                spaceShip->collided = false;
+                spaceShip->processTimer = false;
+            }
+          
+        }
         break;
     }
 }
@@ -114,7 +130,8 @@ void player_render()
         spaceShip->scale.x, spaceShip->scale.y, //scale
         spaceShip->texPos.x, spaceShip->texPos.y, //texture pos
         spaceShip->texSize.x, spaceShip->texSize.y,//texture width and height
-        spaceShip->pivot.x, spaceShip->pivot.y, 0);
+        spaceShip->pivot.x, spaceShip->pivot.y, 0,
+        spaceShip->color.r, spaceShip->color.g, spaceShip->color.b, spaceShip->color.a);
     spaceShip->drawCollision(spaceShip->pos.x, spaceShip->pos.y,spaceShip->inGameSize.x, spaceShip->inGameSize.y);
             
     //rendering for beam
@@ -155,6 +172,10 @@ void player_moveY()
 {
     if (STATE(0) & PAD_DOWN)
     {
+        if (spaceShip->speed.y < 0)
+        {
+            spaceShip->speed.y = 0;
+        }
         spaceShip->speed.y += 1;
         if (spaceShip->speed.y > spaceShip->maxSpeed.y)
         {
@@ -163,6 +184,10 @@ void player_moveY()
     }
     else if (STATE(0) & PAD_UP)
     {
+        if (spaceShip->speed.y > 0)
+        {
+            spaceShip->speed.y = 0;
+        }
         spaceShip->speed.y += -1;
         if (spaceShip->speed.y < -spaceShip->maxSpeed.y)
         {
@@ -229,7 +254,17 @@ void fireBeam()
                beam[i]->pos.x += beam[i]->maxSpeed.x;
                beam[i]->updateCollisionCoord(&beam[i]->collisionCoord, beam[i]->pos.x, beam[i]->pos.x + beam[i]->inGameSize.x,
                    beam[i]->pos.y, beam[i]->pos.y + beam[i]->inGameSize.y);
-               beam[i]->collisionDetector(beam[i], &meteor);
+               for (int z = 0; z < METEOR_MAX; z++)
+               {
+                   if (meteor[z])
+                   {
+                       beam[i]->collisionDetector(beam[i], meteor[z]);
+                   }
+                  
+               }
+               
+
+              
                if (beam[i]->destroySelf)
                {
                    safe_delete(beam[i]);
@@ -280,6 +315,10 @@ void player_moveX()
     //move right
     if (STATE(0) & PAD_RIGHT)
     {
+        if (spaceShip->speed.x < 0)
+        {
+            spaceShip->speed.x = 0; //this is to make sure the ship doesnt have the short delay
+        }
         spaceShip->speed.x += 1;
         if (spaceShip->speed.x > spaceShip->maxSpeed.x)
         {
@@ -289,6 +328,10 @@ void player_moveX()
     }
     else if (STATE(0) & PAD_LEFT)
     {
+        if (spaceShip->speed.x > 0)
+        {
+            spaceShip->speed.x = 0; //this is to make sure the ship doesnt have the short delay
+        }
         spaceShip->speed.x +=- 1;
         if (spaceShip->speed.x < -spaceShip->maxSpeed.x)
         {
