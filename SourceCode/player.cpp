@@ -85,7 +85,7 @@ void player_update()
       
         //player movement
         spaceShipLogic();
-
+   
         debug::setString("player life is %d", spaceShip->currentLife);
         debug::setString("turbo mode is %d", spaceShip->turboMode);
         debug::setString("player speed x is %f", spaceShip->speed.x);
@@ -113,6 +113,7 @@ void player_update()
 
 void player_render()
 {
+    primitive::line(0, 600, 1280, 600, 1, 1, 1, 1, 5);
     // spaceShip->sprImg = sprite_load(L"./Data/Images/empty_HP.png");
    
         for (int i = 0; i < MAX_LIFE ; i++)

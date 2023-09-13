@@ -138,9 +138,10 @@ void game_update()
         }
         debug::setString("total distance travelled %d", spaceShip->playerScore.distanceTraveled);
         debug::setString("score multiplier %f", scoreMultiplier);
+       
         break;
     }
-
+    
     game_timer++;
 }
 
@@ -149,8 +150,10 @@ void game_update()
 //--------------------------------------
 void game_render()
 {
+   
     GameLib::clear(0.2f, 0.2f, 0.4f);
     //firrst screen
+   
     if (moveFirstMap)
         {
         sprite_render(sprBack, mapPosX, 0,
