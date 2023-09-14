@@ -91,38 +91,38 @@ void title_update()
 
             break;
         }
-        if ((selecting == 14) && (TRG(0) & PAD_START))
+        //if ((selecting == 14) && (TRG(0) & PAD_START)) //enter
+        //{
+        //    sound::play(4, 2);
+        //    sprbg = sprite_load(L"./Data/Images/back1.png");
+        //    selecting = 1;
+
+        //    break;
+        //}
+        if ((selecting == 14) && (TRG(0) & PAD_SELECT)) //backspace 
         {
             sound::play(4, 2);
-            sprbg = sprite_load(L"./Data/Images/back1.png");
+            sprbg = sprite_load(L"./Data/Images/help5.png");
+            selecting = 13;
+
+            break;
+        }
+        if ((selecting == 12) && (TRG(0) & PAD_START)) //enter
+        {
+            sound::play(4, 2);
+            sprbg = sprite_load(L"./Data/Images/help5.png");
             selecting = 1;
 
             break;
         }
-        if ((selecting == 14) && (TRG(0) & PAD_SELECT))
-        {
-            sound::play(4, 2);
-            sprbg = sprite_load(L"./Data/Images/help4.png");
-            selecting = 13;
-
-            break;
-        }
-        if ((selecting == 12) && (TRG(0) & PAD_START))
-        {
-            sound::play(4, 2);
-            sprbg = sprite_load(L"./Data/Images/help4.png");
-            selecting = 13;
-
-            break;
-        }
-        if ((selecting == 13) && (TRG(0) & PAD_START))
+       /* if ((selecting == 13) && (TRG(0) & PAD_START))
         {
             sound::play(4, 2);
             sprbg = sprite_load(L"./Data/Images/help5.png");
             selecting = 14;
 
             break;
-        }
+        }*/
         if ((selecting == 13) && (TRG(0) & PAD_SELECT))
         {
             sound::play(4, 2);
@@ -233,20 +233,20 @@ void title_render()
 
     sprite_render(sprbg, 0, 0);
     if (selecting == 4) {
-        font::textOut(4, "1/5", VECTOR2(1100, 670), VECTOR2(1.8f, 1.8f));
+        font::textOut(4, "1/4", VECTOR2(1100, 670), VECTOR2(1.8f, 1.8f));
     }
     if (selecting == 11) {
-        font::textOut(4, "2/5", VECTOR2(1100, 670), VECTOR2(1.8f, 1.8f));
+        font::textOut(4, "2/4", VECTOR2(1100, 670), VECTOR2(1.8f, 1.8f));
     }
     if (selecting == 12) {
-        font::textOut(4, "3/5", VECTOR2(1100, 670), VECTOR2(1.8f, 1.8f));
+        font::textOut(4, "3/4", VECTOR2(1100, 670), VECTOR2(1.8f, 1.8f));
     }
     if (selecting == 13) {
-        font::textOut(4, "4/5", VECTOR2(1100, 670), VECTOR2(1.8f, 1.8f));
+        font::textOut(4, "4/4", VECTOR2(1100, 670), VECTOR2(1.8f, 1.8f));
     }
-    if (selecting == 14) {
+   /* if (selecting == 14) {
         font::textOut(4, "5/5", VECTOR2(1100, 670), VECTOR2(1.8f, 1.8f));
-    }
+    }*/
     if (selecting >= 1 && selecting <= 3) {
         sprite_render(sprarrow, 460, 590, -0.3f, 0.3f);
         sprite_render(sprarrow, 710, 590, 0.3f, 0.3f);

@@ -92,7 +92,7 @@ void meteor_render() {
                 meteor[i]->texPos.x, meteor[i]->texPos.y, //texture pos
                 meteor[i]->texSize.x, meteor[i]->texSize.y,//texture width and height
                 meteor[i]->pivot.x, meteor[i]->pivot.y, 0);
-            meteor[i]->drawCollision(meteor[i]->pos.x, meteor[i]->pos.y, meteor[i]->texSize.x * 0.3, meteor[i]->texSize.y * 0.3);
+          //  meteor[i]->drawCollision(meteor[i]->pos.x, meteor[i]->pos.y, meteor[i]->texSize.x * 0.3, meteor[i]->texSize.y * 0.3);
         }
         
     }

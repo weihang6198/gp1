@@ -149,7 +149,7 @@ void player_render()
         spaceShip->texSize.x, spaceShip->texSize.y,//texture width and height
         spaceShip->pivot.x, spaceShip->pivot.y, 0,
         spaceShip->color.r, spaceShip->color.g, spaceShip->color.b, spaceShip->color.a);
-    spaceShip->drawCollision(spaceShip->pos.x, spaceShip->pos.y,spaceShip->inGameSize.x, spaceShip->inGameSize.y);
+    //spaceShip->drawCollision(spaceShip->pos.x, spaceShip->pos.y,spaceShip->inGameSize.x, spaceShip->inGameSize.y);
             
     //rendering for beam
     for (int i = 0; i < 90; i++)
@@ -188,7 +188,7 @@ void spaceShipLogic()
             spaceShip->pos.y, spaceShip->pos.y + spaceShip->inGameSize.y);
         player_moveX();
         player_moveY();
-        triggerAccelerateMode();
+       // triggerAccelerateMode();
         
         LimitSpaceShipToScreen();
     }
@@ -250,6 +250,7 @@ void player_moveY()
 
 void triggerAccelerateMode()
 {
+
     if (TRG(0) &PAD_TRG1 )
     {
         

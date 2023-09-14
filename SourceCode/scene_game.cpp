@@ -157,7 +157,7 @@ void game_update()
 //--------------------------------------
 void game_render()
 {
-   
+  
     GameLib::clear(0.2f, 0.2f, 0.4f);
     //firrst screen
     //
@@ -181,7 +181,8 @@ void game_render()
     item_render();
     player_render();
     meteor_render(); 
-
+    text_out(1, "WASD to move", 0, 0);
+    text_out(1, "K to shoot", 0, 20);
 
 
 }

@@ -112,7 +112,7 @@ void item_render()
                 item[i]->texPos.x, item[i]->texPos.y,
                 item[i]->texSize.x, item[i]->texSize.y, item[i]->pivot.x, item[i]->pivot.y, ToRadian(0));
 
-            item[0]->drawCollision(item[i]->collisionCoord.left, item[i]->collisionCoord.top, item[i]->inGameSize.x, item[i]->inGameSize.y);
+           // item[0]->drawCollision(item[i]->collisionCoord.left, item[i]->collisionCoord.top, item[i]->inGameSize.x, item[i]->inGameSize.y);
 
         }
     }

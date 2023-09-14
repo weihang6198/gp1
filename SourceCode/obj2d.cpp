@@ -16,7 +16,7 @@ void SPACE_SHIP::spaceShipInit()
    fuel = 100;
    collisionCoord = {pos.x,pos.x +inGameSize.x,
        pos.y,pos.y +inGameSize.y };
-   turboMode = false;
+   turboMode =true;
    timer = 0;
    beamCount = 0;
    objType = PLAYER;
